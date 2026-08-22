@@ -1,21 +1,239 @@
 <!doctype html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SAAE Angra dos Reis · Centro de Controle Operacional</title>
+    <title>Supervisão e Automação · SAAE Angra dos Reis</title>
     <meta
       name="description"
-      content="Painel demonstrativo de supervisão e automação dos sistemas de abastecimento de água e esgotamento sanitário de Angra dos Reis. Dados simulados."
+      content="Projeto de viabilidade para execução interna de um sistema de supervisão, telemetria e automação dos serviços de água e esgoto de Angra dos Reis."
     />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="/estilo.css" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='19' font-size='20'>💧</text></svg>"
     />
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .capa {
+        flex: 1;
+        max-width: 940px;
+        width: 100%;
+        margin: 0 auto;
+        padding: clamp(40px, 9vh, 96px) 24px 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 44px;
+      }
+      .selo {
+        font-family: var(--dado);
+        font-size: 11.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--meio);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+      }
+      .selo span.b {
+        color: var(--fio);
+      }
+      h1 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(34px, 6.6vw, 62px);
+        line-height: 1.04;
+        letter-spacing: -0.023em;
+        margin: 14px 0 0;
+        max-width: 15ch;
+        text-wrap: balance;
+      }
+      .abertura {
+        font-size: clamp(17px, 2.2vw, 21px);
+        line-height: 1.5;
+        color: var(--tinta-2);
+        max-width: 58ch;
+        margin: 20px 0 0;
+      }
+      .caminhos {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 720px) {
+        .caminhos {
+          grid-template-columns: 1.25fr 1fr;
+        }
+      }
+      .caminho {
+        border: 1px solid var(--fio);
+        background: var(--carta);
+        padding: 26px 26px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.15s ease;
+      }
+      .caminho:hover,
+      .caminho:focus-visible {
+        border-color: var(--azul);
+      }
+      .caminho.principal {
+        border-width: 2px;
+        border-color: var(--azul);
+      }
+      .caminho .rotulo {
+        font-family: var(--dado);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--meio);
+      }
+      .caminho.principal .rotulo {
+        color: var(--azul);
+        font-weight: 600;
+      }
+      .caminho h2 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: -0.012em;
+        margin: 0;
+      }
+      .caminho p {
+        margin: 0;
+        font-size: 15.5px;
+        line-height: 1.5;
+        color: var(--tinta-2);
+      }
+      .caminho .seta {
+        font-family: var(--dado);
+        font-size: 13px;
+        color: var(--azul);
+        margin-top: 4px;
+      }
+      .numeros {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1px;
+        background: var(--fio);
+        border: 1px solid var(--fio);
+      }
+      .n {
+        background: var(--carta);
+        padding: 17px 18px 19px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .n .v {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 25px;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.1;
+      }
+      .n .r {
+        font-family: var(--dado);
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--meio);
+        line-height: 1.45;
+      }
+      .n.alerta .v {
+        color: var(--rubro);
+      }
+      footer {
+        border-top: 1px solid var(--fio);
+        padding: 20px 24px 34px;
+        max-width: 940px;
+        width: 100%;
+        margin: 0 auto;
+        font-family: var(--dado);
+        font-size: 11.5px;
+        line-height: 1.65;
+        color: var(--meio);
+      }
+      footer p {
+        margin: 0;
+        max-width: 74ch;
+      }
+    </style>
   </head>
   <body>
-    <div id="raiz"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <main class="capa">
+      <div>
+        <div class="selo">
+          <span>Serviço Autônomo de Água e Esgoto</span><span class="b">/</span>
+          <span>Angra dos Reis — RJ</span><span class="b">/</span>
+          <span>Projeto de viabilidade</span>
+        </div>
+        <h1>Supervisão e automação executadas por dentro</h1>
+        <p class="abertura">
+          Um sistema de telemetria, supervisão e controle dos serviços de água e esgoto, construído
+          pela própria autarquia sobre software livre — com o dado, o código e o conhecimento
+          permanecendo em casa.
+        </p>
+      </div>
+
+      <div class="numeros">
+        <div class="n">
+          <span class="v">13,6 mi m³</span>
+          <span class="r">água produzida por ano</span>
+        </div>
+        <div class="n alerta">
+          <span class="v">2,9 mi m³</span>
+          <span class="r">perdidos na distribuição</span>
+        </div>
+        <div class="n alerta">
+          <span class="v">20,3 %</span>
+          <span class="r">do esgoto gerado é tratado</span>
+        </div>
+        <div class="n">
+          <span class="v">≈ 8 GWh</span>
+          <span class="r">energia elétrica por ano</span>
+        </div>
+      </div>
+
+      <div class="caminhos">
+        <a class="caminho principal" href="/projeto/">
+          <span class="rotulo">Documento</span>
+          <h2>A proposta técnica</h2>
+          <p>
+            Como substituir a leitura manual de cloro, a ficha de papel e a bomba em automático
+            burro: as tecnologias, os equipamentos e o que se ganha. Cada número com fonte e ano.
+          </p>
+          <span class="seta">Ler o documento →</span>
+        </a>
+        <a class="caminho" href="/painel/">
+          <span class="rotulo">Demonstração</span>
+          <h2>Painel de controle</h2>
+          <p>
+            Maquete interativa de uma sala de controle, com dados simulados. Referência visual do
+            que se pretende construir.
+          </p>
+          <span class="seta">Abrir a demonstração →</span>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Indicadores do SINISA 2024 para Angra dos Reis, compilados pelo Instituto Água e Saneamento,
+        com base populacional do Censo IBGE 2022. São dados oficiais, autodeclarados pelo prestador,
+        e podem divergir da operação atual. A demonstração usa dados inteiramente simulados e não se
+        conecta a equipamento real.
+      </p>
+    </footer>
   </body>
 </html>

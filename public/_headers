@@ -5,9 +5,23 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /index.html
-  # Único ponto de entrada, roteamento por hash: revalidar sempre aqui basta
-  # para uma republicação aparecer na hora.
+  # Capa do site. Revalidar sempre para que uma republicação apareça na hora.
   Cache-Control: public, max-age=0, must-revalidate
+
+/painel/*
+  # Shell do painel: mesma razão da capa. Os assets com hash ficam em /assets/.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/projeto/*
+  # Documento de exposição. Muda por revisão, não por build, então revalidar.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/fontes/*
+  # Fontes embarcadas, nome estável e conteúdo imutável.
+  Cache-Control: public, max-age=31536000, immutable
+
+/img/*
+  Cache-Control: public, max-age=2592000
 
 /*
   X-Content-Type-Options: nosniff

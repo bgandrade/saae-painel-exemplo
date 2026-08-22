@@ -189,7 +189,7 @@ export default function DrawerUnidade({ unidade: u }) {
           itens={[
             ['Coordenadas', `${num(u.lat, 6)}, ${num(u.lon, 6)}`],
             ['CLP', u.clp ?? '—'],
-            ['Origem do dado', u.confirmada ? 'Coordenada SAAE' : 'Estimada'],
+            ['Origem do dado', u.confirmada ? 'Localização real' : 'Estimada'],
             u.alimentadaPor && ['Alimentada por', nomeUnidade(u.alimentadaPor)],
             u.recalcaPara && ['Recalca para', nomeUnidade(u.recalcaPara)],
             u.recebeDe?.length && ['Recebe de', u.recebeDe.map(nomeUnidade).join(', ')],

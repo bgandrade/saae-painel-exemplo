@@ -140,15 +140,16 @@ aplicar a falha.
 
 Isto importa se alguém na plateia conhecer o sistema.
 
-|                                                         | Origem                                                                                                                |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Contorno do município                                   | **Real** — malha do IBGE, código 3300100, qualidade máxima (46 polígonos, incluindo a Ilha Grande e 44 ilhas menores) |
-| Coordenadas das 10 unidades                             | **Reais** — fornecidas pelo SAAE, verificadas uma a uma contra a malha do IBGE                                        |
-| Cadeia Captação → Elevatória → Reservatório da Banqueta | **Real** — a arquitetura foi corrigida conforme a operação descrita, com os 5 conjuntos da elevatória                 |
-| Traçado de adutoras e coletores                         | **Estimado** — desenhado entre as coordenadas reais para dar leitura de rede                                          |
-| Setores de abastecimento                                | **Estimados** — áreas e populações plausíveis, não o cadastro do SAAE                                                 |
-| Bombas, capacidades, vazões, setpoints                  | **Estimados** — dimensionados para que o sistema fique realista sob carga                                             |
-| Todas as medições                                       | **Simuladas** — geradas pelo modelo em `src/engine/sim.js`                                                            |
+|                                                         | Origem                                                                                                                                              |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Contorno do município                                   | **Real** — malha do IBGE, código 3300100, qualidade máxima (46 polígonos, incluindo a Ilha Grande e 44 ilhas menores)                               |
+| Nomes e localização das unidades                        | **Reais** — unidades que existem, com coordenadas levantadas em mapa público e conferidas contra a malha do IBGE                                    |
+| Quantidade de unidades                                  | **Recorte** — o SAAE atende o município inteiro e opera muito mais que estas 10; a maquete usa um subconjunto                                       |
+| Cadeia Captação → Elevatória → Reservatório da Banqueta | **Aproximada** — a arquitetura reflete a operação como era conhecida; os 5 conjuntos da elevatória são estimativa de memória, com anos de defasagem |
+| Traçado de adutoras e coletores                         | **Estimado** — desenhado entre as coordenadas reais para dar leitura de rede                                                                        |
+| Setores de abastecimento                                | **Estimados** — áreas e populações plausíveis, não o cadastro do SAAE                                                                               |
+| Bombas, capacidades, vazões, setpoints                  | **Estimados** — dimensionados para que o sistema fique realista sob carga                                                                           |
+| Todas as medições                                       | **Simuladas** — geradas pelo modelo em `src/engine/sim.js`                                                                                          |
 
 A interface declara isso: o rodapé traz o aviso permanente de maquete, a barra
 de estado carrega o selo `SIMULAÇÃO`, o mapa traz a nota de origem e o
@@ -345,18 +346,44 @@ pnpm build && pnpm dlx wrangler pages deploy dist
 
 ou conectar o repositório e deixar cada push publicar.
 [`public/_headers`](public/_headers) já traz cache longo para os assets com
-hash, revalidação do `index.html` e a CSP. O roteamento é por hash (`#/bombas`),
-então não é preciso regra de reescrita para SPA e qualquer aba pode ser aberta
-por link direto.
+hash, revalidação das páginas e a CSP. O roteamento do painel é por hash
+(`#/bombas`), então não é preciso regra de reescrita para SPA e qualquer aba pode
+ser aberta por link direto.
+
+Um `pnpm build` produz **um único deploy com três endereços**:
+
+| Endereço    | Conteúdo                   |
+| ----------- | -------------------------- |
+| `/`         | capa, com os dois caminhos |
+| `/projeto/` | a proposta técnica         |
+| `/painel/`  | esta maquete               |
+
+As três são entradas do build. Capa e documento não importam módulo nenhum —
+são HTML com estilo embutido, e os recursos comuns vivem em `public/`. Precisam
+ser entradas, e não arquivos dentro de `public/`, porque o servidor de
+desenvolvimento resolve índice de diretório a partir da raiz: um `index.html`
+em `public/` funciona no build mas dá 404 no `pnpm dev`.
+
+A CSP proíbe recurso externo, então a tipografia fica embarcada em
+`public/fontes/` — as três páginas funcionam num auditório sem rede. A origem de
+cada imagem está em [`docs/creditos-imagens.md`](docs/creditos-imagens.md), que
+separa as fotografias de licença livre das fotos de catálogo de fabricante e
+registra a situação jurídica de cada grupo.
 
 ---
 
 ## Estrutura
 
 ```
-index.html                       shell do Vite
+index.html                       capa do site              ─┐
+projeto/index.html               a proposta técnica         │ as três entradas
+painel/index.html                shell do Vite — a maquete  ┘ do build
 vite.config.js                   build, sem configuração exótica
-public/_headers                  cache e CSP do Cloudflare Pages
+
+public/                          copiado literalmente, sem passar pelo build
+  estilo.css                     tokens, tipografia e impressão das páginas
+  fontes/  img/                  tipografia embarcada e fotografias
+  _headers                       cache e CSP do Cloudflare Pages
 
 src/
   main.jsx  App.jsx              topbar, barra de estado, rota, atalhos
@@ -393,11 +420,19 @@ módulos ES puros, testáveis por linha de comando, e é por isso que
 
 ## O que viria depois
 
+O caminho da maquete até o sistema real está na **proposta técnica**, publicada
+em `/projeto/` e versionada em
+[`docs/projeto-tecnico.md`](docs/projeto-tecnico.md): parte da operação manual de
+hoje — cloro lido em comparador de prisma, ficha de papel, bomba em automático
+simples — e mostra com quais tecnologias e quais equipamentos ela é substituída
+por registro digital, medição contínua e supervisão centralizada.
+
 Deixado de fora desta maquete de propósito, mas é a estrada à frente:
 
 - **Programação horária e tarifa de ponta** — inibir bombeamento das 18 h às
-  21 h e antecipar reservação. É o argumento financeiro mais forte que existe,
-  e o motor já rastreia energia por conjunto.
+  21 h e antecipar reservação. O ganho depende do enquadramento tarifário de
+  cada unidade, que só a fatura responde; o motor já rastreia energia por
+  conjunto.
 - Integração real por **Modbus TCP / DNP3 / OPC UA** com os CLPs existentes.
 - Aplicativo de campo para a equipe de manutenção.
 - Ordem de serviço automática disparada por horímetro ou por vibração.

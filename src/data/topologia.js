@@ -8,7 +8,10 @@
  * │ incluí-la automaticamente — nenhum outro arquivo precisa ser tocado.    │
  * └────────────────────────────────────────────────────────────────────────┘
  *
- * `confirmada: true`  → coordenada real, fornecida pelo SAAE.
+ * `confirmada: true`  → unidade que existe, com nome e localização reais,
+ *                       levantados em mapa público. NÃO significa que as
+ *                       demais características sejam reais: capacidades,
+ *                       vazões, número de conjuntos e setpoints são projeção.
  * `confirmada: false` → traçado/ativo estimado, existe só para dar contexto
  *                       visual ao mapa. A interface declara isso ao usuário.
  *
@@ -24,10 +27,16 @@ export const TIPOS = Object.freeze({
   eee: { rotulo: 'Elevatória de esgoto', sistema: 'esgoto' },
 });
 
-/* ─────────────────────────── UNIDADES CONFIRMADAS ─────────────────────────
- * As dez coordenadas abaixo foram fornecidas pelo SAAE e verificadas por
- * point-in-polygon contra a malha do IBGE (tools/check_geo.mjs). Todas caem
- * dentro do município; a ETE Abraão cai dentro do polígono da Ilha Grande.
+/* ──────────────────────────────── UNIDADES ────────────────────────────────
+ * As dez unidades abaixo existem, e seus nomes e coordenadas foram levantados
+ * em mapa público e verificados por point-in-polygon contra a malha do IBGE
+ * (tools/check_geo.mjs). Todas caem dentro do município; a ETE Abraão cai
+ * dentro do polígono da Ilha Grande.
+ *
+ * São um RECORTE: o SAAE atende o município inteiro e opera muito mais que
+ * estas dez. Tudo além de nome e localização — capacidades, vazões, número de
+ * conjuntos, setpoints — é projeção dimensionada para a maquete se comportar
+ * de forma realista, não o cadastro da autarquia.
  *
  * `malha` descreve a estratégia de controle da unidade. Os valores são os
  * setpoints de partida do CLP — a interface os lê e os escreve, e é isso que
