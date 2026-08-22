@@ -7,7 +7,7 @@
  * pode depender só da cor.
  */
 
-import { useRef, useState, useMemo } from 'react';
+import { useCallback, useRef, useState, useMemo } from 'react';
 import { num, horaCurta } from '../ui/formato.js';
 import useLargura from '../hooks/useLargura.js';
 import { escala, dominio, caminho, maisProximo, desempilhar, CORES_SERIE } from './escalas.js';
@@ -15,8 +15,14 @@ import { escala, dominio, caminho, maisProximo, desempilhar, CORES_SERIE } from 
 const MARGEM = { t: 12, r: 54, b: 22, l: 46 };
 
 export default function GraficoLinha({
-  series = [], altura = 190, unidade = '', casas = 1,
-  area = false, zero = false, faixa = null, limites = [],
+  series = [],
+  altura = 190,
+  unidade = '',
+  casas = 1,
+  area = false,
+  zero = false,
+  faixa = null,
+  limites = [],
 }) {
   const ref = useRef(null);
   const larg = useLargura(ref);
@@ -61,14 +67,34 @@ export default function GraficoLinha({
       d: caminho(s.t, s.v, ex, ey),
     }));
 
-    const rotulos = validas.length <= 4
-      ? desempilhar(
-          marcas.filter((s) => s.nome).map((s) => ({ y: ey(s.v[s.v.length - 1]), cor: s.cor, nome: s.nome })),
-          y1 + 8, y0
-        )
-      : [];
+    const rotulos =
+      validas.length <= 4
+        ? desempilhar(
+            marcas
+              .filter((s) => s.nome)
+              .map((s) => ({ y: ey(s.v[s.v.length - 1]), cor: s.cor, nome: s.nome })),
+            y1 + 8,
+            y0,
+          )
+        : [];
 
-    return { x0, x1, y0, y1, ex, ey, ymin, ymax, ticksY, ticksX, marcas, rotulos, tmin, tmax, base };
+    return {
+      x0,
+      x1,
+      y0,
+      y1,
+      ex,
+      ey,
+      ymin,
+      ymax,
+      ticksY,
+      ticksX,
+      marcas,
+      rotulos,
+      tmin,
+      tmax,
+      base,
+    };
   }, [validas, larg, altura, zero, faixa, limites]);
 
   function aoMover(ev) {
@@ -83,33 +109,62 @@ export default function GraficoLinha({
   return (
     <div ref={ref} style={{ position: 'relative' }}>
       <svg
-        className="gr" viewBox={`0 0 ${larg} ${altura}`} height={altura} role="img"
-        onMouseMove={aoMover} onMouseLeave={() => setCursor(null)}
+        className="gr"
+        viewBox={`0 0 ${larg} ${altura}`}
+        height={altura}
+        role="img"
+        onMouseMove={aoMover}
+        onMouseLeave={() => setCursor(null)}
       >
         {g && (
           <>
             {g.ticksY.map((v) => (
               <g key={`y${v}`}>
                 <line className="grade-linha" x1={g.x0} x2={g.x1} y1={g.ey(v)} y2={g.ey(v)} />
-                <text x={g.x0 - 7} y={g.ey(v) + 3.5} textAnchor="end">{num(v, casas)}</text>
+                <text x={g.x0 - 7} y={g.ey(v) + 3.5} textAnchor="end">
+                  {num(v, casas)}
+                </text>
               </g>
             ))}
 
             {faixa && (
               <rect
-                className="faixa-norma" x={g.x0} width={g.x1 - g.x0}
+                className="faixa-norma"
+                x={g.x0}
+                width={g.x1 - g.x0}
                 y={g.ey(Math.min(faixa.max, g.ymax))}
-                height={Math.max(0, g.ey(Math.max(faixa.min, g.ymin)) - g.ey(Math.min(faixa.max, g.ymax)))}
+                height={Math.max(
+                  0,
+                  g.ey(Math.max(faixa.min, g.ymin)) - g.ey(Math.min(faixa.max, g.ymax)),
+                )}
               />
             )}
-            {limites.filter((l) => l >= g.ymin && l <= g.ymax).map((l) => (
-              <line key={`lim${l}`} className="limite-linha" x1={g.x0} x2={g.x1} y1={g.ey(l)} y2={g.ey(l)} />
-            ))}
+            {limites
+              .filter((l) => l >= g.ymin && l <= g.ymax)
+              .map((l) => (
+                <line
+                  key={`lim${l}`}
+                  className="limite-linha"
+                  x1={g.x0}
+                  x2={g.x1}
+                  y1={g.ey(l)}
+                  y2={g.ey(l)}
+                />
+              ))}
 
             {g.ticksX.map((t) => (
               <g key={`x${t}`}>
-                <line className="grade-linha" x1={g.ex(t)} x2={g.ex(t)} y1={g.y1} y2={g.y0} opacity="0.55" />
-                <text x={g.ex(t)} y={g.y0 + 14} textAnchor="middle">{horaCurta(t)}</text>
+                <line
+                  className="grade-linha"
+                  x1={g.ex(t)}
+                  x2={g.ex(t)}
+                  y1={g.y1}
+                  y2={g.y0}
+                  opacity="0.55"
+                />
+                <text x={g.ex(t)} y={g.y0 + 14} textAnchor="middle">
+                  {horaCurta(t)}
+                </text>
               </g>
             ))}
             <line className="eixo-linha" x1={g.x0} x2={g.x1} y1={g.y0} y2={g.y0} />
@@ -118,7 +173,9 @@ export default function GraficoLinha({
               <g key={s.nome ?? i}>
                 {area && g.marcas.length === 1 && (
                   <path
-                    className="marca-area" fill={s.cor} opacity="0.13"
+                    className="marca-area"
+                    fill={s.cor}
+                    opacity="0.13"
                     d={`${s.d}L${g.ex(s.t[s.t.length - 1]).toFixed(1)} ${g.y0}L${g.ex(s.t[0]).toFixed(1)} ${g.y0}Z`}
                   />
                 )}
@@ -128,7 +185,10 @@ export default function GraficoLinha({
 
             {g.rotulos.map((r) => (
               <text
-                key={r.nome} x={g.x1 + 6} y={r.y + 3.5} fill={r.cor}
+                key={r.nome}
+                x={g.x1 + 6}
+                y={r.y + 3.5}
+                fill={r.cor}
                 style={{ fontSize: 10, fontWeight: 650 }}
               >
                 {r.nome.length > 10 ? `${r.nome.slice(0, 9)}…` : r.nome}
@@ -137,13 +197,24 @@ export default function GraficoLinha({
 
             {cursor && (
               <g style={{ pointerEvents: 'none' }}>
-                <line className="cursor-linha" x1={g.ex(g.base.t[cursor.i])} x2={g.ex(g.base.t[cursor.i])} y1={g.y1} y2={g.y0} />
+                <line
+                  className="cursor-linha"
+                  x1={g.ex(g.base.t[cursor.i])}
+                  x2={g.ex(g.base.t[cursor.i])}
+                  y1={g.y1}
+                  y2={g.y0}
+                />
                 {g.marcas.map((s, k) => {
                   const v = s.v[Math.min(cursor.i, s.v.length - 1)];
                   return (
                     <circle
-                      key={k} cx={g.ex(g.base.t[cursor.i])} cy={g.ey(v)} r="4"
-                      fill={s.cor} stroke="var(--superficie)" strokeWidth="2"
+                      key={k}
+                      cx={g.ex(g.base.t[cursor.i])}
+                      cy={g.ey(v)}
+                      r="4"
+                      fill={s.cor}
+                      stroke="var(--superficie)"
+                      strokeWidth="2"
                     />
                   );
                 })}
@@ -162,7 +233,10 @@ export default function GraficoLinha({
                 <i className="dica-marca" style={{ background: s.cor }} />
                 {s.nome ?? ''}
               </span>
-              <b>{num(s.v[Math.min(cursor.i, s.v.length - 1)], casas)}{unidade ? ` ${unidade}` : ''}</b>
+              <b>
+                {num(s.v[Math.min(cursor.i, s.v.length - 1)], casas)}
+                {unidade ? ` ${unidade}` : ''}
+              </b>
             </div>
           ))}
         </Dica>
@@ -173,13 +247,15 @@ export default function GraficoLinha({
 
 /** Dica flutuante que vira de lado ao encostar na borda da janela. */
 export function Dica({ x, y, children }) {
-  const ref = useRef(null);
-  const l = ref.current?.offsetWidth ?? 170;
-  const a = ref.current?.offsetHeight ?? 70;
-  const px = x + 14 + l > innerWidth ? x - l - 14 : x + 14;
-  const py = Math.min(Math.max(8, y - a / 2), innerHeight - a - 8);
+  const [tamanho, setTamanho] = useState({ largura: 170, altura: 70 });
+  const medir = useCallback((node) => {
+    if (!node) return;
+    setTamanho({ largura: node.offsetWidth, altura: node.offsetHeight });
+  }, []);
+  const px = x + 14 + tamanho.largura > innerWidth ? x - tamanho.largura - 14 : x + 14;
+  const py = Math.min(Math.max(8, y - tamanho.altura / 2), innerHeight - tamanho.altura - 8);
   return (
-    <div ref={ref} className="dica" style={{ left: px, top: py }}>
+    <div ref={medir} className="dica" style={{ left: px, top: py }}>
       {children}
     </div>
   );

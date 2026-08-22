@@ -14,8 +14,8 @@
 
 import { LIMITES, porId } from '../data/topologia.js';
 
-const ATRASO_PADRAO_S = 20;   // tempo que a condição precisa se sustentar
-const BANDA_MORTA = 0.06;     // 6 % de folga para o alarme sair
+const ATRASO_PADRAO_S = 20; // tempo que a condição precisa se sustentar
+const BANDA_MORTA = 0.06; // 6 % de folga para o alarme sair
 const PASSO_MAX_AVALIACAO_S = 20; // teto do dt de uma avaliação (ver _condicao)
 
 export const SEVERIDADES = Object.freeze({
@@ -51,9 +51,7 @@ export class MotorAlarmes {
     // única avaliação nunca fecha sozinha a janela de confirmação. Sem isto,
     // rodar a simulação acelerada desligaria o antiflapping na prática.
     const passo = Math.min(dt, PASSO_MAX_AVALIACAO_S);
-    e.carga = viola
-      ? Math.min(e.carga + passo, atraso)
-      : Math.max(e.carga - passo, 0);
+    e.carga = viola ? Math.min(e.carga + passo, atraso) : Math.max(e.carga - passo, 0);
 
     if (!e.ativo && e.carga >= atraso) {
       e.ativo = true;
@@ -99,7 +97,7 @@ export class MotorAlarmes {
           detalhe: () => `${p.toFixed(1)} mca (mín. ${LIMITES.pressao.min} mca)`,
           atrasoS: 15,
         },
-        dt
+        dt,
       );
       this._condicao(
         `pressao-baixa/${id}`,
@@ -111,7 +109,7 @@ export class MotorAlarmes {
           detalhe: () => `${p.toFixed(1)} mca`,
           atrasoS: 60,
         },
-        dt
+        dt,
       );
       this._condicao(
         `pressao-alta/${id}`,
@@ -122,7 +120,7 @@ export class MotorAlarmes {
           origem: nome,
           detalhe: () => `${p.toFixed(1)} mca (máx. ${LIMITES.pressao.max} mca)`,
         },
-        dt
+        dt,
       );
 
       /* Cloro residual livre no ponto de rede — GM/MS 888/2021. */
@@ -137,7 +135,7 @@ export class MotorAlarmes {
           detalhe: () => `${cl.toFixed(2)} mg/L (mín. ${LIMITES.cloroLivre.min})`,
           atrasoS: 30,
         },
-        dt
+        dt,
       );
       this._condicao(
         `cloro-alto/${id}`,
@@ -148,7 +146,7 @@ export class MotorAlarmes {
           origem: nome,
           detalhe: () => `${cl.toFixed(2)} mg/L`,
         },
-        dt
+        dt,
       );
     }
 
@@ -165,7 +163,7 @@ export class MotorAlarmes {
           detalhe: () => `${r.nivelPct.toFixed(1)} % — autonomia ${r.autonomiaH.toFixed(1)} h`,
           atrasoS: 30,
         },
-        dt
+        dt,
       );
       this._condicao(
         `nivel-baixo/${id}`,
@@ -177,7 +175,7 @@ export class MotorAlarmes {
           detalhe: () => `${r.nivelPct.toFixed(1)} %`,
           atrasoS: 120,
         },
-        dt
+        dt,
       );
     }
 
@@ -195,7 +193,7 @@ export class MotorAlarmes {
             detalhe: () => `${valor.toFixed(2)} ${unidade} (faixa ${lim.min}–${lim.max})`,
             atrasoS: 45,
           },
-          dt
+          dt,
         );
       };
       checa('cloro', q.cloroMgL, LIMITES.cloroLivre, 'mg/L', 'critico');
@@ -220,7 +218,7 @@ export class MotorAlarmes {
           detalhe: () => 'Proteção atuada — religamento manual',
           atrasoS: 2,
         },
-        dt
+        dt,
       );
       this._condicao(
         `sobrecorrente/${id}`,
@@ -232,7 +230,7 @@ export class MotorAlarmes {
           detalhe: () => `${b.correnteA.toFixed(0)} A (nominal ${nominal} A)`,
           atrasoS: 10,
         },
-        dt
+        dt,
       );
       this._condicao(
         `vibracao/${id}`,
@@ -244,7 +242,7 @@ export class MotorAlarmes {
           detalhe: () => `${b.vibracaoMms.toFixed(1)} mm/s (ISO 10816-3: 4,5)`,
           atrasoS: 15,
         },
-        dt
+        dt,
       );
       this._condicao(
         `temp-mancal/${id}`,
@@ -256,7 +254,7 @@ export class MotorAlarmes {
           detalhe: () => `${b.tempMancalC.toFixed(0)} °C`,
           atrasoS: 30,
         },
-        dt
+        dt,
       );
       // Desequilíbrio de tensão acima de 2 % degrada o motor (NEMA MG-1).
       if (b.ligada) {
@@ -272,7 +270,7 @@ export class MotorAlarmes {
             detalhe: () => `${(desvio * 100).toFixed(1)} % entre fases`,
             atrasoS: 60,
           },
-          dt
+          dt,
         );
       }
     }
@@ -290,7 +288,7 @@ export class MotorAlarmes {
           detalhe: () => `${p.extravasandoLs.toFixed(1)} L/s vertendo`,
           atrasoS: 5,
         },
-        dt
+        dt,
       );
       this._condicao(
         `poco-alto/${id}`,
@@ -302,7 +300,7 @@ export class MotorAlarmes {
           detalhe: () => `${p.nivelPct.toFixed(0)} %`,
           atrasoS: 20,
         },
-        dt
+        dt,
       );
     }
 
@@ -320,7 +318,7 @@ export class MotorAlarmes {
             `DBO ${e.dboEfluenteMgL.toFixed(0)} mg/L, remoção ${(e.remocaoDbo * 100).toFixed(0)} %`,
           atrasoS: 60,
         },
-        dt
+        dt,
       );
       this._condicao(
         `carga-ete/${id}`,
@@ -332,7 +330,7 @@ export class MotorAlarmes {
           detalhe: () => `${e.cargaPct.toFixed(0)} % da vazão nominal`,
           atrasoS: 120,
         },
-        dt
+        dt,
       );
       this._condicao(
         `od-baixo/${id}`,
@@ -344,7 +342,7 @@ export class MotorAlarmes {
           detalhe: () => `${e.odMgL.toFixed(2)} mg/L`,
           atrasoS: 90,
         },
-        dt
+        dt,
       );
     }
   }
@@ -357,7 +355,7 @@ export class MotorAlarmes {
       .sort(
         (a, b) =>
           SEVERIDADES[b.info.severidade].peso - SEVERIDADES[a.info.severidade].peso ||
-          b.desde - a.desde
+          b.desde - a.desde,
       );
   }
 

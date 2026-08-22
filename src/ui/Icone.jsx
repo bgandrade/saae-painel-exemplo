@@ -19,8 +19,10 @@ const ICONES = {
   impressora: 'M6 9V3h12v6M6 18H4v-6h16v6h-2M8 14h8v7H8v-7Z',
   baixar: 'M12 3v12m0 0 4-4m-4 4-4-4M4 19h16',
   seta: 'M5 12h14m0 0-6-6m6 6-6 6',
-  engrenagem: 'M12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm8.4-3a8.4 8.4 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a8.4 8.4 0 0 0-2-1.2L15.5 2h-4l-.4 2.6a8.4 8.4 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6a8.4 8.4 0 0 0 0 2.4l-2 1.6 2 3.4 2.4-1a8.4 8.4 0 0 0 2 1.2l.4 2.6h4l.4-2.6a8.4 8.4 0 0 0 2-1.2l2.4 1 2-3.4-2-1.6c.06-.4.1-.8.1-1.2Z',
-  relatorio: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Zm0 0v5h5M9 13h6M9 17h4',
+  engrenagem:
+    'M12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm8.4-3a8.4 8.4 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a8.4 8.4 0 0 0-2-1.2L15.5 2h-4l-.4 2.6a8.4 8.4 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6a8.4 8.4 0 0 0 0 2.4l-2 1.6 2 3.4 2.4-1a8.4 8.4 0 0 0 2 1.2l.4 2.6h4l.4-2.6a8.4 8.4 0 0 0 2-1.2l2.4 1 2-3.4-2-1.6c.06-.4.1-.8.1-1.2Z',
+  relatorio:
+    'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Zm0 0v5h5M9 13h6M9 17h4',
   mapa: 'M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Zm0 0v14m6-12v14',
   rede: 'M12 2v6m0 8v6M4.9 4.9l4.2 4.2m5.8 5.8 4.2 4.2M2 12h6m8 0h6M4.9 19.1l4.2-4.2m5.8-5.8 4.2-4.2',
 };
@@ -28,9 +30,16 @@ const ICONES = {
 export default function Icone({ nome, tamanho = 14, ...resto }) {
   return (
     <svg
-      viewBox="0 0 24 24" width={tamanho} height={tamanho}
-      fill="none" stroke="currentColor" strokeWidth="2"
-      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...resto}
+      viewBox="0 0 24 24"
+      width={tamanho}
+      height={tamanho}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...resto}
     >
       <path d={ICONES[nome] ?? ICONES.info} />
     </svg>

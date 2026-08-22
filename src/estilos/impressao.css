@@ -15,57 +15,165 @@
 
   /* Impresso é sempre claro: economiza tinta e é o que se espera de um
      documento oficial, mesmo que o painel esteja no tema escuro. */
-  :root, :root[data-theme='dark'] {
-    --fundo: #fff; --superficie: #fff; --superficie-2: #fff; --superficie-3: #f2f4f7;
-    --borda: #c8d0d9; --borda-forte: #98a4b2;
-    --tinta: #000; --tinta-2: #33383d; --tinta-3: #5c6570;
-    --grade: #e4e8ec; --eixo: #b0bac4; --sombra: none; --sombra-flutuante: none;
+  :root,
+  :root[data-theme='dark'] {
+    --fundo: #fff;
+    --superficie: #fff;
+    --superficie-2: #fff;
+    --superficie-3: #f2f4f7;
+    --borda: #c8d0d9;
+    --borda-forte: #98a4b2;
+    --tinta: #000;
+    --tinta-2: #33383d;
+    --tinta-3: #5c6570;
+    --grade: #e4e8ec;
+    --eixo: #b0bac4;
+    --sombra: none;
+    --sombra-flutuante: none;
   }
 
-  body { overflow: visible; background: #fff; font-size: 10pt; }
+  body {
+    overflow: visible;
+    background: #fff;
+    font-size: 10pt;
+  }
 
-  .app { display: block; height: auto; }
-  .conteudo { overflow: visible; padding: 0; height: auto; }
+  .app {
+    display: block;
+    height: auto;
+  }
+  .conteudo {
+    overflow: visible;
+    padding: 0;
+    height: auto;
+  }
 
   /* Cromo do painel não entra no papel. */
-  .topbar, .barra-estado, .rodape, .drawer, .veu, .modal,
-  .mapa-controles, .mapa-legenda, .cenarios, .sem-impressao,
-  .leaflet-control-container { display: none !important; }
+  .topbar,
+  .barra-estado,
+  .rodape,
+  .drawer,
+  .veu,
+  .modal,
+  .mapa-controles,
+  .mapa-legenda,
+  .cenarios,
+  .sem-impressao,
+  .leaflet-control-container {
+    display: none !important;
+  }
 
   .cabecalho-relatorio {
     display: block !important;
     border-bottom: 2px solid #000;
-    padding-bottom: 6mm; margin-bottom: 6mm;
+    padding-bottom: 6mm;
+    margin-bottom: 6mm;
   }
-  .cr-org { font-size: 15pt; font-weight: 700; letter-spacing: -0.01em; }
-  .cr-sub { font-size: 10pt; color: #33383d; }
-  .cr-tit { font-size: 12pt; font-weight: 650; margin-top: 4mm; }
-  .cr-meta { font-size: 9pt; color: #5c6570; margin-top: 1mm; }
+  .cr-org {
+    font-size: 15pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .cr-sub {
+    font-size: 10pt;
+    color: #33383d;
+  }
+  .cr-tit {
+    font-size: 12pt;
+    font-weight: 650;
+    margin-top: 4mm;
+  }
+  .cr-meta {
+    font-size: 9pt;
+    color: #5c6570;
+    margin-top: 1mm;
+  }
   .cr-aviso {
-    margin-top: 3mm; padding: 2mm 3mm;
-    border: 1.5pt solid #000; font-size: 9pt; font-weight: 700; letter-spacing: 0.04em;
+    margin-top: 3mm;
+    padding: 2mm 3mm;
+    border: 1.5pt solid #000;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
   }
 
   /* Uma coluna: relatório é documento, não painel. */
-  .grid { display: block; }
-  .c2, .c3, .c4, .c5, .c6, .c7, .c8, .c9, .c10, .c12 { grid-column: auto; }
-  .card { break-inside: avoid; page-break-inside: avoid; margin-bottom: 5mm; border: 1pt solid #c8d0d9; }
-  .card-cab { background: #f2f4f7; padding: 2mm 3mm; }
-  .card-corpo { padding: 3mm; }
-  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; }
-  .kpi { border: 1pt solid #c8d0d9; padding: 2mm; }
-  .kpi-valor { font-size: 13pt; }
-  .snis { grid-template-columns: repeat(2, 1fr); }
-  .snis-val { font-size: 14pt; }
+  .grid {
+    display: block;
+  }
+  .c2,
+  .c3,
+  .c4,
+  .c5,
+  .c6,
+  .c7,
+  .c8,
+  .c9,
+  .c10,
+  .c12 {
+    grid-column: auto;
+  }
+  .card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 5mm;
+    border: 1pt solid #c8d0d9;
+  }
+  .card-cab {
+    background: #f2f4f7;
+    padding: 2mm 3mm;
+  }
+  .card-corpo {
+    padding: 3mm;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2mm;
+  }
+  .kpi {
+    border: 1pt solid #c8d0d9;
+    padding: 2mm;
+  }
+  .kpi-valor {
+    font-size: 13pt;
+  }
+  .snis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .snis-val {
+    font-size: 14pt;
+  }
 
-  .tabela { font-size: 8.5pt; }
-  .tabela th { background: #f2f4f7; padding: 1.5mm 2mm; }
-  .tabela td { padding: 1.2mm 2mm; }
-  .tabela tbody tr:hover { background: none; }
-  table { break-inside: auto; }
-  tr { break-inside: avoid; page-break-inside: avoid; }
-  thead { display: table-header-group; }
+  .tabela {
+    font-size: 8.5pt;
+  }
+  .tabela th {
+    background: #f2f4f7;
+    padding: 1.5mm 2mm;
+  }
+  .tabela td {
+    padding: 1.2mm 2mm;
+  }
+  .tabela tbody tr:hover {
+    background: none;
+  }
+  table {
+    break-inside: auto;
+  }
+  tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+  }
 
-  a[href]::after { content: none !important; }
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a[href]::after {
+    content: none !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

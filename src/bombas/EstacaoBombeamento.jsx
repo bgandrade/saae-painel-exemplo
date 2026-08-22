@@ -26,8 +26,10 @@ export default function EstacaoBombeamento({ unidade: u }) {
   const total = bombas.reduce((s, b) => s + b.vazaoLs, 0);
   const ligadas = bombas.filter((b) => b.ligada).length;
 
-  const origem = succao?.sigla ?? (u.tipo === 'captacao' ? u.mananancial ?? 'Manancial' : 'Rede coletora');
-  const alvo = destino?.sigla ?? (u.tipo === 'captacao' ? u.sigla : (u.setores ?? []).join(', ') || 'Rede');
+  const origem =
+    succao?.sigla ?? (u.tipo === 'captacao' ? (u.mananancial ?? 'Manancial') : 'Rede coletora');
+  const alvo =
+    destino?.sigla ?? (u.tipo === 'captacao' ? u.sigla : (u.setores ?? []).join(', ') || 'Rede');
 
   return (
     <div className="estacao">
@@ -52,7 +54,9 @@ export default function EstacaoBombeamento({ unidade: u }) {
           <span>{origem}</span>
           {resSuccao && <b>{num(resSuccao.nivelPct, 0)} %</b>}
           <span className="seta">▲</span>
-          <span>Sucção · {ligadas} de {bombas.length} em operação</span>
+          <span>
+            Sucção · {ligadas} de {bombas.length} em operação
+          </span>
         </div>
       </div>
     </div>

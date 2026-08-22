@@ -15,7 +15,7 @@
  *    do React derrubaria o quadro e não traria nada em troca.
  */
 
-import { createContext, useContext, useEffect, useMemo, useState, useRef } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Simulacao } from '../engine/sim.js';
 import { MotorAlarmes } from '../engine/alarms.js';
 
@@ -37,8 +37,8 @@ const Ctx = createContext(null);
 
 export function ProvedorSimulacao({ children }) {
   const [tique, setTique] = useState(0);
+  const [pausado, setPausado] = useState(false);
   const { sim, alarmes } = obterInstancia();
-  const pausado = useRef(false);
 
   useEffect(() => {
     let ultimo = performance.now();
@@ -47,7 +47,7 @@ export function ProvedorSimulacao({ children }) {
       // Aba em segundo plano não pode "pular" horas de uma vez.
       const dtReal = Math.min(agora - ultimo, 4000);
       ultimo = agora;
-      if (!pausado.current) {
+      if (!pausado) {
         // Alarmes avaliados a cada subpasso da física, não uma vez por quadro:
         // é o que impede um pico curto de escapar entre dois quadros de tela.
         sim.avancarReal(dtReal, (dt) => alarmes.avaliar(dt));
@@ -55,17 +55,17 @@ export function ProvedorSimulacao({ children }) {
       setTique((t) => t + 1);
     }, INTERVALO_MS);
     return () => clearInterval(id);
-  }, [sim, alarmes]);
+  }, [sim, alarmes, pausado]);
 
   const valor = useMemo(
     () => ({
       sim,
       alarmes,
       tique,
-      pausado: pausado.current,
-      alternarPausa: () => { pausado.current = !pausado.current; },
+      pausado,
+      alternarPausa: () => setPausado((valorAtual) => !valorAtual),
     }),
-    [sim, alarmes, tique]
+    [sim, alarmes, tique, pausado],
   );
 
   return <Ctx.Provider value={valor}>{children}</Ctx.Provider>;

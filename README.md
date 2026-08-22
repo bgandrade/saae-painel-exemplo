@@ -16,9 +16,12 @@ passam por intertravamento antes de chegar ao equipamento.
 
 ## Rodando
 
+O projeto fixa o Node.js pelo [mise](https://mise.jdx.dev/):
+
 ```bash
+mise install
 pnpm install
-pnpm dev          # http://localhost:5173
+pnpm dev # http://localhost:5173
 ```
 
 Para publicar:
@@ -31,14 +34,19 @@ pnpm preview      # confere o pacote de produção
 ### Verificação automática
 
 ```bash
-pnpm check        # roda os três verificadores abaixo
+pnpm lint         # análise estática com ESLint
+pnpm format:check # confere a formatação com Prettier
+pnpm check        # roda os três verificadores funcionais abaixo
 ```
 
-| Comando | O que confere |
-|---|---|
-| `pnpm check:geo` | cada coordenada cai dentro do município (malha IBGE) e todas as referências entre unidades, bombas, setores e linhas fecham |
-| `pnpm check:telas` | as 8 telas e o faceplate renderizam sem erro e contêm o conteúdo esperado |
-| `pnpm check:demos` | as quatro demonstrações do roteiro funcionam de ponta a ponta |
+Use `pnpm lint:fix` para aplicar correções seguras do ESLint e `pnpm format`
+para formatar o projeto.
+
+| Comando            | O que confere                                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm check:geo`   | cada coordenada cai dentro do município (malha IBGE) e todas as referências entre unidades, bombas, setores e linhas fecham |
+| `pnpm check:telas` | as 8 telas e o faceplate renderizam sem erro e contêm o conteúdo esperado                                                   |
+| `pnpm check:demos` | as quatro demonstrações do roteiro funcionam de ponta a ponta                                                               |
 
 `check:telas` renderiza as telas fora do navegador (jsdom + SSR do Vite), então
 roda em máquina sem as bibliotecas de sistema do Chromium. Ele não valida
@@ -48,12 +56,12 @@ apresentação.
 
 ### Atalhos na apresentação
 
-| Tecla | Ação |
-|---|---|
-| `1`–`8` | salta direto para cada tela |
-| `F` | modo quiosque (tela cheia, cromo enxuto) |
-| `R` | rotação automática entre as telas a cada 20 s |
-| `A` | abre o painel de alarmes |
+| Tecla   | Ação                                          |
+| ------- | --------------------------------------------- |
+| `1`–`8` | salta direto para cada tela                   |
+| `F`     | modo quiosque (tela cheia, cromo enxuto)      |
+| `R`     | rotação automática entre as telas a cada 20 s |
+| `A`     | abre o painel de alarmes                      |
 
 O seletor **1× / 60× / 300×** controla a velocidade do relógio simulado. A 60×
 cada segundo real vale um minuto de operação, o que faz a curva de consumo
@@ -66,16 +74,16 @@ diária aparecer durante a fala. `?tema=light` na URL força o tema claro.
 A navegação segue a hierarquia de quatro níveis da **ISA-101** — o selo `N1`…`N4`
 aparece em cada aba de propósito, para ensinar a estrutura a quem está vendo.
 
-| Nível | Tela | Papel |
-|---|---|---|
-| **1** | Visão Geral | Está tudo bem? Onde olhar? KPIs, mapa, alarmes, cenários |
-| **2** | Sinóptico | Como a água anda pelo sistema — diagramas de água e esgoto |
-| **3** | Unidades | A estação por dentro: barriletes, conjuntos, faceplates |
-| **3** | Automação | Malhas, setpoints, regras, intertravamentos, auditoria |
-| **2** | Rede e Pressão | Pressão por setor, reservatórios, balanço hídrico |
-| **2** | Qualidade | Cloro, pH, turbidez e fluoreto vs. GM/MS 888/2021 |
-| **2** | Esgoto e ETEs | Afluente, remoção de DBO, CONAMA 430/2011 |
-| **4** | Relatórios | Boletim, indicadores SNIS, histórico, CSV e PDF |
+| Nível | Tela           | Papel                                                      |
+| ----- | -------------- | ---------------------------------------------------------- |
+| **1** | Visão Geral    | Está tudo bem? Onde olhar? KPIs, mapa, alarmes, cenários   |
+| **2** | Sinóptico      | Como a água anda pelo sistema — diagramas de água e esgoto |
+| **3** | Unidades       | A estação por dentro: barriletes, conjuntos, faceplates    |
+| **3** | Automação      | Malhas, setpoints, regras, intertravamentos, auditoria     |
+| **2** | Rede e Pressão | Pressão por setor, reservatórios, balanço hídrico          |
+| **2** | Qualidade      | Cloro, pH, turbidez e fluoreto vs. GM/MS 888/2021          |
+| **2** | Esgoto e ETEs  | Afluente, remoção de DBO, CONAMA 430/2011                  |
+| **4** | Relatórios     | Boletim, indicadores SNIS, histórico, CSV e PDF            |
 
 ---
 
@@ -85,30 +93,34 @@ Quatro momentos, na ordem em que convencem. `pnpm check:demos` verifica os
 quatro no motor — se passarem lá, funcionam no auditório.
 
 ### D1 — Setpoint ao vivo
-Em **Automação**, arraste *"chama bombeamento abaixo de"* de 30 % para 55 %. Em
+
+Em **Automação**, arraste _"chama bombeamento abaixo de"_ de 30 % para 55 %. Em
 segundos os conjuntos entram, **um a um**, respeitando o intervalo mínimo entre
 partidas. A auditoria registra o ajuste com o valor antigo e o novo.
 
-> *"Ninguém precisou ir até a Banqueta."*
+> _"Ninguém precisou ir até a Banqueta."_
 
 ### D2 — Intertravamento
+
 Em **Unidades**, abra um conjunto, passe para **MANUAL** e tente parti-lo com o
 nível de sucção baixo. O comando é **recusado**, com o motivo escrito na tela e
 a linha `BLOQUEADO` na trilha de auditoria.
 
-> *"O sistema protege o equipamento até de um comando errado do operador."*
+> _"O sistema protege o equipamento até de um comando errado do operador."_
 
 ### D3 — Rodízio automático
+
 Em **Unidades → Sequência de rodízio**: as barras de horas dos cinco conjuntos
 da Elevatória Banqueta ficam praticamente iguais — dispersão abaixo de 1 %
 depois de uma semana — e o contador mostra quando o líder passa a vez.
 
 ### D4 — Falha e recuperação
+
 Dispare o cenário de **sobrecarga** na Visão Geral. O relé 51 desarma o
 conjunto, sobe alarme crítico, **um conjunto parado entra sozinho no lugar** e a
 pressão do setor não cruza o mínimo da NBR 12218.
 
-> *"Isso aconteceria às três da manhã sem acordar ninguém."*
+> _"Isso aconteceria às três da manhã sem acordar ninguém."_
 
 Normalizar o cenário remove a causa, **não o desarme**: relé de sobrecorrente
 não rearma sozinho. O conjunto fica em falha até alguém apertar `REARMAR` no
@@ -125,15 +137,15 @@ e disparar o cenário na hora errada não produzia sintoma nenhum.
 
 Isto importa se alguém na plateia conhecer o sistema.
 
-| | Origem |
-|---|---|
-| Contorno do município | **Real** — malha do IBGE, código 3300100, qualidade máxima (46 polígonos, incluindo a Ilha Grande e 44 ilhas menores) |
-| Coordenadas das 9 unidades | **Reais** — fornecidas pelo SAAE, verificadas uma a uma contra a malha do IBGE |
-| Cadeia Captação → Elevatória → Reservatório da Banqueta | **Real** — a arquitetura foi corrigida conforme a operação descrita, com os 5 conjuntos da elevatória |
-| Traçado de adutoras e coletores | **Estimado** — desenhado entre as coordenadas reais para dar leitura de rede |
-| Setores de abastecimento | **Estimados** — áreas e populações plausíveis, não o cadastro do SAAE |
-| Bombas, capacidades, vazões, setpoints | **Estimados** — dimensionados para que o sistema fique realista sob carga |
-| Todas as medições | **Simuladas** — geradas pelo modelo em `src/engine/sim.js` |
+|                                                         | Origem                                                                                                                |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Contorno do município                                   | **Real** — malha do IBGE, código 3300100, qualidade máxima (46 polígonos, incluindo a Ilha Grande e 44 ilhas menores) |
+| Coordenadas das 9 unidades                              | **Reais** — fornecidas pelo SAAE, verificadas uma a uma contra a malha do IBGE                                        |
+| Cadeia Captação → Elevatória → Reservatório da Banqueta | **Real** — a arquitetura foi corrigida conforme a operação descrita, com os 5 conjuntos da elevatória                 |
+| Traçado de adutoras e coletores                         | **Estimado** — desenhado entre as coordenadas reais para dar leitura de rede                                          |
+| Setores de abastecimento                                | **Estimados** — áreas e populações plausíveis, não o cadastro do SAAE                                                 |
+| Bombas, capacidades, vazões, setpoints                  | **Estimados** — dimensionados para que o sistema fique realista sob carga                                             |
+| Todas as medições                                       | **Simuladas** — geradas pelo modelo em `src/engine/sim.js`                                                            |
 
 A interface declara isso: o rodapé traz o aviso permanente de maquete, a barra
 de estado carrega o selo `SIMULAÇÃO`, o mapa traz a nota de origem e o
@@ -213,14 +225,14 @@ de Relatórios mostra a taxa de alarmes comparada à meta da **EEMUA 191**.
 
 Seis, todos com entrada e saída em rampa suave:
 
-| Cenário | O que aparece no painel |
-|---|---|
-| Rompimento da adutora Banqueta → Centro | Pressão do Centro abaixo do mínimo, trecho piscando no mapa e no sinóptico, alarme crítico |
-| Falta de energia na Elevatória Japuíba | Pressão desaba, gerador assume em ~90 s e recupera parcialmente |
-| Cloro fora de faixa em Jacuecanga | Cloro residual abaixo de 0,2 mg/L na saída e na rede |
-| Sobrecarga em conjunto motobomba | Corrente, vibração e mancal sobem até o desarme pelo relé 51. O cenário escolhe sozinho um conjunto **que esteja girando**, então funciona a qualquer hora do dia — e o desarme só sai com rearme do operador |
-| Chuva intensa | ETEs em sobrecarga hidráulica, OD despenca, poço do Anil sobe |
-| Pico de consumo de feriado | Demanda 35 % acima, reservatórios drenando mais rápido |
+| Cenário                                 | O que aparece no painel                                                                                                                                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rompimento da adutora Banqueta → Centro | Pressão do Centro abaixo do mínimo, trecho piscando no mapa e no sinóptico, alarme crítico                                                                                                                    |
+| Falta de energia na Elevatória Japuíba  | Pressão desaba, gerador assume em ~90 s e recupera parcialmente                                                                                                                                               |
+| Cloro fora de faixa em Jacuecanga       | Cloro residual abaixo de 0,2 mg/L na saída e na rede                                                                                                                                                          |
+| Sobrecarga em conjunto motobomba        | Corrente, vibração e mancal sobem até o desarme pelo relé 51. O cenário escolhe sozinho um conjunto **que esteja girando**, então funciona a qualquer hora do dia — e o desarme só sai com rearme do operador |
+| Chuva intensa                           | ETEs em sobrecarga hidráulica, OD despenca, poço do Anil sobe                                                                                                                                                 |
+| Pico de consumo de feriado              | Demanda 35 % acima, reservatórios drenando mais rápido                                                                                                                                                        |
 
 ---
 
@@ -258,7 +270,7 @@ Todo o resto vive no **faceplate**, que abre no clique: as três fases e o
 desequilíbrio (NEMA MG-1), cos φ, kW, rpm, vibração com a faixa ISO 10816-3,
 temperatura de mancal, horímetro, e a **curva H×Q com o ponto de operação** —
 o gráfico que mais separa um HMI de bombeamento de um dashboard genérico,
-porque diz se a bomba trabalha *onde deve*, não só se está ligada.
+porque diz se a bomba trabalha _onde deve_, não só se está ligada.
 
 ### O mapa
 
@@ -268,11 +280,11 @@ correção foi estrutural — **a lista própria de localidades deixou de existi
 quem rotula é o basemap, que já traz Japuíba, Jacuecanga, Banqueta e Vila do
 Abraão com tipografia e colisão profissionais.
 
-| Camada | Fonte | Quando |
-|---|---|---|
-| Ruas | CARTO Dark Matter / Positron (XYZ, sem chave) | padrão, segue o tema |
-| Satélite | Esri World Imagery | mostra o relevo e a orla |
-| Sinóptico | contorno IBGE embutido | leitura esquemática e *fallback* |
+| Camada    | Fonte                                         | Quando                           |
+| --------- | --------------------------------------------- | -------------------------------- |
+| Ruas      | CARTO Dark Matter / Positron (XYZ, sem chave) | padrão, segue o tema             |
+| Satélite  | Esri World Imagery                            | mostra o relevo e a orla         |
+| Sinóptico | contorno IBGE embutido                        | leitura esquemática e _fallback_ |
 
 CARTO em vez do OpenStreetMap padrão porque o OSM colorido briga com um painel
 de sala de controle escuro, enquanto o Dark Matter foi desenhado exatamente
@@ -322,7 +334,7 @@ python3 tools/fetch_malha.py
 
 ## Publicando (Cloudflare Pages)
 
-*Build command* `pnpm build`, *output directory* `dist`.
+_Build command_ `pnpm build`, _output directory_ `dist`.
 
 ```bash
 pnpm build && pnpm dlx wrangler pages deploy dist

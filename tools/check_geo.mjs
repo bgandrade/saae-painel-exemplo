@@ -43,7 +43,9 @@ function localizar(lon, lat) {
 const problemas = [];
 const avisos = [];
 
-console.log(`Malha: ${MUNICIPIO.nome}/${MUNICIPIO.uf} (IBGE ${MUNICIPIO.codigo}) — ${POLIGONOS.length} polígonos`);
+console.log(
+  `Malha: ${MUNICIPIO.nome}/${MUNICIPIO.uf} (IBGE ${MUNICIPIO.codigo}) — ${POLIGONOS.length} polígonos`,
+);
 console.log(`Bbox : lat ${BBOX.minLat}..${BBOX.maxLat}  lon ${BBOX.minLon}..${BBOX.maxLon}\n`);
 
 /* ── Unidades ─────────────────────────────────────────────────────────── */
@@ -62,7 +64,9 @@ for (const u of UNIDADES) {
 
   const marca = erros.length ? 'FALHA' : ' ok  ';
   const local = onde ? `→ ${onde}` : '';
-  console.log(`  ${marca} ${u.sigla.padEnd(8)} ${u.nome.padEnd(42)} ${TIPOS[u.tipo]?.sistema ?? '?'} ${local}`);
+  console.log(
+    `  ${marca} ${u.sigla.padEnd(8)} ${u.nome.padEnd(42)} ${TIPOS[u.tipo]?.sistema ?? '?'} ${local}`,
+  );
   for (const e of erros) problemas.push(`${u.id}: ${e}`);
 }
 
@@ -73,9 +77,12 @@ for (const l of LINHAS) {
   // Adutora litorânea encostando no mar é normal; só o traçado inteiro fora
   // do município é que indica erro de digitação.
   const marca = fora === l.pontos.length ? 'FALHA' : fora > 0 ? 'aviso' : ' ok  ';
-  console.log(`  ${marca} ${l.id.padEnd(16)} ${String(l.pontos.length).padStart(2)} pontos, ${fora} fora d'água firme`);
+  console.log(
+    `  ${marca} ${l.id.padEnd(16)} ${String(l.pontos.length).padStart(2)} pontos, ${fora} fora d'água firme`,
+  );
   if (fora === l.pontos.length) problemas.push(`${l.id}: traçado inteiro fora do município`);
-  else if (fora > 0) avisos.push(`${l.id}: ${fora} vértice(s) fora do polígono (aceitável em trecho litorâneo)`);
+  else if (fora > 0)
+    avisos.push(`${l.id}: ${fora} vértice(s) fora do polígono (aceitável em trecho litorâneo)`);
 }
 
 /* ── Presets de enquadramento ─────────────────────────────────────────────
@@ -85,23 +92,32 @@ for (const l of LINHAS) {
  */
 console.log('\nPRESETS DE VISTA');
 for (const v of VISTAS) {
-  if (!v.bbox) { console.log(`   ok   ${v.id.padEnd(16)} município inteiro`); continue; }
+  if (!v.bbox) {
+    console.log(`   ok   ${v.id.padEnd(16)} município inteiro`);
+    continue;
+  }
   const { minLon, minLat, maxLon, maxLat } = v.bbox;
-  const dentro = UNIDADES.filter((u) => u.lon >= minLon && u.lon <= maxLon && u.lat >= minLat && u.lat <= maxLat);
+  const dentro = UNIDADES.filter(
+    (u) => u.lon >= minLon && u.lon <= maxLon && u.lat >= minLat && u.lat <= maxLat,
+  );
   const valido = minLon < maxLon && minLat < maxLat;
   if (!valido) problemas.push(`vista ${v.id}: bbox invertido`);
-  console.log(`  ${valido ? ' ok  ' : 'FALHA'} ${v.id.padEnd(16)} enquadra ${dentro.length} unidade(s)`);
+  console.log(
+    `  ${valido ? ' ok  ' : 'FALHA'} ${v.id.padEnd(16)} enquadra ${dentro.length} unidade(s)`,
+  );
   if (valido && dentro.length === 0) avisos.push(`vista ${v.id} não enquadra nenhuma unidade`);
 }
 
 /* ── Integridade referencial ──────────────────────────────────────────── */
 console.log('\nREFERÊNCIAS');
 for (const b of BOMBAS) {
-  if (!porId.has(b.unidadeId)) problemas.push(`bomba ${b.id}: unidadeId "${b.unidadeId}" não existe`);
+  if (!porId.has(b.unidadeId))
+    problemas.push(`bomba ${b.id}: unidadeId "${b.unidadeId}" não existe`);
 }
 const idsSetor = new Set(SETORES.map((s) => s.id));
 for (const s of SETORES) {
-  if (s.fonteId && !porId.has(s.fonteId)) problemas.push(`setor ${s.id}: fonteId "${s.fonteId}" não existe`);
+  if (s.fonteId && !porId.has(s.fonteId))
+    problemas.push(`setor ${s.id}: fonteId "${s.fonteId}" não existe`);
 }
 for (const u of UNIDADES) {
   for (const id of u.setores ?? []) {
@@ -109,13 +125,17 @@ for (const u of UNIDADES) {
   }
   for (const b of u.bacia ?? []) {
     if (!idsSetor.has(b.setor)) problemas.push(`${u.id}: bacia "${b.setor}" não existe`);
-    if (!(b.fracao > 0 && b.fracao <= 1)) problemas.push(`${u.id}: fração de bacia inválida em "${b.setor}"`);
+    if (!(b.fracao > 0 && b.fracao <= 1))
+      problemas.push(`${u.id}: fração de bacia inválida em "${b.setor}"`);
   }
-  if (u.recalcaPara && !porId.has(u.recalcaPara)) problemas.push(`${u.id}: recalcaPara "${u.recalcaPara}" não existe`);
+  if (u.recalcaPara && !porId.has(u.recalcaPara))
+    problemas.push(`${u.id}: recalcaPara "${u.recalcaPara}" não existe`);
 }
 const dup = UNIDADES.map((u) => u.id).filter((id, i, a) => a.indexOf(id) !== i);
 for (const d of dup) problemas.push(`id de unidade duplicado: ${d}`);
-console.log(`  ${BOMBAS.length} bombas, ${SETORES.length} setores, ${UNIDADES.length} unidades verificadas`);
+console.log(
+  `  ${BOMBAS.length} bombas, ${SETORES.length} setores, ${UNIDADES.length} unidades verificadas`,
+);
 
 /* ── Resultado ────────────────────────────────────────────────────────── */
 console.log('');
@@ -125,4 +145,6 @@ if (problemas.length) {
   for (const p of problemas) console.error(`  - ${p}`);
   process.exit(1);
 }
-console.log(`Tudo certo: ${UNIDADES.length} unidades dentro do município, referências consistentes.`);
+console.log(
+  `Tudo certo: ${UNIDADES.length} unidades dentro do município, referências consistentes.`,
+);

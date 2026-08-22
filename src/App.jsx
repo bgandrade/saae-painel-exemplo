@@ -11,8 +11,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ProvedorSimulacao, useSim } from './hooks/useSimulacao.jsx';
 import { ProvedorUI, useRota, useUI } from './hooks/useUI.jsx';
-import { hora, dataLonga, num } from './ui/formato.js';
-import { Chip, Vazio } from './ui/componentes.jsx';
+import { hora, dataLonga } from './ui/formato.js';
+import { Vazio } from './ui/componentes.jsx';
 import { Drawer } from './ui/Overlay.jsx';
 import LinhaAlarme from './ui/LinhaAlarme.jsx';
 import Icone from './ui/Icone.jsx';
@@ -59,7 +59,7 @@ export default function App() {
 }
 
 function Painel() {
-  const { sim, alarmes, tique } = useSim();
+  const { sim, alarmes } = useSim();
   const { unidadeAberta, bombaAberta } = useUI();
   const rota = useRota('visao-geral');
   const view = VIEWS.find((v) => v.id === rota) ?? VIEWS[0];
@@ -79,7 +79,11 @@ function Painel() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = tema === 'light' ? 'light' : 'dark';
-    try { localStorage.setItem(CHAVE_TEMA, tema); } catch { /* modo privativo */ }
+    try {
+      localStorage.setItem(CHAVE_TEMA, tema);
+    } catch {
+      /* modo privativo */
+    }
   }, [tema]);
 
   useEffect(() => {
@@ -96,7 +100,9 @@ function Painel() {
   useEffect(() => {
     if (!rotacao) return;
     const id = setInterval(() => {
-      const i = VIEWS.findIndex((v) => v.id === (location.hash.match(/^#\/([\w-]+)/)?.[1] ?? 'visao-geral'));
+      const i = VIEWS.findIndex(
+        (v) => v.id === (location.hash.match(/^#\/([\w-]+)/)?.[1] ?? 'visao-geral'),
+      );
       location.hash = `#/${VIEWS[(i + 1) % VIEWS.length].id}`;
     }, 20000);
     return () => clearInterval(id);
@@ -125,7 +131,9 @@ function Painel() {
     <div className="app">
       <header className="topbar">
         <div className="marca">
-          <div className="marca-logo"><Icone nome="gota" tamanho={16} style={{ color: '#fff' }} /></div>
+          <div className="marca-logo">
+            <Icone nome="gota" tamanho={16} style={{ color: '#fff' }} />
+          </div>
           <div className="marca-txt">
             <div className="marca-sigla">SAAE Angra dos Reis</div>
             <div className="marca-sub">Centro de Controle Operacional</div>
@@ -135,12 +143,17 @@ function Painel() {
         <nav className="abas" aria-label="Telas do painel">
           {VIEWS.map((v) => (
             <a
-              key={v.id} className="aba" href={`#/${v.id}`}
+              key={v.id}
+              className="aba"
+              href={`#/${v.id}`}
               aria-current={v.id === view.id ? 'page' : undefined}
             >
               {v.sistema && <i className={`aba-pt ${v.sistema}`} />}
               {v.nome}
-              <span className="aba-nivel oculta-quiosque" title={`Nível ${v.nivel} da hierarquia ISA-101`}>
+              <span
+                className="aba-nivel oculta-quiosque"
+                title={`Nível ${v.nivel} da hierarquia ISA-101`}
+              >
                 N{v.nivel}
               </span>
             </a>
@@ -148,12 +161,21 @@ function Painel() {
         </nav>
 
         <div className="topbar-dir">
-          <div className="segmentado oculta-quiosque" role="group" aria-label="Velocidade da simulação">
+          <div
+            className="segmentado oculta-quiosque"
+            role="group"
+            aria-label="Velocidade da simulação"
+          >
             {VELOCIDADES.map(({ v, rot, titulo }) => (
               <button
-                key={v} type="button" title={titulo}
+                key={v}
+                type="button"
+                title={titulo}
                 aria-pressed={sim.velocidade === v}
-                onClick={() => { sim.velocidade = v; forcar((x) => x + 1); }}
+                onClick={() => {
+                  sim.velocidade = v;
+                  forcar((x) => x + 1);
+                }}
               >
                 {rot}
               </button>
@@ -164,7 +186,8 @@ function Painel() {
             className={`badge-alarmes${c.critico ? ' tem-critico' : c.alerta ? ' tem-alerta' : ''}${
               c.critico && c.naoReconhecidos ? ' pulsa' : ''
             }`}
-            type="button" aria-label={`${c.total} alarmes ativos`}
+            type="button"
+            aria-label={`${c.total} alarmes ativos`}
             onClick={() => setPainelAlarmes(true)}
           >
             <Icone nome="alerta" tamanho={13} />
@@ -177,14 +200,19 @@ function Painel() {
           </div>
 
           <button
-            className="btn btn-icone" type="button" aria-label="Alternar tema"
+            className="btn btn-icone"
+            type="button"
+            aria-label="Alternar tema"
             onClick={() => setTema((t) => (t === 'dark' ? 'light' : 'dark'))}
           >
             <Icone nome={tema === 'dark' ? 'sol' : 'lua'} />
           </button>
           <button
-            className="btn btn-icone" type="button" title="Modo quiosque — tecla F"
-            aria-label="Modo quiosque" onClick={() => setQuiosque((q) => !q)}
+            className="btn btn-icone"
+            type="button"
+            title="Modo quiosque — tecla F"
+            aria-label="Modo quiosque"
+            onClick={() => setQuiosque((q) => !q)}
           >
             <Icone nome="tela" />
           </button>
@@ -198,9 +226,14 @@ function Painel() {
         </span>
         <span className="estado-item">
           <i className="led on" />
-          CLPs <b>{sim.clps.length}/{sim.clps.length} online</b>
+          CLPs{' '}
+          <b>
+            {sim.clps.length}/{sim.clps.length} online
+          </b>
         </span>
-        <span className="estado-item">Comunicação <b>estável · 0 falhas em 24 h</b></span>
+        <span className="estado-item">
+          Comunicação <b>estável · 0 falhas em 24 h</b>
+        </span>
         <span className="estado-item">
           <i className={`led ${emManual ? 'atencao' : ''}`} />
           Conjuntos em manual <b>{emManual}</b>
@@ -209,11 +242,18 @@ function Painel() {
           <i className={`led ${malhasFora ? 'atencao' : ''}`} />
           Malhas fora de serviço <b>{malhasFora}</b>
         </span>
-        <span className="estado-item oculta-quiosque">Operador <b>{sim.operador}</b></span>
+        <span className="estado-item oculta-quiosque">
+          Operador <b>{sim.operador}</b>
+        </span>
         <span className="estado-item oculta-quiosque">
           Sincronismo <b>{hora(sim.tempo)}</b>
         </span>
-        {rotacao && <span className="estado-item"><i className="led on" />Rotação automática</span>}
+        {rotacao && (
+          <span className="estado-item">
+            <i className="led on" />
+            Rotação automática
+          </span>
+        )}
         <span className="selo-simulacao">
           <Icone nome="alerta" tamanho={11} />
           SIMULAÇÃO
@@ -229,7 +269,9 @@ function Painel() {
           <Icone nome="alerta" tamanho={11} />
           DADOS SIMULADOS — MAQUETE DEMONSTRATIVA
         </span>
-        <span className="rodape-item oculta-quiosque">Contorno municipal: IBGE (malha 3300100)</span>
+        <span className="rodape-item oculta-quiosque">
+          Contorno municipal: IBGE (malha 3300100)
+        </span>
         <span className="rodape-item oculta-quiosque">
           Unidades: coordenadas SAAE · rede, setores e conjuntos estimados
         </span>
@@ -241,7 +283,8 @@ function Painel() {
 
       {painelAlarmes && (
         <Drawer
-          titulo="Alarmes ativos" sub="Ordenados por severidade e horário"
+          titulo="Alarmes ativos"
+          sub="Ordenados por severidade e horário"
           aoFechar={() => setPainelAlarmes(false)}
         >
           <PainelAlarmes />
@@ -266,17 +309,28 @@ function PainelAlarmes() {
       <div className="linha" style={{ marginBottom: 'var(--e3)' }}>
         <button
           className="btn"
-          onClick={() => { alarmes.reconhecerTodos(); forcar((x) => x + 1); }}
+          onClick={() => {
+            alarmes.reconhecerTodos();
+            forcar((x) => x + 1);
+          }}
         >
           Reconhecer todos
         </button>
         <span className="mut">{ativos.length} ativo(s)</span>
       </div>
-      <div className="alarmes" style={{ border: '1px solid var(--borda)', borderRadius: 'var(--raio)' }}>
+      <div
+        className="alarmes"
+        style={{ border: '1px solid var(--borda)', borderRadius: 'var(--raio)' }}
+      >
         {ativos.map((a) => (
           <LinhaAlarme
-            key={a.chave} alarme={a} agora={sim.tempo}
-            aoReconhecer={(ch) => { alarmes.reconhecer(ch); forcar((x) => x + 1); }}
+            key={a.chave}
+            alarme={a}
+            agora={sim.tempo}
+            aoReconhecer={(ch) => {
+              alarmes.reconhecer(ch);
+              forcar((x) => x + 1);
+            }}
           />
         ))}
       </div>

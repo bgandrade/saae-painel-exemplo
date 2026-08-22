@@ -11,7 +11,10 @@ function fmt(casas) {
   if (!cacheFmt.has(casas)) {
     cacheFmt.set(
       casas,
-      new Intl.NumberFormat('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas })
+      new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: casas,
+        maximumFractionDigits: casas,
+      }),
     );
   }
   return cacheFmt.get(casas);
@@ -21,10 +24,23 @@ export const num = (v, casas = 1) => (Number.isFinite(v) ? fmt(casas).format(v) 
 export const pct = (v, casas = 0) => `${num(v, casas)} %`;
 export const inteiro = (v) => (Number.isFinite(v) ? fmt(0).format(v) : '—');
 
-const fmtHora = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+const fmtHora = new Intl.DateTimeFormat('pt-BR', {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+});
 const fmtHoraCurta = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
-const fmtData = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-const fmtDataCurta = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+const fmtData = new Intl.DateTimeFormat('pt-BR', {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+const fmtDataCurta = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+});
 
 export const hora = (t) => fmtHora.format(new Date(t));
 export const horaCurta = (t) => fmtHoraCurta.format(new Date(t));
@@ -68,10 +84,15 @@ export function estadoFaixa(valor, { min = -Infinity, max = Infinity } = {}, fol
 }
 
 /** Estado por dois limiares crescentes (vibração, temperatura, corrente). */
-export const estadoLimiar = (v, alerta, critico) => (v > critico ? 'critico' : v > alerta ? 'atencao' : 'ok');
+export const estadoLimiar = (v, alerta, critico) =>
+  v > critico ? 'critico' : v > alerta ? 'atencao' : 'ok';
 
 export const ROTULO_ESTADO = {
-  ok: 'Normal', atencao: 'Atenção', serio: 'Grave', critico: 'Crítico', parada: 'Parada',
+  ok: 'Normal',
+  atencao: 'Atenção',
+  serio: 'Grave',
+  critico: 'Crítico',
+  parada: 'Parada',
 };
 
 export const ROTULO_BOMBA = {

@@ -70,15 +70,24 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     // camada "sinóptico" e some sob os tiles nas demais.
     const terra = L.layerGroup().addTo(m);
     for (const poly of POLIGONOS) {
-      L.polygon(poly.map(([lon, lat]) => [lat, lon]), {
-        className: 'contorno-ibge',
-        color: 'var(--mapa-costa)', weight: 1,
-        fillColor: 'var(--mapa-terra)', fillOpacity: 1, interactive: false,
-      }).addTo(terra);
+      L.polygon(
+        poly.map(([lon, lat]) => [lat, lon]),
+        {
+          className: 'contorno-ibge',
+          color: 'var(--mapa-costa)',
+          weight: 1,
+          fillColor: 'var(--mapa-terra)',
+          fillOpacity: 1,
+          interactive: false,
+        },
+      ).addTo(terra);
     }
     refs.current.terra = terra;
 
-    return () => { m.remove(); mapa.current = null; };
+    return () => {
+      m.remove();
+      mapa.current = null;
+    };
   }, []);
 
   /* ── troca de camada de base, com queda automática ── */
@@ -86,13 +95,20 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     const m = mapa.current;
     if (!m) return;
     const def = CAMADAS.find((c) => c.id === camada);
-    if (refs.current.base) { m.removeLayer(refs.current.base); refs.current.base = null; }
+    if (refs.current.base) {
+      m.removeLayer(refs.current.base);
+      refs.current.base = null;
+    }
 
     // Sinóptico: o contorno do IBGE É o mapa, com o mar como fundo.
-    refs.current.terra.getLayers().forEach((p) => p.setStyle({ fillOpacity: def.online ? 0 : 1, opacity: def.online ? 0.35 : 1 }));
+    refs.current.terra
+      .getLayers()
+      .forEach((p) =>
+        p.setStyle({ fillOpacity: def.online ? 0 : 1, opacity: def.online ? 0.35 : 1 }),
+      );
     div.current.style.background = def.online ? '#000' : 'var(--mapa-mar)';
 
-    if (!def.online) { setOffline(false); return; }
+    if (!def.online) return;
 
     let carregou = false;
     const tl = L.tileLayer(def.url(tema), {
@@ -102,17 +118,26 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       detectRetina: true,
       crossOrigin: true,
     });
-    tl.on('tileload', () => { carregou = true; setOffline(false); });
+    tl.on('tileload', () => {
+      carregou = true;
+      setOffline(false);
+    });
     tl.addTo(m);
     refs.current.base = tl;
 
     // Se nada carregar dentro da janela, cai para o sinóptico e avisa. É a
     // diferença entre uma apresentação que continua e uma que trava.
     const id = setTimeout(() => {
-      if (!carregou) { setOffline(true); setCamada('sinoptico'); }
+      if (!carregou) {
+        setOffline(true);
+        setCamada('sinoptico');
+      }
     }, ESPERA_TILES_MS);
 
-    return () => { clearTimeout(id); if (m.hasLayer(tl)) m.removeLayer(tl); };
+    return () => {
+      clearTimeout(id);
+      if (m.hasLayer(tl)) m.removeLayer(tl);
+    };
   }, [camada, tema]);
 
   /* ── enquadramento ── */
@@ -132,24 +157,35 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     for (const l of r.linhas.values()) m.removeLayer(l);
     for (const s of r.setores.values()) m.removeLayer(s);
     for (const mk of r.marcadores.values()) m.removeLayer(mk);
-    r.linhas.clear(); r.setores.clear(); r.marcadores.clear();
+    r.linhas.clear();
+    r.setores.clear();
+    r.marcadores.clear();
 
     for (const s of SETORES) {
       if (!s.centro || sistema === 'esgoto') continue;
       const c = L.circle([s.centro[1], s.centro[0]], {
         radius: (s.raioKm ?? 2) * 1000,
-        color: 'var(--ok)', weight: 1, opacity: 0.5, fillOpacity: 0.07, interactive: false,
+        color: 'var(--ok)',
+        weight: 1,
+        opacity: 0.5,
+        fillOpacity: 0.07,
+        interactive: false,
       }).addTo(m);
       r.setores.set(s.id, c);
     }
 
     for (const l of LINHAS) {
       if (sistema !== 'ambos' && l.sistema !== sistema) continue;
-      const pl = L.polyline(l.pontos.map(([lon, lat]) => [lat, lon]), {
-        color: l.sistema === 'esgoto' ? 'var(--esgoto)' : 'var(--agua)',
-        weight: Math.max(2, (l.diametroMm ?? 250) / 110),
-        opacity: 0.85, lineCap: 'round', lineJoin: 'round',
-      }).addTo(m);
+      const pl = L.polyline(
+        l.pontos.map(([lon, lat]) => [lat, lon]),
+        {
+          color: l.sistema === 'esgoto' ? 'var(--esgoto)' : 'var(--agua)',
+          weight: Math.max(2, (l.diametroMm ?? 250) / 110),
+          opacity: 0.85,
+          lineCap: 'round',
+          lineJoin: 'round',
+        },
+      ).addTo(m);
       pl.bindTooltip(`${l.nome}<br><b>DN ${l.diametroMm} mm</b>`, { sticky: true });
       r.linhas.set(l.id, pl);
     }
@@ -187,7 +223,8 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     const comAlarme = new Set();
     for (const a of alarmes.ativos) {
       for (const u of UNIDADES) {
-        if (a.info.origem?.includes(u.nome) || a.info.origem?.includes(u.sigla)) comAlarme.add(u.id);
+        if (a.info.origem?.includes(u.nome) || a.info.origem?.includes(u.sigla))
+          comAlarme.add(u.id);
       }
     }
 
@@ -205,7 +242,8 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       if (res) txt = `${num(res.nivelPct, 0)} %`;
       else if (poco) txt = `${num(poco.nivelPct, 0)} %`;
       else if (ete) txt = `${num(ete.afluenteLs, 0)} L/s`;
-      if (bombas.length) txt += `${txt ? ' · ' : ''}${bombas.filter((b) => b.ligada).length}/${bombas.length}`;
+      if (bombas.length)
+        txt += `${txt ? ' · ' : ''}${bombas.filter((b) => b.ligada).length}/${bombas.length}`;
       if (alvo.textContent !== txt) alvo.textContent = txt;
 
       const temAlarme = comAlarme.has(id);
@@ -235,7 +273,11 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       const rompida = l.id === 'ad-bqt-centro' && sim.intensidade('rompimento') > 0.25;
       pl.setStyle({
         opacity: rompida ? 1 : fluindo ? 0.85 : 0.3,
-        color: rompida ? 'var(--critico)' : l.sistema === 'esgoto' ? 'var(--esgoto)' : 'var(--agua)',
+        color: rompida
+          ? 'var(--critico)'
+          : l.sistema === 'esgoto'
+            ? 'var(--esgoto)'
+            : 'var(--agua)',
         dashArray: rompida ? '8 5' : fluindo ? null : '3 6',
       });
     }
@@ -248,21 +290,43 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       <div className="mapa-controles">
         <div className="segmentado" role="group" aria-label="Camada de base">
           {CAMADAS.map((c) => (
-            <button key={c.id} type="button" aria-pressed={camada === c.id} onClick={() => setCamada(c.id)}>
+            <button
+              key={c.id}
+              type="button"
+              aria-pressed={camada === c.id}
+              onClick={() => {
+                setOffline(false);
+                setCamada(c.id);
+              }}
+            >
               {c.nome}
             </button>
           ))}
         </div>
         <div className="segmentado" role="group" aria-label="Enquadramento">
           {VISTAS.map((v) => (
-            <button key={v.id} type="button" aria-pressed={vista === v.id} onClick={() => setVista(v.id)}>
+            <button
+              key={v.id}
+              type="button"
+              aria-pressed={vista === v.id}
+              onClick={() => setVista(v.id)}
+            >
               {v.nome}
             </button>
           ))}
         </div>
         <div className="segmentado" role="group" aria-label="Filtro de sistema">
-          {[['ambos', 'Ambos'], ['agua', 'Água'], ['esgoto', 'Esgoto']].map(([id, nome]) => (
-            <button key={id} type="button" aria-pressed={sistema === id} onClick={() => setSistema(id)}>
+          {[
+            ['ambos', 'Ambos'],
+            ['agua', 'Água'],
+            ['esgoto', 'Esgoto'],
+          ].map(([id, nome]) => (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={sistema === id}
+              onClick={() => setSistema(id)}
+            >
               {nome}
             </button>
           ))}
@@ -276,7 +340,8 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
               <path
                 d={FORMAS[tipo](5)}
                 fill={tipo === 'ete' || tipo === 'eee' ? 'var(--esgoto)' : 'var(--agua)'}
-                stroke="var(--superficie)" strokeWidth="1"
+                stroke="var(--superficie)"
+                strokeWidth="1"
               />
             </svg>
             {rot}
@@ -284,9 +349,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
         ))}
       </div>
 
-      {offline && (
-        <div className="mapa-offline">Sem conexão — exibindo contorno IBGE</div>
-      )}
+      {offline && <div className="mapa-offline">Sem conexão — exibindo contorno IBGE</div>}
       <div className="mapa-nota">Contorno: IBGE · rede e setores estimados</div>
     </div>
   );

@@ -20,12 +20,18 @@ export function Card({ titulo, meta, children, classe = '', pad = true, id }) {
 export function Kpi({ rotulo, valor, unidade, sub, estado, spark }) {
   return (
     <div className={`kpi${estado && estado !== 'ok' ? ` estado-${estado}` : ''}`}>
-      <div className="kpi-rotulo" title={rotulo}>{rotulo}</div>
+      <div className="kpi-rotulo" title={rotulo}>
+        {rotulo}
+      </div>
       <div className="kpi-linha">
         <span className="kpi-valor">{valor}</span>
         {unidade && <span className="kpi-unidade">{unidade}</span>}
       </div>
-      {sub && <div className="kpi-sub" title={sub}>{sub}</div>}
+      {sub && (
+        <div className="kpi-sub" title={sub}>
+          {sub}
+        </div>
+      )}
       {spark && <div className="kpi-spark">{spark}</div>}
     </div>
   );
@@ -79,16 +85,22 @@ export function FaixaNormativa({ nome, valor, limite, casas = 2, unidade = '' })
       <div className="faixa-topo">
         <span className="faixa-nome">{nome}</span>
         <span className={`faixa-valor${fora ? ' fora' : ''}`}>
-          {num(valor, casas)}{unidade ? ` ${unidade}` : ''}
+          {num(valor, casas)}
+          {unidade ? ` ${unidade}` : ''}
         </span>
       </div>
       <div className="faixa-trilho">
-        <i className="faixa-ok-zona" style={{ left: posicao(min), right: `calc(100% - ${posicao(max)})` }} />
+        <i
+          className="faixa-ok-zona"
+          style={{ left: posicao(min), right: `calc(100% - ${posicao(max)})` }}
+        />
         <i className={`faixa-marcador${fora ? ' fora' : ''}`} style={{ left: posicao(valor) }} />
       </div>
       <div className="faixa-legenda">
         <span>{num(escMin, casas)}</span>
-        <span>faixa {num(min, casas)}–{num(max, casas)}</span>
+        <span>
+          faixa {num(min, casas)}–{num(max, casas)}
+        </span>
         <span>{num(escMax, casas)}</span>
       </div>
     </div>
@@ -109,7 +121,9 @@ export function Segmentado({ opcoes, valor, aoMudar, rotulo }) {
     <div className="segmentado" role="group" aria-label={rotulo}>
       {opcoes.map((o) => (
         <button
-          key={o.id} type="button" title={o.titulo}
+          key={o.id}
+          type="button"
+          title={o.titulo}
           aria-pressed={o.id === valor}
           onClick={() => aoMudar(o.id)}
         >
@@ -124,11 +138,17 @@ export function Segmentado({ opcoes, valor, aoMudar, rotulo }) {
 export function Tanque({ nivelPct, marcas = [], esgoto = false, altura }) {
   const estado = nivelPct < 10 ? 'baixo' : nivelPct < 20 ? 'atencao' : '';
   return (
-    <div className={`tanque${esgoto ? ' tanque-esgoto' : ''}`} style={altura ? { height: altura } : undefined}>
+    <div
+      className={`tanque${esgoto ? ' tanque-esgoto' : ''}`}
+      style={altura ? { height: altura } : undefined}
+    >
       {marcas.map((m) => (
         <i key={m.rot} className="tanque-marca" data-rot={m.rot} style={{ bottom: `${m.pct}%` }} />
       ))}
-      <i className={`tanque-agua ${estado}`} style={{ height: `${Math.max(0, Math.min(100, nivelPct))}%` }} />
+      <i
+        className={`tanque-agua ${estado}`}
+        style={{ height: `${Math.max(0, Math.min(100, nivelPct))}%` }}
+      />
       <div className="tanque-rot">{num(nivelPct, 0)} %</div>
     </div>
   );

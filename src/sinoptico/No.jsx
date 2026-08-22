@@ -30,8 +30,13 @@ export default function No({ spec }) {
 
   if (spec.tipo === 'externo') {
     return (
-      <div className="no" style={{ left: `${spec.x}%`, top: `${spec.y}%`, borderStyle: 'dashed', cursor: 'default' }}>
-        <div className="no-cab"><span className="no-sigla">{spec.rotulo}</span></div>
+      <div
+        className="no"
+        style={{ left: `${spec.x}%`, top: `${spec.y}%`, borderStyle: 'dashed', cursor: 'default' }}
+      >
+        <div className="no-cab">
+          <span className="no-sigla">{spec.rotulo}</span>
+        </div>
         <div className="no-tipo">{spec.sub}</div>
       </div>
     );
@@ -44,16 +49,36 @@ export default function No({ spec }) {
     const est = p < LIMITES.pressao.min ? 'critico' : p < 15 ? 'atencao' : '';
     const semTel = s.def.semTelemetria;
     return (
-      <div className={`no ${est}`} style={{ left: `${spec.x}%`, top: `${spec.y}%`, cursor: 'default' }}>
-        <div className="no-cab"><span className="no-sigla">{s.def.nomeCurto}</span></div>
-        <div className="no-tipo">{spec.papel === 'bacia' ? 'Bacia de esgotamento' : 'Setor de abastecimento'}</div>
+      <div
+        className={`no ${est}`}
+        style={{ left: `${spec.x}%`, top: `${spec.y}%`, cursor: 'default' }}
+      >
+        <div className="no-cab">
+          <span className="no-sigla">{s.def.nomeCurto}</span>
+        </div>
+        <div className="no-tipo">
+          {spec.papel === 'bacia' ? 'Bacia de esgotamento' : 'Setor de abastecimento'}
+        </div>
         {spec.papel === 'bacia' ? (
-          <div className="no-linha"><span>População</span><b>{num(s.def.populacao / 1000, 1)} mil</b></div>
+          <div className="no-linha">
+            <span>População</span>
+            <b>{num(s.def.populacao / 1000, 1)} mil</b>
+          </div>
         ) : (
-          <div className="no-valor"><b>{num(p, 1)}</b><small>mca</small></div>
+          <div className="no-valor">
+            <b>{num(p, 1)}</b>
+            <small>mca</small>
+          </div>
         )}
-        <div className="no-linha"><span>Consumo</span><b>{num(s.consumoLs, 1)} L/s</b></div>
-        {semTel && <div className="no-tipo" style={{ color: 'var(--atencao)' }}>sem telemetria</div>}
+        <div className="no-linha">
+          <span>Consumo</span>
+          <b>{num(s.consumoLs, 1)} L/s</b>
+        </div>
+        {semTel && (
+          <div className="no-tipo" style={{ color: 'var(--atencao)' }}>
+            sem telemetria
+          </div>
+        )}
       </div>
     );
   }
@@ -90,37 +115,70 @@ export default function No({ spec }) {
 
       {res && (
         <>
-          <div className="no-valor"><b>{num(res.nivelPct, 0)}</b><small>% · {num(res.volumeM3, 0)} m³</small></div>
+          <div className="no-valor">
+            <b>{num(res.nivelPct, 0)}</b>
+            <small>% · {num(res.volumeM3, 0)} m³</small>
+          </div>
           <BarraNivel pct={res.nivelPct} marcas={malha ? [malha.ligaPct, malha.desligaPct] : []} />
-          <div className="no-linha"><span>Entrada</span><b>{num(res.entradaLs, 1)} L/s</b></div>
-          <div className="no-linha"><span>Saída</span><b>{num(res.saidaLs, 1)} L/s</b></div>
+          <div className="no-linha">
+            <span>Entrada</span>
+            <b>{num(res.entradaLs, 1)} L/s</b>
+          </div>
+          <div className="no-linha">
+            <span>Saída</span>
+            <b>{num(res.saidaLs, 1)} L/s</b>
+          </div>
         </>
       )}
 
       {poco && (
         <>
-          <div className="no-valor"><b>{num(poco.nivelPct, 0)}</b><small>% do poço</small></div>
-          <BarraNivel pct={poco.nivelPct} marcas={malha ? [malha.desligaPct, malha.ligaPct] : []} esgoto />
-          <div className="no-linha"><span>Afluente</span><b>{num(poco.afluenteLs, 1)} L/s</b></div>
+          <div className="no-valor">
+            <b>{num(poco.nivelPct, 0)}</b>
+            <small>% do poço</small>
+          </div>
+          <BarraNivel
+            pct={poco.nivelPct}
+            marcas={malha ? [malha.desligaPct, malha.ligaPct] : []}
+            esgoto
+          />
+          <div className="no-linha">
+            <span>Afluente</span>
+            <b>{num(poco.afluenteLs, 1)} L/s</b>
+          </div>
         </>
       )}
 
       {ete && (
         <>
-          <div className="no-valor"><b>{num(ete.afluenteLs, 1)}</b><small>L/s afluente</small></div>
-          <div className="no-linha"><span>Carga</span><b>{num(ete.cargaPct, 0)} %</b></div>
-          <div className="no-linha"><span>Remoção DBO</span><b>{num(ete.remocaoDbo * 100, 0)} %</b></div>
+          <div className="no-valor">
+            <b>{num(ete.afluenteLs, 1)}</b>
+            <small>L/s afluente</small>
+          </div>
+          <div className="no-linha">
+            <span>Carga</span>
+            <b>{num(ete.cargaPct, 0)} %</b>
+          </div>
+          <div className="no-linha">
+            <span>Remoção DBO</span>
+            <b>{num(ete.remocaoDbo * 100, 0)} %</b>
+          </div>
         </>
       )}
 
       {bombas.length > 0 && (
         <div className="no-linha">
           <span>Conjuntos</span>
-          <b>{ligadas}/{bombas.length} operando</b>
+          <b>
+            {ligadas}/{bombas.length} operando
+          </b>
         </div>
       )}
       {!res && !poco && !ete && bombas.length > 0 && (
-        <div className="no-linha"><span>Recalque</span><b>{num(sim.recalques.get(u.id) ?? bombas.reduce((s, b) => s + b.vazaoLs, 0), 1)} L/s</b></div>
+        <div className="no-linha">
+          <span>Recalque</span>
+          <b>{num(sim.recalques.get(u.id) ?? bombas.reduce((s, b) => s + b.vazaoLs, 0), 1)} L/s</b>
+        </div>
       )}
     </button>
   );

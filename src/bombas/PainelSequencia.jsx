@@ -39,13 +39,19 @@ export default function PainelSequencia({ unidade: u }) {
         </Chip>
         <span className="espaco" />
         <span className="mut" style={{ fontSize: 'var(--t-xs)' }}>
-          {troca == null ? 'sem substituta disponível' : `próxima troca de líder em ${duracao(troca)}`}
+          {troca == null
+            ? 'sem substituta disponível'
+            : `próxima troca de líder em ${duracao(troca)}`}
         </span>
       </div>
 
       <div className="horimetro-barras">
         {bombas.map((b) => (
-          <div className="hb" key={b.id} role="button" tabIndex={0}
+          <div
+            className="hb"
+            key={b.id}
+            role="button"
+            tabIndex={0}
             onClick={() => abrirBomba(b.id)}
             onKeyDown={(e) => e.key === 'Enter' && abrirBomba(b.id)}
             style={{ cursor: 'pointer' }}
@@ -53,15 +59,22 @@ export default function PainelSequencia({ unidade: u }) {
             <span>
               <b>{b.id.split('-').slice(-2).join('-')}</b>
               <br />
-              <span className="mut" style={{ fontSize: 9 }}>{papeis.get(b.id)}</span>
+              <span className="mut" style={{ fontSize: 9 }}>
+                {papeis.get(b.id)}
+              </span>
             </span>
-            <div className="hb-trilho" title={`${num(b.horasRodizio, 1)} h no totalizador de rodízio`}>
+            <div
+              className="hb-trilho"
+              title={`${num(b.horasRodizio, 1)} h no totalizador de rodízio`}
+            >
               <i style={{ width: `${(b.horasRodizio / maxH) * 100}%` }} />
             </div>
             <span className="hb-val">
               {num(b.horasRodizio, 1)} h
               <br />
-              <span className="mut" style={{ fontWeight: 400, fontSize: 9 }}>{b.partidasHoje} part.</span>
+              <span className="mut" style={{ fontWeight: 400, fontSize: 9 }}>
+                {b.partidasHoje} part.
+              </span>
             </span>
           </div>
         ))}
@@ -70,7 +83,10 @@ export default function PainelSequencia({ unidade: u }) {
       <table className="tabela compacta">
         <thead>
           <tr>
-            <th>Conjunto</th><th>Papel</th><th className="n">Horímetro de vida</th><th className="n">Campanha</th>
+            <th>Conjunto</th>
+            <th>Papel</th>
+            <th className="n">Horímetro de vida</th>
+            <th className="n">Campanha</th>
           </tr>
         </thead>
         <tbody>
@@ -87,8 +103,8 @@ export default function PainelSequencia({ unidade: u }) {
 
       <p className="nota">
         O <b>totalizador de rodízio</b> é o que ordena a fila de entrada: parte sempre o conjunto
-        que acumulou menos horas. É por isso que ele se iguala sozinho ao longo dos dias, enquanto
-        o horímetro de vida — que traz a idade de cada bomba desde a instalação — continua diferente.
+        que acumulou menos horas. É por isso que ele se iguala sozinho ao longo dos dias, enquanto o
+        horímetro de vida — que traz a idade de cada bomba desde a instalação — continua diferente.
       </p>
     </div>
   );

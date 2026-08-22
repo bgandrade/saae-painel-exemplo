@@ -23,9 +23,17 @@ export default function LinhaAlarme({ alarme: a, agora, aoReconhecer }) {
       <div className="alarme-dir">
         <span>{desde(a.desde, agora)}</span>
         {a.reconhecido ? (
-          <Chip estado="ok" pequeno>Reconhecido</Chip>
+          <Chip estado="ok" pequeno>
+            Reconhecido
+          </Chip>
         ) : (
-          <button className="btn" onClick={(e) => { e.stopPropagation(); aoReconhecer?.(a.chave); }}>
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              aoReconhecer?.(a.chave);
+            }}
+          >
             Reconhecer
           </button>
         )}

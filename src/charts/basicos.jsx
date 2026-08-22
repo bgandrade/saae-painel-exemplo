@@ -15,9 +15,24 @@ export function Sparkline({ t, v, cor = 'var(--serie-1)', altura = 24, area = tr
   const ey = escala(ymin, ymax, altura - 1, 1);
   const d = caminho(t, v, ex, ey);
   return (
-    <svg className="gr" viewBox={`0 0 ${L} ${altura}`} height={altura} preserveAspectRatio="none" aria-hidden="true">
-      {area && <path d={`${d}L${L} ${altura}L0 ${altura}Z`} fill={cor} opacity="0.14" stroke="none" />}
-      <path d={d} fill="none" stroke={cor} strokeWidth="1.5" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+    <svg
+      className="gr"
+      viewBox={`0 0 ${L} ${altura}`}
+      height={altura}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      {area && (
+        <path d={`${d}L${L} ${altura}L0 ${altura}Z`} fill={cor} opacity="0.14" stroke="none" />
+      )}
+      <path
+        d={d}
+        fill="none"
+        stroke={cor}
+        strokeWidth="1.5"
+        vectorEffect="non-scaling-stroke"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -30,8 +45,15 @@ export function Sparkline({ t, v, cor = 'var(--serie-1)', altura = 24, area = tr
  * qual é a corrente de placa daquele motor.
  */
 export function Gauge({
-  valor, min = 0, max = 100, faixaOk, rotulo, unidade = '', casas = 0,
-  cor = 'var(--serie-1)', tamanho = 96,
+  valor,
+  min = 0,
+  max = 100,
+  faixaOk,
+  rotulo,
+  unidade = '',
+  casas = 0,
+  cor = 'var(--serie-1)',
+  tamanho = 96,
 }) {
   const A0 = Math.PI * 0.72;
   const A1 = Math.PI * 2.28;
@@ -43,16 +65,41 @@ export function Gauge({
   return (
     <div className="gauge-wrap">
       <div style={{ position: 'relative', lineHeight: 0 }}>
-        <svg className="gauge" viewBox={`0 0 ${tamanho} ${tamanho}`} width={tamanho} height={tamanho} aria-hidden="true">
+        <svg
+          className="gauge"
+          viewBox={`0 0 ${tamanho} ${tamanho}`}
+          width={tamanho}
+          height={tamanho}
+          aria-hidden="true"
+        >
           <path className="trilha" d={arco(c, c, r, A0, A1)} fill="none" strokeWidth="7" />
           {faixaOk && (
-            <path className="faixa-ok" d={arco(c, c, r, ang(faixaOk.min), ang(faixaOk.max))} fill="none" strokeWidth="7" />
+            <path
+              className="faixa-ok"
+              d={arco(c, c, r, ang(faixaOk.min), ang(faixaOk.max))}
+              fill="none"
+              strokeWidth="7"
+            />
           )}
           {valor > min && (
-            <path className="arco" d={arco(c, c, r, A0, ang(valor))} fill="none" stroke={cor} strokeWidth="7" />
+            <path
+              className="arco"
+              d={arco(c, c, r, A0, ang(valor))}
+              fill="none"
+              stroke={cor}
+              strokeWidth="7"
+            />
           )}
         </svg>
-        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'grid',
+            placeItems: 'center',
+            textAlign: 'center',
+          }}
+        >
           <div>
             <div className="gauge-valor">{num(valor, casas)}</div>
             <div className="gauge-rot">{unidade}</div>
@@ -79,8 +126,14 @@ export function BarraEmpilhada({ segmentos, altura = 26, unidade = '' }) {
               key={seg.nome}
               title={`${seg.nome}: ${num(seg.valor, 1)} ${unidade}`}
               style={{
-                flex: `0 0 ${p}%`, background: seg.cor, display: 'grid', placeItems: 'center',
-                fontSize: 'var(--t-xs)', color: '#fff', fontWeight: 600, fontStyle: 'normal',
+                flex: `0 0 ${p}%`,
+                background: seg.cor,
+                display: 'grid',
+                placeItems: 'center',
+                fontSize: 'var(--t-xs)',
+                color: '#fff',
+                fontWeight: 600,
+                fontStyle: 'normal',
               }}
             >
               {p > 11 ? `${num(p, 0)}%` : ''}
@@ -122,7 +175,10 @@ export function Gantt({ faixas, horas = 24, alturaLinha = 17 }) {
     const n = v.length;
     let i = 0;
     while (i < n) {
-      if (v[i] < 0.5) { i++; continue; }
+      if (v[i] < 0.5) {
+        i++;
+        continue;
+      }
       const ini = i;
       while (i < n && v[i] >= 0.5) i++;
       out.push([ini / n, (i - ini) / n]);
@@ -135,8 +191,18 @@ export function Gantt({ faixas, horas = 24, alturaLinha = 17 }) {
       <svg className="gr" viewBox={`0 0 ${larg} ${alt}`} height={alt} role="img">
         {[0, 0.25, 0.5, 0.75, 1].map((f) => (
           <g key={f}>
-            <line className="gantt-grade" x1={x0 + f * (x1 - x0)} x2={x0 + f * (x1 - x0)} y1="0" y2={alt - 18} />
-            <text x={x0 + f * (x1 - x0)} y={alt - 5} textAnchor={f === 1 ? 'end' : f === 0 ? 'start' : 'middle'}>
+            <line
+              className="gantt-grade"
+              x1={x0 + f * (x1 - x0)}
+              x2={x0 + f * (x1 - x0)}
+              y1="0"
+              y2={alt - 18}
+            />
+            <text
+              x={x0 + f * (x1 - x0)}
+              y={alt - 5}
+              textAnchor={f === 1 ? 'end' : f === 0 ? 'start' : 'middle'}
+            >
               {f === 1 ? 'agora' : `−${num(horas * (1 - f), 0)} h`}
             </text>
           </g>
@@ -146,14 +212,19 @@ export function Gantt({ faixas, horas = 24, alturaLinha = 17 }) {
           const h = alturaLinha - 5;
           return (
             <g key={f.nome} className="gantt-linha">
-              <text className="gantt-nome" x="0" y={y + h - 2}>{f.nome}</text>
+              <text className="gantt-nome" x="0" y={y + h - 2}>
+                {f.nome}
+              </text>
               <rect className="gantt-trilho" x={x0} y={y} width={x1 - x0} height={h} rx="2" />
               {blocos(f.v).map(([e, w], k) => (
                 <rect
                   key={k}
                   className={`gantt-barra${f.falha ? ' falha' : ''}${f.manual ? ' manual' : ''}`}
-                  x={x0 + e * (x1 - x0)} y={y}
-                  width={Math.max(1, w * (x1 - x0))} height={h} rx="2"
+                  x={x0 + e * (x1 - x0)}
+                  y={y}
+                  width={Math.max(1, w * (x1 - x0))}
+                  height={h}
+                  rx="2"
                 />
               ))}
             </g>

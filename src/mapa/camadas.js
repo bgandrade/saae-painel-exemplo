@@ -28,7 +28,8 @@ export const CAMADAS = [
   {
     id: 'satelite',
     nome: 'Satélite',
-    url: () => 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    url: () =>
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     atrib: 'Imagens &copy; Esri, Maxar, Earthstar Geographics',
     subdominios: 'abc',
     zoomMax: 18,
@@ -44,7 +45,4 @@ export const CAMADAS = [
 ];
 
 /** Domínios que a CSP precisa liberar. Documentado aqui e em public/_headers. */
-export const DOMINIOS_TILE = [
-  'https://*.basemaps.cartocdn.com',
-  'https://server.arcgisonline.com',
-];
+export const DOMINIOS_TILE = ['https://*.basemaps.cartocdn.com', 'https://server.arcgisonline.com'];

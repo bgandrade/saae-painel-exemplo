@@ -9,7 +9,6 @@
 
 import { useState } from 'react';
 import { useSim, janela } from '../hooks/useSimulacao.jsx';
-import { useUI } from '../hooks/useUI.jsx';
 import { Card, Kpi, Chip, Vazio } from '../ui/componentes.jsx';
 import LinhaAlarme from '../ui/LinhaAlarme.jsx';
 import { num } from '../ui/formato.js';
@@ -28,8 +27,10 @@ export default function VisaoGeral() {
     return <Sparkline t={t} v={v} cor={cor} />;
   };
 
-  const estPressao = g.pressaoMediaMca < LIMITES.pressao.min ? 'critico' : g.pressaoMediaMca < 15 ? 'atencao' : 'ok';
-  const estCloro = g.cloroMedioMgL < LIMITES.cloroLivre.min ? 'critico' : g.cloroMedioMgL < 0.4 ? 'atencao' : 'ok';
+  const estPressao =
+    g.pressaoMediaMca < LIMITES.pressao.min ? 'critico' : g.pressaoMediaMca < 15 ? 'atencao' : 'ok';
+  const estCloro =
+    g.cloroMedioMgL < LIMITES.cloroLivre.min ? 'critico' : g.cloroMedioMgL < 0.4 ? 'atencao' : 'ok';
   const ativos = alarmes.ativos.slice(0, 6);
 
   return (
@@ -38,24 +39,60 @@ export default function VisaoGeral() {
         {/* As captações ciclam por histerese, então o instantâneo passa por zero
             várias vezes ao dia. Sozinho ele lê como "sistema parado"; a média
             de 24 h ao lado é o que dá a escala verdadeira da produção. */}
-        <Kpi rotulo="Vazão produzida" valor={num(g.vazaoProduzidaLs, 0)} unidade="L/s"
+        <Kpi
+          rotulo="Vazão produzida"
+          valor={num(g.vazaoProduzidaLs, 0)}
+          unidade="L/s"
           sub={`média 24 h: ${num(sim.hist.serie('glob/vazaoProduzida').estat().media, 0)} L/s`}
-          spark={spark('glob/vazaoProduzida', 'var(--serie-1)')} />
-        <Kpi rotulo="Volume distribuído hoje" valor={num(g.volumeDistribuidoM3Hoje, 0)} unidade="m³"
-          sub={`perdas estimadas ${num((g.indicePerdas ?? 0) * 100, 0)} %`} />
-        <Kpi rotulo="Pressão média da rede" valor={num(g.pressaoMediaMca, 1)} unidade="mca"
-          sub={`mínimo NBR 12218: ${LIMITES.pressao.min} mca`} estado={estPressao}
-          spark={spark('glob/pressaoMedia', 'var(--serie-2)')} />
-        <Kpi rotulo="Reservação total" valor={num(g.reservacaoPct, 0)} unidade="%"
-          sub={`${num(g.volumeReservadoM3, 0)} m³ armazenados`} spark={spark('glob/reservacao', 'var(--serie-3)')} />
-        <Kpi rotulo="Cloro médio na rede" valor={num(g.cloroMedioMgL, 2)} unidade="mg/L"
-          sub={`faixa ${LIMITES.cloroLivre.min}–${LIMITES.cloroLivre.max}`} estado={estCloro} />
-        <Kpi rotulo="Conjuntos em operação" valor={`${g.bombasOperando}`} unidade={`de ${g.bombasTotal}`}
-          sub={`${num(g.potenciaKW, 0)} kW instantâneos`} />
-        <Kpi rotulo="Esgoto tratado" valor={num(g.vazaoEsgotoLs, 1)} unidade="L/s"
-          sub={`${num(g.vazaoEsgotoLs * 3.6, 0)} m³/h`} spark={spark('glob/vazaoEsgoto', 'var(--serie-2)')} />
-        <Kpi rotulo="Energia consumida hoje" valor={num(g.energiaKWhHoje, 0)} unidade="kWh"
-          sub="conjuntos elevatórios" />
+          spark={spark('glob/vazaoProduzida', 'var(--serie-1)')}
+        />
+        <Kpi
+          rotulo="Volume distribuído hoje"
+          valor={num(g.volumeDistribuidoM3Hoje, 0)}
+          unidade="m³"
+          sub={`perdas estimadas ${num((g.indicePerdas ?? 0) * 100, 0)} %`}
+        />
+        <Kpi
+          rotulo="Pressão média da rede"
+          valor={num(g.pressaoMediaMca, 1)}
+          unidade="mca"
+          sub={`mínimo NBR 12218: ${LIMITES.pressao.min} mca`}
+          estado={estPressao}
+          spark={spark('glob/pressaoMedia', 'var(--serie-2)')}
+        />
+        <Kpi
+          rotulo="Reservação total"
+          valor={num(g.reservacaoPct, 0)}
+          unidade="%"
+          sub={`${num(g.volumeReservadoM3, 0)} m³ armazenados`}
+          spark={spark('glob/reservacao', 'var(--serie-3)')}
+        />
+        <Kpi
+          rotulo="Cloro médio na rede"
+          valor={num(g.cloroMedioMgL, 2)}
+          unidade="mg/L"
+          sub={`faixa ${LIMITES.cloroLivre.min}–${LIMITES.cloroLivre.max}`}
+          estado={estCloro}
+        />
+        <Kpi
+          rotulo="Conjuntos em operação"
+          valor={`${g.bombasOperando}`}
+          unidade={`de ${g.bombasTotal}`}
+          sub={`${num(g.potenciaKW, 0)} kW instantâneos`}
+        />
+        <Kpi
+          rotulo="Esgoto tratado"
+          valor={num(g.vazaoEsgotoLs, 1)}
+          unidade="L/s"
+          sub={`${num(g.vazaoEsgotoLs * 3.6, 0)} m³/h`}
+          spark={spark('glob/vazaoEsgoto', 'var(--serie-2)')}
+        />
+        <Kpi
+          rotulo="Energia consumida hoje"
+          valor={num(g.energiaKWhHoje, 0)}
+          unidade="kWh"
+          sub="conjuntos elevatórios"
+        />
       </div>
 
       <div className="c8">
@@ -71,14 +108,23 @@ export default function VisaoGeral() {
       <div className="c4 pilha">
         <Card
           titulo="Alarmes ativos"
-          meta={<span>{alarmes.contagem.total ? `${alarmes.contagem.total} ativo(s)` : 'nenhum'}</span>}
+          meta={
+            <span>{alarmes.contagem.total ? `${alarmes.contagem.total} ativo(s)` : 'nenhum'}</span>
+          }
           pad={false}
         >
           {ativos.length ? (
             <div className="alarmes">
               {ativos.map((a) => (
-                <LinhaAlarme key={a.chave} alarme={a} agora={sim.tempo}
-                  aoReconhecer={(c) => { alarmes.reconhecer(c); forcar((x) => x + 1); }} />
+                <LinhaAlarme
+                  key={a.chave}
+                  alarme={a}
+                  agora={sim.tempo}
+                  aoReconhecer={(c) => {
+                    alarmes.reconhecer(c);
+                    forcar((x) => x + 1);
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -99,8 +145,14 @@ export default function VisaoGeral() {
               const estado = falha ? 'critico' : manual ? 'atencao' : 'parada';
               const texto = falha
                 ? `${u.sigla} · falha`
-                : bombas.length ? `${u.sigla} · ${operando}/${bombas.length}` : u.sigla;
-              return <Chip key={u.id} estado={estado}>{texto}</Chip>;
+                : bombas.length
+                  ? `${u.sigla} · ${operando}/${bombas.length}`
+                  : u.sigla;
+              return (
+                <Chip key={u.id} estado={estado}>
+                  {texto}
+                </Chip>
+              );
             })}
           </div>
         </Card>
@@ -111,34 +163,50 @@ export default function VisaoGeral() {
       </div>
 
       <div className="c8">
-        <Card titulo="Vazão nas últimas 24 horas" meta={<span>produzida × distribuída × consumida</span>}>
+        <Card
+          titulo="Vazão nas últimas 24 horas"
+          meta={<span>produzida × distribuída × consumida</span>}
+        >
           <GraficoLinha
-            altura={200} unidade="L/s" casas={0} zero
+            altura={200}
+            unidade="L/s"
+            casas={0}
+            zero
             series={[
               { nome: 'Produzida', cor: CORES_SERIE[0], ...jan('glob/vazaoProduzida') },
               { nome: 'Distribuída', cor: CORES_SERIE[1], ...jan('glob/vazaoDistribuida') },
               { nome: 'Consumida', cor: CORES_SERIE[2], ...jan('glob/consumo') },
             ]}
           />
-          <Legenda itens={[
-            { nome: 'Produzida', cor: CORES_SERIE[0] },
-            { nome: 'Distribuída', cor: CORES_SERIE[1] },
-            { nome: 'Consumida', cor: CORES_SERIE[2] },
-          ]} />
+          <Legenda
+            itens={[
+              { nome: 'Produzida', cor: CORES_SERIE[0] },
+              { nome: 'Distribuída', cor: CORES_SERIE[1] },
+              { nome: 'Consumida', cor: CORES_SERIE[2] },
+            ]}
+          />
         </Card>
       </div>
 
       <div className="c4">
         <Card titulo="Níveis de reservação — 24 h" meta={<span>tracejado: nível baixo</span>}>
           <GraficoLinha
-            altura={200} unidade="%" casas={0} limites={[20]}
+            altura={200}
+            unidade="%"
+            casas={0}
+            limites={[20]}
             series={[...sim.reservatorios.keys()].map((id, i) => ({
               nome: sim.reservatorios.get(id).unidade.sigla,
               cor: CORES_SERIE[i],
               ...jan(`reserv/${id}/nivel`),
             }))}
           />
-          <Legenda itens={[...sim.reservatorios.values()].map((r, i) => ({ nome: r.unidade.sigla, cor: CORES_SERIE[i] }))} />
+          <Legenda
+            itens={[...sim.reservatorios.values()].map((r, i) => ({
+              nome: r.unidade.sigla,
+              cor: CORES_SERIE[i],
+            }))}
+          />
         </Card>
       </div>
     </div>
@@ -162,11 +230,16 @@ function Cenarios() {
             <span className="espaco" />
             <button
               className={`btn${est.ativo ? ' perigo' : ''}`}
-              onClick={() => { sim.alternarCenario(c.id); forcar((x) => x + 1); }}
+              onClick={() => {
+                sim.alternarCenario(c.id);
+                forcar((x) => x + 1);
+              }}
             >
               {est.ativo ? 'Normalizar' : 'Disparar'}
             </button>
-            <div className="cenario-barra"><i style={{ width: `${est.intensidade * 100}%` }} /></div>
+            <div className="cenario-barra">
+              <i style={{ width: `${est.intensidade * 100}%` }} />
+            </div>
           </div>
         );
       })}

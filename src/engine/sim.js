@@ -20,23 +20,23 @@ import { podeComandar, ACOES } from './control.js';
 
 /* ══════════════════════ PARÂMETROS DO SISTEMA ══════════════════════ */
 
-const CONSUMO_PER_CAPITA_LD = 160;   // L/habitante/dia, micromedido
-const INDICE_PERDAS = 0.38;          // perdas na distribuição
-const COEF_RETORNO_ESGOTO = 0.80;    // fração do consumo que vira esgoto
-const TAXA_INFILTRACAO = 0.12;       // infiltração na rede coletora
-const ATRASO_ESGOTO_H = 2.5;         // defasagem consumo → chegada na ETA
-const TAU_CAIXA_CHEGADA_S = 2400;    // caixa de chegada ≈ 40 min de vazão média
-const DECAIMENTO_CLORO_H = 0.09;     // constante de decaimento na rede
+const CONSUMO_PER_CAPITA_LD = 160; // L/habitante/dia, micromedido
+const INDICE_PERDAS = 0.38; // perdas na distribuição
+const COEF_RETORNO_ESGOTO = 0.8; // fração do consumo que vira esgoto
+const TAXA_INFILTRACAO = 0.12; // infiltração na rede coletora
+const ATRASO_ESGOTO_H = 2.5; // defasagem consumo → chegada na ETA
+const TAU_CAIXA_CHEGADA_S = 2400; // caixa de chegada ≈ 40 min de vazão média
+const DECAIMENTO_CLORO_H = 0.09; // constante de decaimento na rede
 const TENSAO_NOMINAL = 380;
 const TEMP_AMBIENTE = 28;
 
-const AMOSTRA_S = 60;                // resolução do histórico: 1 min simulado
-const CAPACIDADE_HIST = 1440;        // 24 h
-const AQUECIMENTO_H = 3;             // horas rodadas antes do trecho exibido
-const PASSO_MAX_S = 20;              // subpasso máximo de integração
+const AMOSTRA_S = 60; // resolução do histórico: 1 min simulado
+const CAPACIDADE_HIST = 1440; // 24 h
+const AQUECIMENTO_H = 3; // horas rodadas antes do trecho exibido
+const PASSO_MAX_S = 20; // subpasso máximo de integração
 const RODIZIO_LIDERANCA_S = 12 * 3600; // troca a bomba líder a cada 12 h contínuas
-const PARTIDA_S = 4;                 // rampa de partida (soft-starter/inversor)
-const BANDA_EMERGENCIA = 10;         // banda morta do degrau de emergência, em % de nível
+const PARTIDA_S = 4; // rampa de partida (soft-starter/inversor)
+const BANDA_EMERGENCIA = 10; // banda morta do degrau de emergência, em % de nível
 
 /** Rótulos dos setpoints para a trilha de auditoria. */
 const ROTULO_SETPOINT = {
@@ -68,12 +68,12 @@ function resolverReservatorio(unidadeId, visitados = new Set()) {
 }
 
 const RESERVATORIO_DO_SETOR = Object.fromEntries(
-  SETORES.map((s) => [s.id, resolverReservatorio(s.fonteId)])
+  SETORES.map((s) => [s.id, resolverReservatorio(s.fonteId)]),
 );
 
 /** Trecho entre dois reservatórios: transferência com controle de nível. */
 const TRANSFERENCIAS = LINHAS.filter(
-  (l) => porId.get(l.de)?.capacidadeM3 && porId.get(l.para)?.capacidadeM3
+  (l) => porId.get(l.de)?.capacidadeM3 && porId.get(l.para)?.capacidadeM3,
 ).map((l) => ({ de: l.de, para: l.para, maxLs: l.maxLs ?? 150, nivelAlvo: l.nivelAlvo ?? 0.75 }));
 
 /* ══════════════════════ CURVA DE DEMANDA DIÁRIA ══════════════════════ */
@@ -130,7 +130,8 @@ export const CENARIOS = [
   {
     id: 'sobrecarga',
     nome: 'Sobrecarga em conjunto motobomba',
-    resumo: 'Corrente, vibração e mancal sobem num conjunto em operação até o desarme pelo relé 51. A reserva assume sozinha.',
+    resumo:
+      'Corrente, vibração e mancal sobem num conjunto em operação até o desarme pelo relé 51. A reserva assume sozinha.',
     severidade: 'alerta',
     rampaS: 240,
   },
@@ -243,7 +244,7 @@ export class Simulacao {
     this.acumuladoAmostra = 0;
 
     this.cenarios = new Map(
-      CENARIOS.map((c) => [c.id, { def: c, ativo: false, intensidade: 0, tRestante: 0 }])
+      CENARIOS.map((c) => [c.id, { def: c, ativo: false, intensidade: 0, tRestante: 0 }]),
     );
 
     // Trilha de auditoria e estado de comando. O cadastro em topologia.js
@@ -261,7 +262,7 @@ export class Simulacao {
         // unidade, ou o reservatório que ela enche. Sem isso, a tela de Rede
         // não teria como desenhar as marcas de setpoint no tanque certo.
         { ...u.malha, modo: 'auto', unidadeId: u.id, destinoId: u.recalcaPara ?? u.id },
-      ])
+      ]),
     );
 
     // Reservatórios: toda unidade com capacidade declarada.
@@ -331,13 +332,13 @@ export class Simulacao {
         partidasHoje: 0,
         segundosLigada: 0,
         ruidos: {
-          rpm: this._ruido(`${def.id}/rpm`, {media: 0, desvio: 3.5, reversao: 0.35  }),
-          corrente: this._ruido(`${def.id}/i`, {media: 0, desvio: 0.9, reversao: 0.02  }),
-          vib: this._ruido(`${def.id}/vib`, {media: 0, desvio: 0.15, reversao: 0.01  }),
-          temp: this._ruido(`${def.id}/temp`, {media: 0, desvio: 0.5, reversao: 0.12  }),
+          rpm: this._ruido(`${def.id}/rpm`, { media: 0, desvio: 3.5, reversao: 0.35 }),
+          corrente: this._ruido(`${def.id}/i`, { media: 0, desvio: 0.9, reversao: 0.02 }),
+          vib: this._ruido(`${def.id}/vib`, { media: 0, desvio: 0.15, reversao: 0.01 }),
+          temp: this._ruido(`${def.id}/temp`, { media: 0, desvio: 0.5, reversao: 0.12 }),
           // Desequilíbrio entre fases: pequeno, constante por bomba, como na vida real.
-          fases: [0, 1, 2].map(
-            (i) => this._ruido(`${def.id}/v${i}`, {media: 0, desvio: 2.6, reversao: 0.2  })
+          fases: [0, 1, 2].map((i) =>
+            this._ruido(`${def.id}/v${i}`, { media: 0, desvio: 2.6, reversao: 0.2 }),
           ),
         },
       };
@@ -359,8 +360,8 @@ export class Simulacao {
         producaoLs: 0,
         pressaoMca: s.pressaoAlvoMca,
         cloroMgL: 1.0,
-        ruidoPressao: this._ruido(`${s.id}/p`, {media: 0, desvio: 0.5, reversao: 0.004  }),
-        ruidoCloro: this._ruido(`${s.id}/cl`, {media: 0, desvio: 0.04, reversao: 0.0015  }),
+        ruidoPressao: this._ruido(`${s.id}/p`, { media: 0, desvio: 0.5, reversao: 0.004 }),
+        ruidoCloro: this._ruido(`${s.id}/cl`, { media: 0, desvio: 0.04, reversao: 0.0015 }),
       });
     }
 
@@ -375,10 +376,10 @@ export class Simulacao {
         turbidezUT: 0.55,
         fluoretoMgL: 0.74,
         ruidos: {
-          cloro: this._ruido(`${u.id}/cloro`, {media: 1.75, desvio: 0.07, reversao: 0.0012  }),
-          ph: this._ruido(`${u.id}/ph`, {media: 7.15, desvio: 0.1, reversao: 0.001  }),
-          turbidez: this._ruido(`${u.id}/turb`, {media: 0.55, desvio: 0.13, reversao: 0.0015  }),
-          fluoreto: this._ruido(`${u.id}/fl`, {media: 0.74, desvio: 0.033, reversao: 0.001  }),
+          cloro: this._ruido(`${u.id}/cloro`, { media: 1.75, desvio: 0.07, reversao: 0.0012 }),
+          ph: this._ruido(`${u.id}/ph`, { media: 7.15, desvio: 0.1, reversao: 0.001 }),
+          turbidez: this._ruido(`${u.id}/turb`, { media: 0.55, desvio: 0.13, reversao: 0.0015 }),
+          fluoreto: this._ruido(`${u.id}/fl`, { media: 0.74, desvio: 0.033, reversao: 0.001 }),
         },
       });
     }
@@ -403,10 +404,10 @@ export class Simulacao {
         turbidezUT: 6,
         conforme: true,
         ruidos: {
-          dbo: this._ruido(`${u.id}/dbo`, {media: u.dboAfluenteMgL, desvio: 22, reversao: 0.03  }),
-          od: this._ruido(`${u.id}/od`, {media: 0, desvio: 0.18, reversao: 0.08  }),
-          sst: this._ruido(`${u.id}/sst`, {media: 0, desvio: 3.2, reversao: 0.06  }),
-          ph: this._ruido(`${u.id}/phe`, {media: 7.05, desvio: 0.14, reversao: 0.05  }),
+          dbo: this._ruido(`${u.id}/dbo`, { media: u.dboAfluenteMgL, desvio: 22, reversao: 0.03 }),
+          od: this._ruido(`${u.id}/od`, { media: 0, desvio: 0.18, reversao: 0.08 }),
+          sst: this._ruido(`${u.id}/sst`, { media: 0, desvio: 3.2, reversao: 0.06 }),
+          ph: this._ruido(`${u.id}/phe`, { media: 7.05, desvio: 0.14, reversao: 0.05 }),
         },
       });
     }
@@ -492,7 +493,10 @@ export class Simulacao {
       (this.bombasPorUnidade.get(uid) ?? []).find((b) => b.ligada && b.estado === 'operando');
     for (const uid of preferencia) {
       const b = girando(uid);
-      if (b) { this.alvoSobrecarga = b.id; return; }
+      if (b) {
+        this.alvoSobrecarga = b.id;
+        return;
+      }
     }
     const qualquer = [...this.bombas.values()].find((b) => b.ligada && b.estado === 'operando');
     this.alvoSobrecarga = qualquer?.id ?? null;
@@ -536,7 +540,13 @@ export class Simulacao {
 
   registrarComando({ alvo, acao, detalhe = '', aceito, motivo = '' }) {
     this.comandos.unshift({
-      t: this.tempo, operador: this.operador, alvo, acao, detalhe, aceito, motivo,
+      t: this.tempo,
+      operador: this.operador,
+      alvo,
+      acao,
+      detalhe,
+      aceito,
+      motivo,
     });
     if (this.comandos.length > 500) this.comandos.length = 500;
   }
@@ -789,7 +799,11 @@ export class Simulacao {
       // comando do operador e à referência de rotação que ele ajustou.
       for (const b of bs) {
         if (b.modo !== 'manual') continue;
-        this._aplicarEstado(u, b, b.comandoManual && b.estado !== 'falha' && b.estado !== 'manutencao');
+        this._aplicarEstado(
+          u,
+          b,
+          b.comandoManual && b.estado !== 'falha' && b.estado !== 'manutencao',
+        );
         b.rotacaoPct = b.ligada ? b.referenciaPct : 0;
       }
     }
@@ -886,7 +900,7 @@ export class Simulacao {
 
     const demanda = (u.setores ?? []).reduce(
       (s, id) => s + (this.setores.get(id)?.producaoLs ?? 0),
-      0
+      0,
     );
     const porBomba = bs[0].def.vazaoNominalLs;
     const disponiveis = bs.filter((b) => b.estado !== 'falha' && b.estado !== 'manutencao').length;
@@ -1032,7 +1046,7 @@ export class Simulacao {
     // é a proteção clássica contra short-cycling. Motor de 150 CV que parte e
     // para a cada minuto perde vida útil por aquecimento de rotor, e a conta
     // de energia sente cada partida.
-    const tMin = (m?.tempoMinimoOperacaoS ?? 180);
+    const tMin = m?.tempoMinimoOperacaoS ?? 180;
     for (const b of disp) {
       if (!b.ligada || escolhidas.has(b) || ligadas <= alvoQtd) continue;
       if (b.segundosLigada < tMin) continue;
@@ -1087,12 +1101,18 @@ export class Simulacao {
 
         const horasContinuas = b.segundosLigada / 3600;
         b.vibracaoMms = limitar(
-          1.55 + 0.35 * rot + 0.12 * Math.min(horasContinuas / 6, 1) + 2.6 * sob + b.ruidos.vib.passo(dt),
+          1.55 +
+            0.35 * rot +
+            0.12 * Math.min(horasContinuas / 6, 1) +
+            2.6 * sob +
+            b.ruidos.vib.passo(dt),
           0.2,
-          22
+          22,
         );
         const alvoTemp = TEMP_AMBIENTE + (34 + 30 * sob) * (0.35 + 0.65 * rot);
-        b.tempMancalC += (alvoTemp - b.tempMancalC) * (1 - Math.exp(-dt / 1500)) + b.ruidos.temp.passo(dt) * dt * 0.002;
+        b.tempMancalC +=
+          (alvoTemp - b.tempMancalC) * (1 - Math.exp(-dt / 1500)) +
+          b.ruidos.temp.passo(dt) * dt * 0.002;
 
         // Desarme por sobrecorrente: a proteção atua antes de queimar o motor.
         if (sob > 0.88 && b.estado === 'operando') {
@@ -1148,7 +1168,10 @@ export class Simulacao {
     // independentes que por acaso aparecem no mesmo mapa.
     for (const u of UNIDADES) {
       if (u.tipo !== 'elevatoria' || !u.recalcaPara) continue;
-      const recalque = (this.bombasPorUnidade.get(u.id) ?? []).reduce((acc, b) => acc + b.vazaoLs, 0);
+      const recalque = (this.bombasPorUnidade.get(u.id) ?? []).reduce(
+        (acc, b) => acc + b.vazaoLs,
+        0,
+      );
       this.recalques.set(u.id, recalque);
       const destino = this.reservatorios.get(u.recalcaPara);
       const origem = u.alimentadaPor ? this.reservatorios.get(u.alimentadaPor) : null;
@@ -1174,11 +1197,7 @@ export class Simulacao {
     }
 
     for (const r of this.reservatorios.values()) {
-      r.volumeM3 = limitar(
-        r.volumeM3 + ((r.entradaLs - r.saidaLs) * dt) / 1000,
-        0,
-        r.capacidadeM3
-      );
+      r.volumeM3 = limitar(r.volumeM3 + ((r.entradaLs - r.saidaLs) * dt) / 1000, 0, r.capacidadeM3);
       r.nivelPct = (r.volumeM3 / r.capacidadeM3) * 100;
       r.autonomiaH = r.saidaLs > 0.1 ? r.volumeM3 / ((r.saidaLs * 3600) / 1000) : 99;
     }
@@ -1213,7 +1232,7 @@ export class Simulacao {
       if (idElev) {
         const suprimento = (this.bombasPorUnidade.get(idElev) ?? []).reduce(
           (acc, b) => acc + b.vazaoLs,
-          0
+          0,
         );
         const deficit = limitar(1 - suprimento / Math.max(s.producaoLs, 0.1), 0, 1);
         p -= deficit * 22;
@@ -1234,9 +1253,8 @@ export class Simulacao {
     for (const [id, q] of this.qualidade) {
       // A falha de dosagem puxa a média do processo, não o valor instantâneo:
       // assim a queda tem inércia, como teria um tanque de contato real.
-      const alvoCloro = id === 'cap-jacuecanga'
-        ? interpolar(1.75, 0.12, this.intensidade('cloro-baixo'))
-        : 1.75;
+      const alvoCloro =
+        id === 'cap-jacuecanga' ? interpolar(1.75, 0.12, this.intensidade('cloro-baixo')) : 1.75;
       q.ruidos.cloro.moverMedia(alvoCloro);
       q.cloroMgL = limitar(q.ruidos.cloro.passo(dt), 0, 4);
       q.ph = limitar(q.ruidos.ph.passo(dt), 4, 11);
@@ -1288,7 +1306,11 @@ export class Simulacao {
         p.volumeM3 = p.capacidadeM3;
         if (!p.extravasando) {
           p.extravasando = true;
-          this.registrar('esgoto', `${p.unidade.sigla}: extravasamento no poço de sucção`, 'critico');
+          this.registrar(
+            'esgoto',
+            `${p.unidade.sigla}: extravasamento no poço de sucção`,
+            'critico',
+          );
         }
       } else {
         p.extravasandoLs = 0;

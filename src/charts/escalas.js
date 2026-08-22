@@ -7,11 +7,16 @@
  */
 
 export const CORES_SERIE = [
-  'var(--serie-1)', 'var(--serie-2)', 'var(--serie-3)', 'var(--serie-4)', 'var(--serie-5)',
+  'var(--serie-1)',
+  'var(--serie-2)',
+  'var(--serie-3)',
+  'var(--serie-4)',
+  'var(--serie-5)',
 ];
 
 /** Escala linear. */
-export const escala = (d0, d1, r0, r1) => (v) => (d1 === d0 ? r0 : r0 + ((v - d0) / (d1 - d0)) * (r1 - r0));
+export const escala = (d0, d1, r0, r1) => (v) =>
+  d1 === d0 ? r0 : r0 + ((v - d0) / (d1 - d0)) * (r1 - r0);
 
 /**
  * Domínio "redondo", que não fica dançando a cada tique.
@@ -28,7 +33,10 @@ export function dominio(valores, { min, max, folga = 0.12, zero = false } = {}) 
     if (v < lo) lo = v;
     if (v > hi) hi = v;
   }
-  if (lo === Infinity) { lo = 0; hi = 1; }
+  if (lo === Infinity) {
+    lo = 0;
+    hi = 1;
+  }
   if (zero) lo = Math.min(lo, 0);
   const amp = hi - lo || Math.abs(hi) || 1;
   lo -= amp * folga;
@@ -47,7 +55,8 @@ export function dominio(valores, { min, max, folga = 0.12, zero = false } = {}) 
 /** Caminho SVG de uma série temporal. */
 export function caminho(t, v, ex, ey) {
   let d = '';
-  for (let k = 0; k < v.length; k++) d += `${k ? 'L' : 'M'}${ex(t[k]).toFixed(1)} ${ey(v[k]).toFixed(1)}`;
+  for (let k = 0; k < v.length; k++)
+    d += `${k ? 'L' : 'M'}${ex(t[k]).toFixed(1)} ${ey(v[k]).toFixed(1)}`;
   return d;
 }
 

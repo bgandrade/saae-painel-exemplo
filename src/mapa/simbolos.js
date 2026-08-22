@@ -11,13 +11,17 @@ export const FORMAS = {
   captacao: (r) => `M0 ${-r * 1.15}L${r} ${r * 0.7}L${-r} ${r * 0.7}Z`,
   reservatorio: (r) => `M${-r * 0.92} ${-r * 0.92}H${r * 0.92}V${r * 0.92}H${-r * 0.92}Z`,
   elevatoria: (r) => `M0 ${-r}A${r} ${r} 0 1 1 0 ${r}A${r} ${r} 0 1 1 0 ${-r}Z`,
-  ete: (r) => `M0 ${-r * 1.2}L${r * 1.05} ${-r * 0.6}V${r * 0.6}L0 ${r * 1.2}L${-r * 1.05} ${r * 0.6}V${-r * 0.6}Z`,
+  ete: (r) =>
+    `M0 ${-r * 1.2}L${r * 1.05} ${-r * 0.6}V${r * 0.6}L0 ${r * 1.2}L${-r * 1.05} ${r * 0.6}V${-r * 0.6}Z`,
   eee: (r) => `M0 ${-r * 1.2}L${r * 1.2} 0L0 ${r * 1.2}L${-r * 1.2} 0Z`,
 };
 
 export const ROTULO_FORMA = {
-  captacao: 'Captação', reservatorio: 'Reservatório', elevatoria: 'Elevatória',
-  ete: 'ETE', eee: 'Elevatória de esgoto',
+  captacao: 'Captação',
+  reservatorio: 'Reservatório',
+  elevatoria: 'Elevatória',
+  ete: 'ETE',
+  eee: 'Elevatória de esgoto',
 };
 
 /** SVG do símbolo como string, para uso dentro de um divIcon do Leaflet. */

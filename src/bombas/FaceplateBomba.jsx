@@ -17,14 +17,23 @@ import { Chip } from '../ui/componentes.jsx';
 import Icone from '../ui/Icone.jsx';
 import { num, horimetro, duracao, estadoLimiar, ROTULO_BOMBA } from '../ui/formato.js';
 import { GraficoLinha, Gauge, CurvaBomba } from '../charts/index.js';
-import { intertravamentos, podeComandar, curvaBomba, desequilibrioPct, saude } from '../engine/control.js';
+import {
+  intertravamentos,
+  podeComandar,
+  curvaBomba,
+  desequilibrioPct,
+  saude,
+} from '../engine/control.js';
 import { LIMITES } from '../data/topologia.js';
 
 function Metrica({ rot, valor, unidade, estado = '', sub }) {
   return (
     <div className={`metrica ${estado}`}>
       <div className="metrica-rot">{rot}</div>
-      <div className="metrica-val">{valor}{unidade && <small>{unidade}</small>}</div>
+      <div className="metrica-val">
+        {valor}
+        {unidade && <small>{unidade}</small>}
+      </div>
       {sub && <div className="metrica-sub">{sub}</div>}
     </div>
   );
@@ -72,14 +81,20 @@ export default function FaceplateBomba({ idBomba }) {
           <button type="button" aria-pressed={!manual} onClick={() => comandar('auto')}>
             AUTOMÁTICO
           </button>
-          <button type="button" className="man" aria-pressed={manual} onClick={() => comandar('manual')}>
+          <button
+            type="button"
+            className="man"
+            aria-pressed={manual}
+            onClick={() => comandar('manual')}
+          >
             MANUAL
           </button>
         </div>
 
         <div className="g2" style={{ marginTop: 4 }}>
           <button
-            className="btn sucesso grande" style={{ flex: 1 }}
+            className="btn sucesso grande"
+            style={{ flex: 1 }}
             disabled={!podePartir.permitido}
             title={podePartir.motivo}
             onClick={() => comandar('partir')}
@@ -87,7 +102,8 @@ export default function FaceplateBomba({ idBomba }) {
             <Icone nome="play" /> PARTIR
           </button>
           <button
-            className="btn perigo grande" style={{ flex: 1 }}
+            className="btn perigo grande"
+            style={{ flex: 1 }}
             disabled={!podeParar.permitido}
             title={podeParar.motivo}
             onClick={() => comandar('parar')}
@@ -100,9 +116,15 @@ export default function FaceplateBomba({ idBomba }) {
             </button>
           )}
           {b.estado === 'manutencao' ? (
-            <button className="btn grande" onClick={() => comandar('liberar')}>Liberar</button>
+            <button className="btn grande" onClick={() => comandar('liberar')}>
+              Liberar
+            </button>
           ) : (
-            <button className="btn grande" title="Bloquear para manutenção" onClick={() => comandar('manutencao')}>
+            <button
+              className="btn grande"
+              title="Bloquear para manutenção"
+              onClick={() => comandar('manutencao')}
+            >
               <Icone nome="cadeado" />
             </button>
           )}
@@ -128,11 +150,19 @@ export default function FaceplateBomba({ idBomba }) {
 
         {manual && d.inversor && (
           <div className="slider-linha">
-            <span className="mut" style={{ minWidth: 110 }}>Referência de rotação</span>
+            <span className="mut" style={{ minWidth: 110 }}>
+              Referência de rotação
+            </span>
             <input
-              type="range" min="55" max="100" step="1"
+              type="range"
+              min="55"
+              max="100"
+              step="1"
               value={Math.round(b.referenciaPct * 100)}
-              onChange={(e) => { sim.ajustarRotacao(idBomba, Number(e.target.value)); forcar((x) => x + 1); }}
+              onChange={(e) => {
+                sim.ajustarRotacao(idBomba, Number(e.target.value));
+                forcar((x) => x + 1);
+              }}
             />
             <span className="slider-val">{num(b.referenciaPct * 100, 0)} %</span>
           </div>
@@ -156,20 +186,35 @@ export default function FaceplateBomba({ idBomba }) {
           <div className="drawer-secao-tit">Corrente</div>
           <div className="centro">
             <Gauge
-              valor={b.correnteA} min={0} max={d.correnteNominalA * 1.35}
+              valor={b.correnteA}
+              min={0}
+              max={d.correnteNominalA * 1.35}
               faixaOk={{ min: d.correnteNominalA * 0.5, max: d.correnteNominalA * 1.05 }}
-              unidade="A" casas={0} tamanho={132}
+              unidade="A"
+              casas={0}
+              tamanho={132}
               rotulo={`nominal de placa ${d.correnteNominalA} A`}
               cor={b.correnteA > d.correnteNominalA * 1.15 ? 'var(--critico)' : 'var(--serie-1)'}
             />
           </div>
-          <div className="drawer-secao-tit" style={{ marginTop: 'var(--e3)' }}>Tensão por fase</div>
+          <div className="drawer-secao-tit" style={{ marginTop: 'var(--e3)' }}>
+            Tensão por fase
+          </div>
           <div className="fases" title={b.tensoes.map((v) => `${num(v, 0)} V`).join(' · ')}>
             {b.tensoes.map((v, i) => (
-              <i key={i} className="fase" style={{ height: `${b.ligada ? Math.max(14, (v / Math.max(...b.tensoes, 1)) * 100) : 8}%` }} />
+              <i
+                key={i}
+                className="fase"
+                style={{
+                  height: `${b.ligada ? Math.max(14, (v / Math.max(...b.tensoes, 1)) * 100) : 8}%`,
+                }}
+              />
             ))}
           </div>
-          <div className="linha" style={{ justifyContent: 'space-between', fontSize: 'var(--t-xs)', marginTop: 4 }}>
+          <div
+            className="linha"
+            style={{ justifyContent: 'space-between', fontSize: 'var(--t-xs)', marginTop: 4 }}
+          >
             <span className="mut">L1 · L2 · L3</span>
             <b className="num">{b.tensoes.map((v) => num(v, 0)).join(' / ')} V</b>
           </div>
@@ -182,22 +227,54 @@ export default function FaceplateBomba({ idBomba }) {
         <div className="fp-grade">
           <Metrica rot="Tensão média" valor={num(b.tensaoMedia, 0)} unidade="V" />
           <Metrica
-            rot="Desequilíbrio" valor={num(deseq, 2)} unidade="%"
-            estado={estadoLimiar(deseq, LIMITES.desequilibrio.alerta, LIMITES.desequilibrio.critico).replace('ok', '')}
+            rot="Desequilíbrio"
+            valor={num(deseq, 2)}
+            unidade="%"
+            estado={estadoLimiar(
+              deseq,
+              LIMITES.desequilibrio.alerta,
+              LIMITES.desequilibrio.critico,
+            ).replace('ok', '')}
             sub={`limite ${LIMITES.desequilibrio.norma}: ${LIMITES.desequilibrio.alerta} %`}
           />
           <Metrica rot="Potência" valor={num(b.potenciaKW, 1)} unidade="kW" />
           <Metrica rot="Fator de pot." valor={b.ligada ? num(b.cosPhi, 2) : '—'} />
-          <Metrica rot="Rotação" valor={num(b.rpm, 0)} unidade="rpm" sub={`nominal ${d.rpmNominal}`} />
-          <Metrica rot="Vazão" valor={b.ligada ? num(b.vazaoLs, 1) : '—'} unidade="L/s" sub={`nominal ${d.vazaoNominalLs}`} />
           <Metrica
-            rot="Vibração" valor={b.ligada ? num(b.vibracaoMms, 1) : '—'} unidade="mm/s"
-            estado={b.ligada ? estadoLimiar(b.vibracaoMms, LIMITES.vibracao.alerta, LIMITES.vibracao.critico).replace('ok', '') : ''}
+            rot="Rotação"
+            valor={num(b.rpm, 0)}
+            unidade="rpm"
+            sub={`nominal ${d.rpmNominal}`}
+          />
+          <Metrica
+            rot="Vazão"
+            valor={b.ligada ? num(b.vazaoLs, 1) : '—'}
+            unidade="L/s"
+            sub={`nominal ${d.vazaoNominalLs}`}
+          />
+          <Metrica
+            rot="Vibração"
+            valor={b.ligada ? num(b.vibracaoMms, 1) : '—'}
+            unidade="mm/s"
+            estado={
+              b.ligada
+                ? estadoLimiar(
+                    b.vibracaoMms,
+                    LIMITES.vibracao.alerta,
+                    LIMITES.vibracao.critico,
+                  ).replace('ok', '')
+                : ''
+            }
             sub={`${LIMITES.vibracao.norma}: ${LIMITES.vibracao.alerta} / ${LIMITES.vibracao.critico}`}
           />
           <Metrica
-            rot="Temp. mancal" valor={num(b.tempMancalC, 0)} unidade="°C"
-            estado={estadoLimiar(b.tempMancalC, LIMITES.tempMancal.alerta, LIMITES.tempMancal.critico).replace('ok', '')}
+            rot="Temp. mancal"
+            valor={num(b.tempMancalC, 0)}
+            unidade="°C"
+            estado={estadoLimiar(
+              b.tempMancalC,
+              LIMITES.tempMancal.alerta,
+              LIMITES.tempMancal.critico,
+            ).replace('ok', '')}
             sub={`alarme em ${LIMITES.tempMancal.alerta} °C`}
           />
         </div>
@@ -208,13 +285,31 @@ export default function FaceplateBomba({ idBomba }) {
         <div className="drawer-secao-tit">Operação e manutenção</div>
         <div className="fp-grade">
           <Metrica rot="Horímetro" valor={horimetro(b.horimetroH)} sub="desde a instalação" />
-          <Metrica rot="Horas no rodízio" valor={num(b.horasRodizio, 1)} unidade="h" sub="totalizador zerável" />
+          <Metrica
+            rot="Horas no rodízio"
+            valor={num(b.horasRodizio, 1)}
+            unidade="h"
+            sub="totalizador zerável"
+          />
           <Metrica rot="Partidas hoje" valor={String(b.partidasHoje)} />
           <Metrica
-            rot="Campanha atual" valor={b.ligada ? duracao(b.segundosLigada) : '—'}
+            rot="Campanha atual"
+            valor={b.ligada ? duracao(b.segundosLigada) : '—'}
             sub="troca de liderança em 12 h"
           />
-          <Metrica rot="Saúde" valor={s.estado === 'ok' ? 'Normal' : s.estado === 'atencao' ? 'Atenção' : s.estado === 'critico' ? 'Crítica' : '—'} sub={`pior: ${s.pior}`} />
+          <Metrica
+            rot="Saúde"
+            valor={
+              s.estado === 'ok'
+                ? 'Normal'
+                : s.estado === 'atencao'
+                  ? 'Atenção'
+                  : s.estado === 'critico'
+                    ? 'Crítica'
+                    : '—'
+            }
+            sub={`pior: ${s.pior}`}
+          />
         </div>
       </div>
 
@@ -226,7 +321,9 @@ export default function FaceplateBomba({ idBomba }) {
             <div className={`intertrav-linha${i.ativo ? ' ativo' : ''}`} key={i.id}>
               <i className={`led ${i.ativo ? (i.bloqueiaPartida ? 'critico' : 'atencao') : ''}`} />
               {i.descricao}
-              <span className="tag">{i.ativo ? (i.bloqueiaPartida ? 'BLOQUEIA' : 'ALERTA') : 'ok'}</span>
+              <span className="tag">
+                {i.ativo ? (i.bloqueiaPartida ? 'BLOQUEIA' : 'ALERTA') : 'ok'}
+              </span>
             </div>
           ))}
         </div>
@@ -236,9 +333,18 @@ export default function FaceplateBomba({ idBomba }) {
       <div className="fp-secao">
         <div className="drawer-secao-tit">Corrente nas últimas 6 horas</div>
         <GraficoLinha
-          altura={150} unidade="A" casas={0} zero
+          altura={150}
+          unidade="A"
+          casas={0}
+          zero
           limites={[d.correnteNominalA]}
-          series={[{ nome: 'Corrente', cor: 'var(--serie-1)', ...janela(sim, `bomba/${b.id}/corrente`, 360) }]}
+          series={[
+            {
+              nome: 'Corrente',
+              cor: 'var(--serie-1)',
+              ...janela(sim, `bomba/${b.id}/corrente`, 360),
+            },
+          ]}
         />
       </div>
     </Modal>

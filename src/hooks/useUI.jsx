@@ -25,7 +25,7 @@ export function ProvedorUI({ children }) {
 
   const valor = useMemo(
     () => ({ unidadeAberta, bombaAberta, abrirUnidade, fecharUnidade, abrirBomba, fecharBomba }),
-    [unidadeAberta, bombaAberta, abrirUnidade, fecharUnidade, abrirBomba, fecharBomba]
+    [unidadeAberta, bombaAberta, abrirUnidade, fecharUnidade, abrirBomba, fecharBomba],
   );
 
   return <Ctx.Provider value={valor}>{children}</Ctx.Provider>;
@@ -35,7 +35,7 @@ export const useUI = () => useContext(Ctx);
 
 /** Rota por hash: `#/bombas`. Qualquer aba pode ser aberta por link direto. */
 export function useRota(padrao) {
-  const ler = useCallback(() => (location.hash.match(/^#\/([\w-]+)/)?.[1] ?? padrao), [padrao]);
+  const ler = useCallback(() => location.hash.match(/^#\/([\w-]+)/)?.[1] ?? padrao, [padrao]);
   const [rota, setRota] = useState(ler);
   useEffect(() => {
     const h = () => setRota(ler());

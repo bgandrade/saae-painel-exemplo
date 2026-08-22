@@ -3,16 +3,18 @@
 import { useEffect } from 'react';
 import Icone from './Icone.jsx';
 
-function usarEscape(aoFechar) {
+function useEscape(aoFechar) {
   useEffect(() => {
-    const h = (e) => { if (e.key === 'Escape') aoFechar(); };
+    const h = (e) => {
+      if (e.key === 'Escape') aoFechar();
+    };
     addEventListener('keydown', h);
     return () => removeEventListener('keydown', h);
   }, [aoFechar]);
 }
 
 export function Drawer({ titulo, sub, aoFechar, children }) {
-  usarEscape(aoFechar);
+  useEscape(aoFechar);
   return (
     <>
       <div className="veu" onClick={aoFechar} />
@@ -22,7 +24,12 @@ export function Drawer({ titulo, sub, aoFechar, children }) {
             <div className="drawer-titulo">{titulo}</div>
             {sub && <div className="drawer-sub">{sub}</div>}
           </div>
-          <button className="btn btn-icone" style={{ marginLeft: 'auto' }} aria-label="Fechar" onClick={aoFechar}>
+          <button
+            className="btn btn-icone"
+            style={{ marginLeft: 'auto' }}
+            aria-label="Fechar"
+            onClick={aoFechar}
+          >
             <Icone nome="x" />
           </button>
         </div>
@@ -33,11 +40,16 @@ export function Drawer({ titulo, sub, aoFechar, children }) {
 }
 
 export function Modal({ titulo, sub, aoFechar, children, acoes, largo }) {
-  usarEscape(aoFechar);
+  useEscape(aoFechar);
   return (
     <>
       <div className="veu" onClick={aoFechar} />
-      <div className={`modal${largo ? ' largo' : ''}`} role="dialog" aria-modal="true" aria-label={titulo}>
+      <div
+        className={`modal${largo ? ' largo' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={titulo}
+      >
         <div className="modal-cab">
           <div style={{ minWidth: 0 }}>
             <div className="modal-titulo">{titulo}</div>

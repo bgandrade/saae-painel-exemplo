@@ -22,24 +22,59 @@ import { num } from '../ui/formato.js';
 import { saude } from '../engine/control.js';
 
 const ROTULO_ESTADO = {
-  operando: 'Operando', partindo: 'Partindo', parada: 'Parada',
-  falha: 'FALHA', manutencao: 'Manutenção',
+  operando: 'Operando',
+  partindo: 'Partindo',
+  parada: 'Parada',
+  falha: 'FALHA',
+  manutencao: 'Manutenção',
 };
 
 /** Bomba centrífuga: círculo com voluta, na convenção de fluxograma de processo. */
 function Desenho({ estado, ligada, rot }) {
   const cor =
-    estado === 'falha' ? 'var(--critico)'
-      : estado === 'manutencao' ? 'var(--tinta-3)'
-        : ligada ? 'var(--agua)' : 'var(--tinta-3)';
+    estado === 'falha'
+      ? 'var(--critico)'
+      : estado === 'manutencao'
+        ? 'var(--tinta-3)'
+        : ligada
+          ? 'var(--agua)'
+          : 'var(--tinta-3)';
   return (
     <svg width="46" height="34" viewBox="-23 -17 46 34" aria-hidden="true">
       {/* bocais de sucção (embaixo) e recalque (em cima) */}
-      <path d="M0 -11V-16M-12 6H-18" stroke={cor} strokeWidth="2.5" strokeLinecap="round" fill="none" />
-      <circle cx="0" cy="0" r="11" fill={ligada ? 'color-mix(in srgb, var(--agua) 22%, transparent)' : 'none'} stroke={cor} strokeWidth="2" />
+      <path
+        d="M0 -11V-16M-12 6H-18"
+        stroke={cor}
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle
+        cx="0"
+        cy="0"
+        r="11"
+        fill={ligada ? 'color-mix(in srgb, var(--agua) 22%, transparent)' : 'none'}
+        stroke={cor}
+        strokeWidth="2"
+      />
       {/* rotor: gira só quando o conjunto está girando de fato */}
-      <g style={ligada ? { transformOrigin: '0px 0px', animation: `girar ${Math.max(0.35, 1.4 - rot)}s linear infinite` } : undefined}>
-        <path d="M0 -7A7 7 0 0 1 6 3M0 7A7 7 0 0 1-6-3" stroke={cor} strokeWidth="2" fill="none" strokeLinecap="round" />
+      <g
+        style={
+          ligada
+            ? {
+                transformOrigin: '0px 0px',
+                animation: `girar ${Math.max(0.35, 1.4 - rot)}s linear infinite`,
+              }
+            : undefined
+        }
+      >
+        <path
+          d="M0 -7A7 7 0 0 1 6 3M0 7A7 7 0 0 1-6-3"
+          stroke={cor}
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+        />
       </g>
       <circle cx="0" cy="0" r="1.6" fill={cor} />
     </svg>
@@ -49,7 +84,8 @@ function Desenho({ estado, ligada, rot }) {
 export default function SimboloBomba({ bomba: b, papel, aoAbrir }) {
   const s = saude(b);
   const manual = b.modo === 'manual';
-  const classePapel = papel === 'LÍDER' ? 'lider' : manual ? 'manual' : papel === 'FALHA' ? 'falha' : '';
+  const classePapel =
+    papel === 'LÍDER' ? 'lider' : manual ? 'manual' : papel === 'FALHA' ? 'falha' : '';
 
   return (
     <button
@@ -74,8 +110,16 @@ export default function SimboloBomba({ bomba: b, papel, aoAbrir }) {
         {b.ligada ? (
           <>
             <b>{num(b.vazaoLs, 1)}</b> <small>L/s</small>
-            {b.def.inversor && <div><small>{num(b.rotacaoPct * (b.rampa ?? 1) * 100, 0)} % de rotação</small></div>}
-            {!b.def.inversor && <div><small>{ROTULO_ESTADO[b.estado]}</small></div>}
+            {b.def.inversor && (
+              <div>
+                <small>{num(b.rotacaoPct * (b.rampa ?? 1) * 100, 0)} % de rotação</small>
+              </div>
+            )}
+            {!b.def.inversor && (
+              <div>
+                <small>{ROTULO_ESTADO[b.estado]}</small>
+              </div>
+            )}
           </>
         ) : (
           <span className="parada">{ROTULO_ESTADO[b.estado]}</span>

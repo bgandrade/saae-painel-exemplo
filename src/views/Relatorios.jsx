@@ -15,9 +15,9 @@
 import { useState } from 'react';
 import { useSim } from '../hooks/useSimulacao.jsx';
 import { Card, Kpi, Chip, Segmentado } from '../ui/componentes.jsx';
-import { num, horimetro, dataHora, dataLonga, hora, estadoFaixa } from '../ui/formato.js';
+import { num, horimetro, dataHora, dataLonga, hora } from '../ui/formato.js';
 import Icone from '../ui/Icone.jsx';
-import { SETORES, LIMITES, porId } from '../data/topologia.js';
+import { SETORES, LIMITES } from '../data/topologia.js';
 
 const POPULACAO = SETORES.reduce((s, x) => s + x.populacao, 0);
 
@@ -86,14 +86,22 @@ export default function Relatorios() {
       [],
       ['Conjunto', 'Unidade', 'Horas bombeadas', 'Partidas hoje', 'Horímetro (h)', 'Modo'],
       ...bombas.map((b) => [
-        b.id, b.unidade.sigla, num(horasBombeadas(b), 2), b.partidasHoje, num(b.horimetroH, 0),
+        b.id,
+        b.unidade.sigla,
+        num(horasBombeadas(b), 2),
+        b.partidasHoje,
+        num(b.horimetroH, 0),
         b.modo === 'manual' ? 'MANUAL' : 'AUTO',
       ]),
       [],
       ['Alarme', 'Origem', 'Severidade', 'Horário'],
       ...alarmesPeriodo.map((a) => [a.titulo, a.origem, a.severidade, dataHora(a.t)]),
     ];
-    const csv = '﻿' + linhas.map((l) => l.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(';')).join('\n');
+    const csv =
+      '﻿' +
+      linhas
+        .map((l) => l.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(';'))
+        .join('\n');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     const a = document.createElement('a');
     a.href = url;
@@ -122,11 +130,17 @@ export default function Relatorios() {
         <div className="linha wrap">
           <Segmentado
             opcoes={PERIODOS.map((p) => ({ id: p.id, nome: p.nome }))}
-            valor={n} aoMudar={setN} rotulo="Período"
+            valor={n}
+            aoMudar={setN}
+            rotulo="Período"
           />
           <span className="espaco" />
-          <button className="btn" onClick={exportarCSV}><Icone nome="baixar" /> Exportar CSV</button>
-          <button className="btn primario" onClick={() => print()}><Icone nome="impressora" /> Imprimir / PDF</button>
+          <button className="btn" onClick={exportarCSV}>
+            <Icone nome="baixar" /> Exportar CSV
+          </button>
+          <button className="btn primario" onClick={() => print()}>
+            <Icone nome="impressora" /> Imprimir / PDF
+          </button>
         </div>
       </div>
 
@@ -136,18 +150,34 @@ export default function Relatorios() {
           meta={<span>Sistema Nacional de Informações sobre Saneamento</span>}
         >
           <div className="snis">
-            <ItemSnis cod="IN049" nome="Índice de perdas na distribuição"
-              valor={num(in049, 1)} unidade="%"
-              ref_={`${num(distribuido - consumido, 0)} m³ não consumidos de ${num(distribuido, 0)} m³ distribuídos`} />
-            <ItemSnis cod="IN058" nome="Consumo de energia elétrica em sistemas de abastecimento"
-              valor={num(in058, 3)} unidade="kWh/m³"
-              ref_={`${num(energia, 0)} kWh para produzir ${num(produzido, 0)} m³`} />
-            <ItemSnis cod="IN022" nome="Consumo médio per capita de água"
-              valor={num(in022, 1)} unidade="L/hab./dia"
-              ref_={`${num(POPULACAO / 1000, 1)} mil habitantes atendidos`} />
-            <ItemSnis cod="IN046" nome="Esgoto tratado referido à água consumida"
-              valor={num(in046, 1)} unidade="%"
-              ref_={`${num(esgoto, 0)} m³ tratados de ${num(consumido, 0)} m³ consumidos`} />
+            <ItemSnis
+              cod="IN049"
+              nome="Índice de perdas na distribuição"
+              valor={num(in049, 1)}
+              unidade="%"
+              ref_={`${num(distribuido - consumido, 0)} m³ não consumidos de ${num(distribuido, 0)} m³ distribuídos`}
+            />
+            <ItemSnis
+              cod="IN058"
+              nome="Consumo de energia elétrica em sistemas de abastecimento"
+              valor={num(in058, 3)}
+              unidade="kWh/m³"
+              ref_={`${num(energia, 0)} kWh para produzir ${num(produzido, 0)} m³`}
+            />
+            <ItemSnis
+              cod="IN022"
+              nome="Consumo médio per capita de água"
+              valor={num(in022, 1)}
+              unidade="L/hab./dia"
+              ref_={`${num(POPULACAO / 1000, 1)} mil habitantes atendidos`}
+            />
+            <ItemSnis
+              cod="IN046"
+              nome="Esgoto tratado referido à água consumida"
+              valor={num(in046, 1)}
+              unidade="%"
+              ref_={`${num(esgoto, 0)} m³ tratados de ${num(consumido, 0)} m³ consumidos`}
+            />
           </div>
           <p className="nota">
             Estes quatro indicadores são calculados a partir das mesmas séries que alimentam os
@@ -161,11 +191,31 @@ export default function Relatorios() {
         <Card titulo={`Balanço do período — últimas ${horas} horas`}>
           <div className="kpis">
             <Kpi rotulo="Volume produzido" valor={num(produzido, 0)} unidade="m³" sub="captações" />
-            <Kpi rotulo="Volume distribuído" valor={num(distribuido, 0)} unidade="m³" sub="consumo + perdas" />
-            <Kpi rotulo="Volume consumido" valor={num(consumido, 0)} unidade="m³" sub="micromedido" />
-            <Kpi rotulo="Perdas" valor={num(distribuido - consumido, 0)} unidade="m³" sub={`${num(in049, 1)} %`} />
+            <Kpi
+              rotulo="Volume distribuído"
+              valor={num(distribuido, 0)}
+              unidade="m³"
+              sub="consumo + perdas"
+            />
+            <Kpi
+              rotulo="Volume consumido"
+              valor={num(consumido, 0)}
+              unidade="m³"
+              sub="micromedido"
+            />
+            <Kpi
+              rotulo="Perdas"
+              valor={num(distribuido - consumido, 0)}
+              unidade="m³"
+              sub={`${num(in049, 1)} %`}
+            />
             <Kpi rotulo="Esgoto tratado" valor={num(esgoto, 0)} unidade="m³" />
-            <Kpi rotulo="Energia consumida" valor={num(energia, 0)} unidade="kWh" sub={`${num(in058, 3)} kWh/m³`} />
+            <Kpi
+              rotulo="Energia consumida"
+              valor={num(energia, 0)}
+              unidade="kWh"
+              sub={`${num(in058, 3)} kWh/m³`}
+            />
           </div>
         </Card>
       </div>
@@ -176,9 +226,13 @@ export default function Relatorios() {
             <table className="tabela">
               <thead>
                 <tr>
-                  <th>Conjunto</th><th>Unidade</th><th className="n">Horas bombeadas</th>
-                  <th className="n">Aproveitamento</th><th className="n">Partidas hoje</th>
-                  <th className="n">Horímetro</th><th>Modo</th>
+                  <th>Conjunto</th>
+                  <th>Unidade</th>
+                  <th className="n">Horas bombeadas</th>
+                  <th className="n">Aproveitamento</th>
+                  <th className="n">Partidas hoje</th>
+                  <th className="n">Horímetro</th>
+                  <th>Modo</th>
                 </tr>
               </thead>
               <tbody>
@@ -203,18 +257,28 @@ export default function Relatorios() {
       </div>
 
       <div className="c5 pilha">
-        <Card
-          titulo="Desempenho do sistema de alarmes"
-          meta={<span>EEMUA 191</span>}
-        >
+        <Card titulo="Desempenho do sistema de alarmes" meta={<span>EEMUA 191</span>}>
           <div className="kpis">
-            <Kpi rotulo="Alarmes no período" valor={`${alarmesPeriodo.length}`} sub={`em ${horas} h`} />
-            <Kpi rotulo="Taxa de alarmes" valor={num(taxaAlarmes, 2)} unidade="/h"
+            <Kpi
+              rotulo="Alarmes no período"
+              valor={`${alarmesPeriodo.length}`}
+              sub={`em ${horas} h`}
+            />
+            <Kpi
+              rotulo="Taxa de alarmes"
+              valor={num(taxaAlarmes, 2)}
+              unidade="/h"
               estado={taxaAlarmes > 6 ? 'critico' : taxaAlarmes > 3 ? 'atencao' : 'ok'}
-              sub="meta EEMUA: ≤ 6 por hora" />
-            <Kpi rotulo="Ativos agora" valor={`${alarmes.contagem.total}`}
-              estado={alarmes.contagem.critico ? 'critico' : alarmes.contagem.alerta ? 'atencao' : 'ok'}
-              sub={`${alarmes.contagem.naoReconhecidos} não reconhecidos`} />
+              sub="meta EEMUA: ≤ 6 por hora"
+            />
+            <Kpi
+              rotulo="Ativos agora"
+              valor={`${alarmes.contagem.total}`}
+              estado={
+                alarmes.contagem.critico ? 'critico' : alarmes.contagem.alerta ? 'atencao' : 'ok'
+              }
+              sub={`${alarmes.contagem.naoReconhecidos} não reconhecidos`}
+            />
           </div>
           <p className="nota">
             A EEMUA 191 recomenda no máximo um alarme a cada dez minutos por operador em regime
@@ -228,8 +292,11 @@ export default function Relatorios() {
           <table className="tabela compacta">
             <thead>
               <tr>
-                <th>Ponto</th><th className="n">Cloro mín</th><th className="n">Cloro méd</th>
-                <th className="n">Cloro máx</th><th>Conformidade</th>
+                <th>Ponto</th>
+                <th className="n">Cloro mín</th>
+                <th className="n">Cloro méd</th>
+                <th className="n">Cloro máx</th>
+                <th>Conformidade</th>
               </tr>
             </thead>
             <tbody>
@@ -242,7 +309,11 @@ export default function Relatorios() {
                     <td className="n">{num(e.min, 2)}</td>
                     <td className="n">{num(e.media, 2)}</td>
                     <td className="n">{num(e.max, 2)}</td>
-                    <td><Chip estado={conf ? 'ok' : 'critico'} pequeno>{conf ? 'Conforme' : 'Não conforme'}</Chip></td>
+                    <td>
+                      <Chip estado={conf ? 'ok' : 'critico'} pequeno>
+                        {conf ? 'Conforme' : 'Não conforme'}
+                      </Chip>
+                    </td>
                   </tr>
                 );
               })}
@@ -257,15 +328,31 @@ export default function Relatorios() {
             <div className="rolagem" style={{ maxHeight: 320, overflowY: 'auto' }}>
               <table className="tabela">
                 <thead>
-                  <tr><th>Horário</th><th>Severidade</th><th>Alarme</th><th>Origem</th></tr>
+                  <tr>
+                    <th>Horário</th>
+                    <th>Severidade</th>
+                    <th>Alarme</th>
+                    <th>Origem</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {alarmesPeriodo.map((a, i) => (
                     <tr key={i}>
                       <td>{dataHora(a.t)}</td>
-                      <td><Chip estado={a.severidade === 'critico' ? 'critico' : a.severidade === 'alerta' ? 'atencao' : 'info'} pequeno>
-                        {a.severidade}
-                      </Chip></td>
+                      <td>
+                        <Chip
+                          estado={
+                            a.severidade === 'critico'
+                              ? 'critico'
+                              : a.severidade === 'alerta'
+                                ? 'atencao'
+                                : 'info'
+                          }
+                          pequeno
+                        >
+                          {a.severidade}
+                        </Chip>
+                      </td>
                       <td className="principal">{a.titulo}</td>
                       <td>{a.origem}</td>
                     </tr>
@@ -284,12 +371,20 @@ export default function Relatorios() {
       </div>
 
       <div className="c12">
-        <Card titulo="Padrão de lançamento de efluentes" meta={<span>CONAMA 430/2011</span>} pad={false}>
+        <Card
+          titulo="Padrão de lançamento de efluentes"
+          meta={<span>CONAMA 430/2011</span>}
+          pad={false}
+        >
           <table className="tabela">
             <thead>
               <tr>
-                <th>Estação</th><th>Processo</th><th className="n">Vazão média</th>
-                <th className="n">DBO efluente</th><th className="n">Remoção</th><th>Situação</th>
+                <th>Estação</th>
+                <th>Processo</th>
+                <th className="n">Vazão média</th>
+                <th className="n">DBO efluente</th>
+                <th className="n">Remoção</th>
+                <th>Situação</th>
               </tr>
             </thead>
             <tbody>
@@ -297,7 +392,9 @@ export default function Relatorios() {
                 const q = sim.hist.serie(`ete/${e.unidade.id}/afluente`).estat(n);
                 const dbo = sim.hist.serie(`ete/${e.unidade.id}/dboEfluente`).estat(n);
                 const rem = sim.hist.serie(`ete/${e.unidade.id}/remocao`).estat(n);
-                const conf = dbo.media <= LIMITES.dboEfluente.max || rem.media / 100 >= LIMITES.dboEfluente.remocaoMin;
+                const conf =
+                  dbo.media <= LIMITES.dboEfluente.max ||
+                  rem.media / 100 >= LIMITES.dboEfluente.remocaoMin;
                 return (
                   <tr key={e.unidade.id}>
                     <td className="principal">{e.unidade.nome}</td>
@@ -305,7 +402,11 @@ export default function Relatorios() {
                     <td className="n">{num(q.media, 1)} L/s</td>
                     <td className="n">{num(dbo.media, 0)} mg/L</td>
                     <td className="n">{num(rem.media, 1)} %</td>
-                    <td><Chip estado={conf ? 'ok' : 'critico'} pequeno>{conf ? 'Atende' : 'Não atende'}</Chip></td>
+                    <td>
+                      <Chip estado={conf ? 'ok' : 'critico'} pequeno>
+                        {conf ? 'Atende' : 'Não atende'}
+                      </Chip>
+                    </td>
                   </tr>
                 );
               })}
@@ -322,7 +423,10 @@ function ItemSnis({ cod, nome, valor, unidade, ref_ }) {
     <div className="snis-item">
       <span className="snis-cod">{cod}</span>
       <div className="snis-nome">{nome}</div>
-      <div className="snis-val">{valor}<small>{unidade}</small></div>
+      <div className="snis-val">
+        {valor}
+        <small>{unidade}</small>
+      </div>
       <div className="snis-ref">{ref_}</div>
     </div>
   );

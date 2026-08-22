@@ -24,7 +24,12 @@ export default function Diagrama({ spec }) {
 
   return (
     <div className="sinoptico" style={{ height: spec.altura }}>
-      <svg className="sinoptico-tubos" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <svg
+        className="sinoptico-tubos"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
         {spec.tubos.map((t, i) => {
           const d = caminhoTubo(t.pontos);
           const q = vazaoDoTubo(t);
@@ -34,7 +39,12 @@ export default function Diagrama({ spec }) {
             <g key={i}>
               <path d={d} />
               <path d={d} className="interno" />
-              <path d={d} className={rompido ? 'rompido' : fluindo ? `fluxo${t.esgoto ? ' esgoto' : ''}` : 'parado'} />
+              <path
+                d={d}
+                className={
+                  rompido ? 'rompido' : fluindo ? `fluxo${t.esgoto ? ' esgoto' : ''}` : 'parado'
+                }
+              />
             </g>
           );
         })}

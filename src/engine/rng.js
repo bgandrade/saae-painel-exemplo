@@ -61,7 +61,8 @@ export class Ruido {
     // passos grandes do backfill de 24 h.
     const decaimento = Math.exp(-this.reversao * dt);
     const variancia = this.desvio * Math.sqrt(1 - decaimento * decaimento);
-    this.valor = this.media + (this.valor - this.media) * decaimento + variancia * normal(this.rand);
+    this.valor =
+      this.media + (this.valor - this.media) * decaimento + variancia * normal(this.rand);
     return this.valor;
   }
 

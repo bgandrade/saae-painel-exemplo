@@ -25,11 +25,11 @@
   --sombra: 0 1px 2px rgb(16 20 24 / 6%), 0 2px 8px rgb(16 20 24 / 4%);
 
   /* ── séries categóricas (ordem fixa, nunca ciclada) ── */
-  --serie-1: #2a78d6;  /* azul    */
-  --serie-2: #eb6834;  /* laranja */
-  --serie-3: #1baf7a;  /* aqua    */
-  --serie-4: #eda100;  /* amarelo */
-  --serie-5: #e87ba4;  /* magenta */
+  --serie-1: #2a78d6; /* azul    */
+  --serie-2: #eb6834; /* laranja */
+  --serie-3: #1baf7a; /* aqua    */
+  --serie-4: #eda100; /* amarelo */
+  --serie-5: #e87ba4; /* magenta */
 
   /* ── sistemas ── */
   --agua: #2a78d6;
@@ -149,7 +149,8 @@
 
 :root {
   /* ── tipografia ── */
-  --fonte: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --fonte:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --fonte-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
 
   --t-xs: 0.6875rem;
@@ -212,7 +213,9 @@
 /* Respeita quem pediu menos movimento: as animações do painel (fluxo nas
    adutoras, pulso de alarme) são decorativas e podem parar sem prejuízo. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;

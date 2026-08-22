@@ -12,5 +12,5 @@ import App from './App.jsx';
 createRoot(document.getElementById('raiz')).render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 );
