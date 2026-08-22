@@ -357,7 +357,7 @@ const DEMOS = [
   {
     n: 'D4',
     tit: 'Falha e recuperação',
-    txt: 'Dispare o cenário de sobrecarga na Visão Geral. O relé desarma o conjunto, o alarme sobe, a reserva entra sozinha e a pressão do setor não cai. Isso aconteceria às 3 da manhã sem acordar ninguém.',
+    txt: 'Dispare o cenário de falha da Elevatória Banqueta na Visão Geral. O relé desarma um conjunto da estação, o alarme sobe, a reserva entra sozinha e a pressão do setor não cai. Isso aconteceria às 3 da manhã sem acordar ninguém.',
   },
 ];
 

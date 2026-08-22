@@ -116,9 +116,9 @@ depois de uma semana — e o contador mostra quando o líder passa a vez.
 
 ### D4 — Falha e recuperação
 
-Dispare o cenário de **sobrecarga** na Visão Geral. O relé 51 desarma o
-conjunto, sobe alarme crítico, **um conjunto parado entra sozinho no lugar** e a
-pressão do setor não cruza o mínimo da NBR 12218.
+Dispare o cenário de **falha na Elevatória Banqueta** na Visão Geral. O relé 51
+desarma um conjunto da estação, sobe alarme crítico, **um conjunto parado entra
+sozinho no lugar** e a pressão do setor não cruza o mínimo da NBR 12218.
 
 > _"Isso aconteceria às três da manhã sem acordar ninguém."_
 
@@ -126,10 +126,10 @@ Normalizar o cenário remove a causa, **não o desarme**: relé de sobrecorrente
 não rearma sozinho. O conjunto fica em falha até alguém apertar `REARMAR` no
 faceplate — o que rende mais uma linha na auditoria e mais um argumento.
 
-`pnpm check:demos` dispara este cenário em **seis horários diferentes** do
-dia. É a verificação mais importante do conjunto: a versão anterior escolhia o
-conjunto sobrecarregado só na Captação Banqueta, que fica parada metade do dia,
-e disparar o cenário na hora errada não produzia sintoma nenhum.
+`pnpm check:demos` dispara este cenário em **seis horários diferentes** do dia e
+confirma que o conjunto afetado pertence sempre à Elevatória Banqueta. Se a
+estação estiver em repouso, o ensaio coloca dois conjuntos em operação antes de
+aplicar a falha.
 
 ---
 
@@ -140,7 +140,7 @@ Isto importa se alguém na plateia conhecer o sistema.
 |                                                         | Origem                                                                                                                |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Contorno do município                                   | **Real** — malha do IBGE, código 3300100, qualidade máxima (46 polígonos, incluindo a Ilha Grande e 44 ilhas menores) |
-| Coordenadas das 9 unidades                              | **Reais** — fornecidas pelo SAAE, verificadas uma a uma contra a malha do IBGE                                        |
+| Coordenadas das 10 unidades                             | **Reais** — fornecidas pelo SAAE, verificadas uma a uma contra a malha do IBGE                                        |
 | Cadeia Captação → Elevatória → Reservatório da Banqueta | **Real** — a arquitetura foi corrigida conforme a operação descrita, com os 5 conjuntos da elevatória                 |
 | Traçado de adutoras e coletores                         | **Estimado** — desenhado entre as coordenadas reais para dar leitura de rede                                          |
 | Setores de abastecimento                                | **Estimados** — áreas e populações plausíveis, não o cadastro do SAAE                                                 |
@@ -160,10 +160,10 @@ O princípio: **nada é roteirizado.** O que se vê na tela emerge do modelo.
 - **Curva de demanda diária** com mínimo às 4 h e picos às 7 h e 19 h,
   normalizada para média 1,0.
 - **Reservatórios** integram `dV = (Q_entrada − Q_saída)·dt`.
-- **Cadeia da Banqueta**: a captação enche a câmara de carga por histerese; a
-  elevatória de 5 conjuntos puxa da câmara e recalca para o reservatório,
-  observando o nível do **destino** e travando na **sucção**; o reservatório
-  abastece o Centro por gravidade e Japuíba via elevatória.
+- **Cadeia da Banqueta**: a captação alimenta diretamente a EEA Japuíba, que
+  abastece Centro, Balneário e Parque das Palmeiras. Em paralelo, a Elevatória
+  Banqueta recalca para o reservatório, que abastece Japuíba, Nova Angra, Belém
+  e Ribeira.
 - **Número de conjuntos** sai da vazão que o reservatório está entregando, não
   de um número fixo — por isso o painel mostra dois conjuntos de madrugada e
   até cinco no pico das 7 h.
@@ -225,14 +225,14 @@ de Relatórios mostra a taxa de alarmes comparada à meta da **EEMUA 191**.
 
 Seis, todos com entrada e saída em rampa suave:
 
-| Cenário                                 | O que aparece no painel                                                                                                                                                                                       |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Rompimento da adutora Banqueta → Centro | Pressão do Centro abaixo do mínimo, trecho piscando no mapa e no sinóptico, alarme crítico                                                                                                                    |
-| Falta de energia na Elevatória Japuíba  | Pressão desaba, gerador assume em ~90 s e recupera parcialmente                                                                                                                                               |
-| Cloro fora de faixa em Jacuecanga       | Cloro residual abaixo de 0,2 mg/L na saída e na rede                                                                                                                                                          |
-| Sobrecarga em conjunto motobomba        | Corrente, vibração e mancal sobem até o desarme pelo relé 51. O cenário escolhe sozinho um conjunto **que esteja girando**, então funciona a qualquer hora do dia — e o desarme só sai com rearme do operador |
-| Chuva intensa                           | ETEs em sobrecarga hidráulica, OD despenca, poço do Anil sobe                                                                                                                                                 |
-| Pico de consumo de feriado              | Demanda 35 % acima, reservatórios drenando mais rápido                                                                                                                                                        |
+| Cenário                                    | O que aparece no painel                                                                                                                   |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Rompimento da adutora EEA Japuíba → Centro | Pressão do Centro abaixo do mínimo, trecho piscando no mapa e no sinóptico, alarme crítico                                                |
+| Falta de energia na Elevatória Japuíba     | Pressão desaba, gerador assume em ~90 s e recupera parcialmente                                                                           |
+| Cloro fora de faixa em Jacuecanga          | Cloro residual abaixo de 0,2 mg/L na saída e na rede                                                                                      |
+| Falha em conjunto da Elevatória Banqueta   | Corrente, vibração e mancal sobem até o desarme pelo relé 51. A reserva assume automaticamente, e o desarme só sai com rearme do operador |
+| Chuva intensa                              | ETEs em sobrecarga hidráulica, OD despenca, poço do Anil sobe                                                                             |
+| Pico de consumo de feriado                 | Demanda 35 % acima, reservatórios drenando mais rápido                                                                                    |
 
 ---
 

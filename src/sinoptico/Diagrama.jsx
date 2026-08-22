@@ -34,7 +34,7 @@ export default function Diagrama({ spec }) {
           const d = caminhoTubo(t.pontos);
           const q = vazaoDoTubo(t);
           const fluindo = t.fonte ? q > 0.2 : true;
-          const rompido = t.trecho === 'ad-bqt-centro' && sim.intensidade('rompimento') > 0.25;
+          const rompido = t.trecho === 'ad-jpb-centro' && sim.intensidade('rompimento') > 0.25;
           return (
             <g key={i}>
               <path d={d} />

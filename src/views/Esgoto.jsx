@@ -195,13 +195,17 @@ export default function Esgoto() {
             casas={1}
             zero
             series={[
-              { nome: 'Consumo Centro', cor: CORES_SERIE[0], ...jan('setor/centro/consumo') },
+              {
+                nome: 'Consumo Centro e adjacências',
+                cor: CORES_SERIE[0],
+                ...jan('setor/centro/consumo'),
+              },
               { nome: 'Afluente ETE-CHC', cor: CORES_SERIE[1], ...jan('ete/ete-chacara/afluente') },
             ]}
           />
           <Legenda
             itens={[
-              { nome: 'Consumo de água (Centro)', cor: CORES_SERIE[0] },
+              { nome: 'Consumo (Centro, Balneário e Parque das Palmeiras)', cor: CORES_SERIE[0] },
               { nome: 'Afluente na ETE Chácara', cor: CORES_SERIE[1] },
             ]}
           />

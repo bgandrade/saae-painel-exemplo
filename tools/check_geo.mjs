@@ -130,6 +130,17 @@ for (const u of UNIDADES) {
   }
   if (u.recalcaPara && !porId.has(u.recalcaPara))
     problemas.push(`${u.id}: recalcaPara "${u.recalcaPara}" não existe`);
+  if (u.alimentadaPor && !porId.has(u.alimentadaPor))
+    problemas.push(`${u.id}: alimentadaPor "${u.alimentadaPor}" não existe`);
+  for (const id of u.recebeDe ?? []) {
+    if (!porId.has(id)) problemas.push(`${u.id}: recebeDe "${id}" não existe`);
+  }
+}
+for (const l of LINHAS) {
+  if (!porId.has(l.de) && !idsSetor.has(l.de))
+    problemas.push(`${l.id}: origem "${l.de}" não existe`);
+  if (!porId.has(l.para) && !idsSetor.has(l.para))
+    problemas.push(`${l.id}: destino "${l.para}" não existe`);
 }
 const dup = UNIDADES.map((u) => u.id).filter((id, i, a) => a.indexOf(id) !== i);
 for (const d of dup) problemas.push(`id de unidade duplicado: ${d}`);

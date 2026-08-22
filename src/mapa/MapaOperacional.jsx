@@ -162,7 +162,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     r.marcadores.clear();
 
     for (const s of SETORES) {
-      if (!s.centro || sistema === 'esgoto') continue;
+      if (!s.centro || s.somenteEsgoto || sistema === 'esgoto') continue;
       const c = L.circle([s.centro[1], s.centro[0]], {
         radius: (s.raioKm ?? 2) * 1000,
         color: 'var(--ok)',
@@ -270,7 +270,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       // animação para junto com as bombas quando cai a energia.
       const bombas = sim.bombasPorUnidade.get(l.de);
       const fluindo = bombas?.length ? bombas.some((b) => b.ligada) : true;
-      const rompida = l.id === 'ad-bqt-centro' && sim.intensidade('rompimento') > 0.25;
+      const rompida = l.id === 'ad-jpb-centro' && sim.intensidade('rompimento') > 0.25;
       pl.setStyle({
         opacity: rompida ? 1 : fluindo ? 0.85 : 0.3,
         color: rompida

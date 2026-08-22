@@ -34,7 +34,7 @@ const AMOSTRA_S = 60; // resolução do histórico: 1 min simulado
 const CAPACIDADE_HIST = 1440; // 24 h
 const AQUECIMENTO_H = 3; // horas rodadas antes do trecho exibido
 const PASSO_MAX_S = 20; // subpasso máximo de integração
-const RODIZIO_LIDERANCA_S = 12 * 3600; // troca a bomba líder a cada 12 h contínuas
+const RODIZIO_LIDERANCA_S = 8 * 3600; // troca a bomba líder a cada 8 h contínuas
 const PARTIDA_S = 4; // rampa de partida (soft-starter/inversor)
 const BANDA_EMERGENCIA = 10; // banda morta do degrau de emergência, em % de nível
 
@@ -108,8 +108,9 @@ export const fatorDemanda = (h) => perfilBruto(((h % 24) + 24) % 24) / MEDIA_PER
 export const CENARIOS = [
   {
     id: 'rompimento',
-    nome: 'Rompimento da adutora Banqueta → Centro',
-    resumo: 'Perda de carga e vazamento no trecho de recalque para o Centro.',
+    nome: 'Rompimento da adutora EEA Japuíba → Centro',
+    resumo:
+      'Perda de carga e vazamento no trecho que abastece Centro, Balneário e Parque das Palmeiras.',
     severidade: 'critico',
     rampaS: 120,
   },
@@ -129,9 +130,9 @@ export const CENARIOS = [
   },
   {
     id: 'sobrecarga',
-    nome: 'Sobrecarga em conjunto motobomba',
+    nome: 'Falha em conjunto da Elevatória Banqueta',
     resumo:
-      'Corrente, vibração e mancal sobem num conjunto em operação até o desarme pelo relé 51. A reserva assume sozinha.',
+      'Corrente, vibração e mancal sobem em um conjunto da EEA Banqueta até o desarme pelo relé 51. A reserva assume sozinha.',
     severidade: 'alerta',
     rampaS: 240,
   },
@@ -482,24 +483,15 @@ export class Simulacao {
   /**
    * Escolhe qual conjunto sofre a sobrecarga.
    *
-   * Tem de ser um que esteja REALMENTE girando: sobrecarregar bomba parada não
-   * produziria sintoma nenhum, e o cenário morreria em silêncio na frente da
-   * plateia. A preferência é pelas unidades de água de maior porte, onde o
-   * desarme se vê melhor no painel, mas serve qualquer conjunto em operação.
+   * O alvo é sempre um conjunto da Elevatória Banqueta que esteja realmente
+   * girando. Se a estação estiver em repouso, a malha do cenário a coloca em
+   * operação e a seleção acontece no passo seguinte.
    */
   _escolherAlvoSobrecarga() {
-    const preferencia = ['cap-banqueta', 'eea-banqueta', 'eea-japuiba', 'cap-jacuecanga'];
-    const girando = (uid) =>
-      (this.bombasPorUnidade.get(uid) ?? []).find((b) => b.ligada && b.estado === 'operando');
-    for (const uid of preferencia) {
-      const b = girando(uid);
-      if (b) {
-        this.alvoSobrecarga = b.id;
-        return;
-      }
-    }
-    const qualquer = [...this.bombas.values()].find((b) => b.ligada && b.estado === 'operando');
-    this.alvoSobrecarga = qualquer?.id ?? null;
+    const alvo = (this.bombasPorUnidade.get('eea-banqueta') ?? []).find(
+      (b) => b.ligada && b.estado === 'operando',
+    );
+    this.alvoSobrecarga = alvo?.id ?? null;
   }
 
   normalizarCenario(id) {
@@ -863,6 +855,12 @@ export class Simulacao {
       quantas = limitar(Math.ceil(alvo / porBomba), 1, bs.length);
       if (destino.emergencia) quantas = bs.length;
     }
+    // O cenário de falha pertence à EEA Banqueta. Mantém dois conjuntos em
+    // operação durante o ensaio para que o relé tenha um alvo real e a entrada
+    // da reserva seja observável mesmo se a estação estava em repouso.
+    if (u.id === 'eea-banqueta' && this.cenarios.get('sobrecarga')?.ativo) {
+      quantas = Math.max(quantas, 2);
+    }
     this._definirLigadas(u, bs, quantas);
 
     // Com inversor, a rotação fecha o resto: em vez de bater no liga/desliga,
@@ -911,7 +909,7 @@ export class Simulacao {
     // Rotação mínima: abaixo dela a bomba sai da curva de rendimento.
     const rotMin = (m?.rotacaoMinPct ?? 55) / 100;
     const rot = limitar(demanda / (ligadas * porBomba), rotMin, 1);
-    const forcada = this.intensidade('rompimento') > 0.3 && u.id === 'eea-banqueta';
+    const forcada = this.intensidade('rompimento') > 0.3 && u.id === 'eea-japuiba';
     for (const b of bs) {
       if (b.modo !== 'auto') continue;
       b.rotacaoPct = b.ligada ? (forcada ? 1 : rot) : 0;
@@ -991,7 +989,7 @@ export class Simulacao {
     const alvoQtd = limitar(quantas, 0, disp.length);
     const escolhidas = new Set();
 
-    // Uma bomba que já rodou 12 h seguidas cede o posto para uma irmã
+    // Uma bomba que já rodou 8 h seguidas cede o posto para uma irmã
     // descansada — é assim que o horímetro do conjunto se equaliza ao longo
     // das semanas, em vez de uma bomba morrer e a outra chegar nova.
     const cansada = (b) => b.segundosLigada > RODIZIO_LIDERANCA_S;
@@ -1145,7 +1143,7 @@ export class Simulacao {
   /* ───────────── balanço de volume ───────────── */
 
   _passoReservatorios(dt) {
-    // Entrada: bombas da própria unidade (só captação capta do manancial).
+    // Entrada bombeada das unidades de captação que possuem conjuntos.
     for (const [id, r] of this.reservatorios) {
       r.entradaLs = 0;
       r.saidaLs = 0;
@@ -1156,6 +1154,7 @@ export class Simulacao {
 
     // Saída: demanda dos setores atendidos por cada reservatório.
     for (const s of this.setores.values()) {
+      if (s.def.somenteEsgoto) continue;
       const idReserv = RESERVATORIO_DO_SETOR[s.def.id];
       if (!idReserv) continue;
       const r = this.reservatorios.get(idReserv);
@@ -1177,6 +1176,16 @@ export class Simulacao {
       const origem = u.alimentadaPor ? this.reservatorios.get(u.alimentadaPor) : null;
       if (destino) destino.entradaLs += recalque;
       if (origem) origem.saidaLs += recalque;
+    }
+
+    // A Captação Banqueta não possui conjuntos motobomba cadastrados. Sua
+    // entrada acompanha a retirada das elevatórias e corrige suavemente o
+    // nível da câmara, limitada pela vazão nominal da captação.
+    for (const r of this.reservatorios.values()) {
+      if (!r.unidade.entradaSemBombeamento) continue;
+      const alvoM3 = r.capacidadeM3 * ((r.unidade.nivelInicialPct ?? 60) / 100);
+      const correcaoLs = ((alvoM3 - r.volumeM3) * 1000) / 1800;
+      r.entradaLs = limitar(r.saidaLs + correcaoLs, 0, r.unidade.vazaoNominalLs);
     }
 
     // Transferências entre reservatórios, com controle proporcional de nível.
@@ -1209,6 +1218,7 @@ export class Simulacao {
     const hora = this.horaDecimal;
     const fator = fatorDemanda(hora);
     for (const s of this.setores.values()) {
+      if (s.def.somenteEsgoto) continue;
       const idReserv = RESERVATORIO_DO_SETOR[s.def.id];
       const r = idReserv ? this.reservatorios.get(idReserv) : null;
 
@@ -1263,6 +1273,7 @@ export class Simulacao {
     }
 
     for (const s of this.setores.values()) {
+      if (s.def.somenteEsgoto) continue;
       const idReserv = RESERVATORIO_DO_SETOR[s.def.id];
       let origem = null;
       if (idReserv) {
@@ -1379,6 +1390,7 @@ export class Simulacao {
         consumo += s.consumoLs;
         distribuida += s.producaoLs;
       }
+      if (s.def.somenteEsgoto) continue;
       // Média ponderada por população: um setor grande pesa mais no indicador.
       somaPressao += s.pressaoMca * s.def.populacao;
       somaCloro += s.cloroMgL * s.def.populacao;

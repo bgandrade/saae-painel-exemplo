@@ -1,7 +1,7 @@
 /**
  * Aleatoriedade determinística para a maquete.
  *
- * Tudo aqui é semeado por string: `ruido('BQT-CMB-01/corrente')` devolve
+ * Tudo aqui é semeado por string: `ruido('EBQ-CMB-01/corrente')` devolve
  * sempre a mesma sequência. Isso importa por dois motivos — o histórico de
  * 24 h reconstruído no carregamento bate com o que a simulação produziria ao
  * vivo, e uma apresentação pode ser ensaiada e repetida sem surpresa.

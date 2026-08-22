@@ -10,7 +10,7 @@ import { Drawer } from '../ui/Overlay.jsx';
 import { Chip, Tanque, Pares } from '../ui/componentes.jsx';
 import { Sparkline } from '../charts/index.js';
 import { num, horimetro, ROTULO_BOMBA } from '../ui/formato.js';
-import { TIPOS } from '../data/topologia.js';
+import { TIPOS, SETORES, porId } from '../data/topologia.js';
 
 export default function DrawerUnidade({ unidade: u }) {
   const { sim } = useSim();
@@ -23,6 +23,8 @@ export default function DrawerUnidade({ unidade: u }) {
   const bombas = sim.bombasPorUnidade.get(u.id) ?? [];
   const malha = sim.malhas.get(u.id);
   const hist = janela(sim, `reserv/${u.id}/nivel`, 360, 120);
+  const nomeSetor = (id) => SETORES.find((s) => s.id === id)?.nome ?? id;
+  const nomeUnidade = (id) => porId.get(id)?.nome ?? id;
 
   return (
     <Drawer
@@ -188,6 +190,15 @@ export default function DrawerUnidade({ unidade: u }) {
             ['Coordenadas', `${num(u.lat, 6)}, ${num(u.lon, 6)}`],
             ['CLP', u.clp ?? '—'],
             ['Origem do dado', u.confirmada ? 'Coordenada SAAE' : 'Estimada'],
+            u.alimentadaPor && ['Alimentada por', nomeUnidade(u.alimentadaPor)],
+            u.recalcaPara && ['Recalca para', nomeUnidade(u.recalcaPara)],
+            u.recebeDe?.length && ['Recebe de', u.recebeDe.map(nomeUnidade).join(', ')],
+            u.setores?.length && ['Abastece', u.setores.map(nomeSetor).join(', ')],
+            u.bacia?.length && [
+              'Bacia atendida',
+              u.bacia.map((b) => nomeSetor(b.setor)).join(', '),
+            ],
+            u.modoChegada && ['Chegada do esgoto', u.modoChegada],
             u.mananancial && ['Manancial', u.mananancial],
             u.alturaManometricaM && ['Altura manométrica', `${u.alturaManometricaM} m`],
           ].filter(Boolean)}

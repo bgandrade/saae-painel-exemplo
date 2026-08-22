@@ -25,7 +25,7 @@ export const TIPOS = Object.freeze({
 });
 
 /* ─────────────────────────── UNIDADES CONFIRMADAS ─────────────────────────
- * As nove coordenadas abaixo foram fornecidas pelo SAAE e verificadas por
+ * As dez coordenadas abaixo foram fornecidas pelo SAAE e verificadas por
  * point-in-polygon contra a malha do IBGE (tools/check_geo.mjs). Todas caem
  * dentro do município; a ETE Abraão cai dentro do polígono da Ilha Grande.
  *
@@ -51,18 +51,9 @@ export const UNIDADES = [
     capacidadeM3: 800,
     rotuloVolume: 'Câmara de carga',
     nivelInicialPct: 68,
+    entradaSemBombeamento: true,
     setores: ['banqueta'],
     mananancial: 'Rio Banqueta',
-    malha: {
-      tipo: 'nivel',
-      descricao: 'Histerese de nível na câmara de carga, partida direta',
-      variavel: 'Nível CAP-BQT',
-      ligaPct: 30,
-      desligaPct: 85,
-      emergenciaPct: 15,
-      escalonamentoS: 15,
-      tempoMinimoOperacaoS: 300,
-    },
   },
   {
     id: 'eea-banqueta',
@@ -113,7 +104,7 @@ export const UNIDADES = [
     capacidadeM3: 1500,
     rotuloVolume: 'Reservatório apoiado',
     nivelInicialPct: 64,
-    setores: ['centro', 'japuiba'],
+    setores: ['japuiba'],
   },
   {
     id: 'eea-japuiba',
@@ -127,12 +118,14 @@ export const UNIDADES = [
     clp: 'CLP-03',
     vazaoNominalLs: 90,
     alturaManometricaM: 48,
-    alimentadaPor: 'res-banqueta',
-    setores: ['japuiba'],
+    // Recebe diretamente da captação da Banqueta, sem passar pelo
+    // Reservatório Banqueta.
+    alimentadaPor: 'cap-banqueta',
+    setores: ['centro'],
     malha: {
       tipo: 'demanda',
       descricao: 'Modulação de rotação por inversor para acompanhar a demanda do setor',
-      variavel: 'Demanda Japuíba',
+      variavel: 'Demanda Centro / Balneário / Parque das Palmeiras',
       rotacaoMinPct: 55,
       nivelMinSuccaoPct: 12,
       escalonamentoS: 15,
@@ -184,8 +177,10 @@ export const UNIDADES = [
     dboAfluenteMgL: 320,
     eficienciaDbo: 0.92,
     sopradores: 2,
-    // A parcela do Centro chega recalcada pela EEE Anil, não direto.
-    bacia: [{ setor: 'japuiba', fracao: 0.7 }],
+    // Centro, Balneário e Parque das Palmeiras chegam exclusivamente
+    // recalcados pela EEE Praia do Anil.
+    bacia: [],
+    recebeDe: ['eee-anil'],
     malha: {
       tipo: 'continua',
       descricao: 'Recalque interno contínuo, rotação modulada pela carga afluente',
@@ -211,7 +206,7 @@ export const UNIDADES = [
     pocoM3: 45,
     nivelInicialPct: 42,
     recalcaPara: 'ete-chacara',
-    bacia: [{ setor: 'centro', fracao: 0.55 }],
+    bacia: [{ setor: 'centro', fracao: 1 }],
     malha: {
       tipo: 'poco',
       descricao: 'Histerese de nível no poço de sucção, alternância a cada partida',
@@ -239,7 +234,7 @@ export const UNIDADES = [
     dboAfluenteMgL: 340,
     eficienciaDbo: 0.86,
     sopradores: 1,
-    bacia: [{ setor: 'centro', fracao: 0.3 }],
+    bacia: [{ setor: 'bonfim', fracao: 1 }],
     malha: {
       tipo: 'continua',
       descricao: 'Recalque interno contínuo, rotação modulada pela carga afluente',
@@ -248,6 +243,30 @@ export const UNIDADES = [
       escalonamentoS: 15,
       tempoMinimoOperacaoS: 300,
     },
+  },
+  {
+    id: 'ete-japuiba',
+    nome: 'ETE Japuíba',
+    sigla: 'ETE-JPB',
+    tipo: 'ete',
+    lat: -22.977649577511944,
+    lon: -44.30422552964291,
+    bairro: 'Japuíba',
+    confirmada: true,
+    clp: null,
+    // Vazão e parâmetros de processo mantidos como estimativas da maquete;
+    // a localização e a bacia atendida são os dados confirmados.
+    dadosProcessoEstimados: true,
+    vazaoNominalLs: 60,
+    tratamento: 'Processo não informado',
+    populacaoAtendida: 18000,
+    dboAfluenteMgL: 320,
+    eficienciaDbo: 0.88,
+    sopradores: 1,
+    // O esgoto de Japuíba chega por gravidade. O destino sanitário de Nova
+    // Angra, Belém e Ribeira não foi informado e não é inferido no cadastro.
+    bacia: [{ setor: 'japuiba-esgoto', fracao: 1 }],
+    modoChegada: 'Gravidade',
   },
   {
     id: 'ete-abraao',
@@ -289,49 +308,10 @@ export const UNIDADES = [
  * forma típica de uma centrífuga de rotor fechado.
  */
 export const BOMBAS = [
-  // Captação Banqueta — 2 operando + 1 reserva, recalcam do rio para a câmara
-  {
-    id: 'BQT-CMB-01',
-    inversor: false,
-    unidadeId: 'cap-banqueta',
-    papel: 'principal',
-    potenciaCV: 150,
-    correnteNominalA: 168,
-    rpmNominal: 1780,
-    vazaoNominalLs: 90,
-    alturaNominalM: 45,
-    rendimentoBep: 0.79,
-  },
-  {
-    id: 'BQT-CMB-02',
-    inversor: false,
-    unidadeId: 'cap-banqueta',
-    papel: 'principal',
-    potenciaCV: 150,
-    correnteNominalA: 168,
-    rpmNominal: 1780,
-    vazaoNominalLs: 90,
-    alturaNominalM: 45,
-    rendimentoBep: 0.79,
-  },
-  {
-    id: 'BQT-CMB-03',
-    inversor: false,
-    unidadeId: 'cap-banqueta',
-    papel: 'reserva',
-    potenciaCV: 150,
-    correnteNominalA: 168,
-    rpmNominal: 1780,
-    vazaoNominalLs: 90,
-    alturaNominalM: 45,
-    rendimentoBep: 0.79,
-  },
-
   /* Elevatória Banqueta — 5 conjuntos.
-   * Dimensionamento: o Reservatório Banqueta abastece o Centro (14.000 hab) e,
-   * via EEA-JPB, o setor Japuíba (18.000 hab). Isso pede ~96 L/s de produção
-   * média e ~181 L/s no pico das 7 h. Com 5 × 50 L/s, o painel mostra 2, 3, 4 e
-   * até 5 conjuntos entrando ao longo do dia, sempre com folga de reserva. */
+   * Dimensionamento: o Reservatório Banqueta abastece Japuíba, Nova Angra,
+   * Belém e Ribeira (18.000 hab). Isso pede ~52 L/s de produção média e cerca
+   * de 100 L/s no pico das 7 h. Os cinco conjuntos preservam ampla reserva. */
   {
     id: 'EBQ-CMB-01',
     inversor: true,
@@ -534,33 +514,63 @@ export const BOMBAS = [
   },
 ];
 
-/* ───────────────────────── SETORES DE ABASTECIMENTO ────────────────────────
- * Estimados. Servem para dar contexto de pressão e consumo ao mapa.
+/* ─────────────────── SETORES DE ABASTECIMENTO E BACIAS ─────────────────────
+ * Estimados. Servem para dar contexto de pressão, consumo e esgoto ao mapa.
  */
 export const SETORES = [
   {
     id: 'centro',
-    nome: 'Centro / Praia do Anil',
+    nome: 'Centro / Balneário / Parque das Palmeiras',
     nomeCurto: 'Centro',
     cotaM: 8,
     populacao: 14000,
     pressaoAlvoMca: 32,
-    fonteId: 'res-banqueta',
+    fonteId: 'eea-japuiba',
     residenciaH: 5.2,
     centro: [-44.3181, -23.0067],
     raioKm: 2.4,
   },
   {
     id: 'japuiba',
-    nome: 'Japuíba / Belém',
+    nome: 'Japuíba / Nova Angra / Belém / Ribeira',
     nomeCurto: 'Japuíba',
     cotaM: 22,
     populacao: 18000,
     pressaoAlvoMca: 28,
-    fonteId: 'eea-japuiba',
+    fonteId: 'res-banqueta',
     residenciaH: 6.8,
     centro: [-44.296, -22.982],
     raioKm: 2.7,
+  },
+  {
+    id: 'japuiba-esgoto',
+    nome: 'Japuíba',
+    nomeCurto: 'Japuíba',
+    cotaM: 22,
+    populacao: 18000,
+    pressaoAlvoMca: 28,
+    fonteId: null,
+    residenciaH: 3,
+    semTelemetria: true,
+    somenteEsgoto: true,
+    centro: [-44.296, -22.982],
+    raioKm: 2.7,
+  },
+  // Bacia sanitária independente; não participa dos indicadores de
+  // abastecimento de água desta maquete.
+  {
+    id: 'bonfim',
+    nome: 'Bonfim',
+    nomeCurto: 'Bonfim',
+    cotaM: 8,
+    populacao: 9000,
+    pressaoAlvoMca: 30,
+    fonteId: null,
+    residenciaH: 3,
+    semTelemetria: true,
+    somenteEsgoto: true,
+    centro: [-44.335, -23.021],
+    raioKm: 1,
   },
   {
     id: 'jacuecanga',
@@ -639,31 +649,31 @@ export const LINHAS = [
     ],
   },
   {
-    id: 'ad-bqt-centro',
-    nome: 'Adutora Reservatório Banqueta → Centro',
+    id: 'ad-jpb-centro',
+    nome: 'Adutora EEA Japuíba → Centro / Balneário / Parque das Palmeiras',
     sistema: 'agua',
     diametroMm: 350,
-    de: 'res-banqueta',
+    de: 'eea-japuiba',
     para: 'centro',
     confirmada: false,
     pontos: [
-      [-44.294315, -22.969067],
-      [-44.3005, -22.9788],
+      [-44.303495, -22.984898],
       [-44.3068, -22.9903],
       [-44.3113, -23.0002],
       [-44.313, -23.006],
     ],
   },
   {
-    id: 'ad-res-jpb',
-    nome: 'Adutora Reservatório Banqueta → Japuíba',
+    id: 'ad-cap-jpb',
+    nome: 'Adutora Captação Banqueta → EEA Japuíba',
     sistema: 'agua',
     diametroMm: 300,
-    de: 'res-banqueta',
+    de: 'cap-banqueta',
     para: 'eea-japuiba',
     confirmada: false,
     pontos: [
-      [-44.294315, -22.969067],
+      [-44.273131, -22.959238],
+      [-44.286, -22.967],
       [-44.2981, -22.9755],
       [-44.3012, -22.9812],
       [-44.303495, -22.984898],
@@ -671,14 +681,15 @@ export const LINHAS = [
   },
   {
     id: 'ad-jpb-rede',
-    nome: 'Rede Japuíba',
+    nome: 'Rede Japuíba / Nova Angra / Belém / Ribeira',
     sistema: 'agua',
     diametroMm: 250,
-    de: 'eea-japuiba',
+    de: 'res-banqueta',
     para: 'japuiba',
     confirmada: false,
     pontos: [
-      [-44.303495, -22.984898],
+      [-44.294315, -22.969067],
+      [-44.296, -22.975],
       [-44.2985, -22.9832],
       [-44.2938, -22.9818],
       [-44.289, -22.9808],
@@ -701,7 +712,7 @@ export const LINHAS = [
   },
   {
     id: 'co-centro-anil',
-    nome: 'Coletor-tronco Centro → Anil',
+    nome: 'Coletor Centro / Balneário / Parque das Palmeiras → Anil',
     sistema: 'esgoto',
     diametroMm: 400,
     de: 'centro',
@@ -732,14 +743,26 @@ export const LINHAS = [
     nome: 'Coletor-tronco Bonfim',
     sistema: 'esgoto',
     diametroMm: 300,
-    de: 'centro',
+    de: 'bonfim',
     para: 'ete-bonfim',
     confirmada: false,
     pontos: [
-      [-44.3181, -23.0067],
-      [-44.3245, -23.0128],
-      [-44.3298, -23.018],
+      [-44.335, -23.021],
       [-44.33349, -23.021322],
+    ],
+  },
+  {
+    id: 'co-japuiba',
+    nome: 'Coletor por gravidade Japuíba → ETE Japuíba',
+    sistema: 'esgoto',
+    diametroMm: 300,
+    de: 'japuiba-esgoto',
+    para: 'ete-japuiba',
+    confirmada: false,
+    pontos: [
+      [-44.296, -22.982],
+      [-44.2995, -22.9805],
+      [-44.30422552964291, -22.977649577511944],
     ],
   },
   {

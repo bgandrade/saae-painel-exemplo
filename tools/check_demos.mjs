@@ -119,14 +119,20 @@ console.log('\nD3 — Equalização do rodízio');
 /* ───────────── D4: falha e recuperação ───────────── */
 console.log('\nD4 — Sobrecarga, desarme e entrada da reserva');
 {
+  const aguardarAlvoNaElevatoria = (sim, al) => {
+    for (let i = 0; i < 12 && !sim.alvoSobrecarga; i++) {
+      sim._passo(5);
+      al.avaliar(5);
+    }
+    return sim.alvoSobrecarga;
+  };
+
   /**
    * Roda o cenário a partir de vários instantes do dia.
    *
-   * Não é preciosismo: a versão anterior escolhia o conjunto sobrecarregado
-   * apenas na Captação Banqueta, que fica parada metade do dia. Disparar o
-   * cenário na hora errada não produzia sintoma nenhum — e a plateia veria um
-   * botão que não faz nada. Seis horários cobrem o vale da madrugada, os dois
-   * picos e os patamares intermediários.
+   * O alvo deve pertencer sempre à Elevatória Banqueta. Se a estação estiver
+   * em repouso, o cenário primeiro coloca dois conjuntos em operação e só
+   * então escolhe o que sofrerá a falha.
    */
   const trial = (avancoH) => {
     const sim = new Simulacao({ velocidade: 60 });
@@ -135,7 +141,7 @@ console.log('\nD4 — Sobrecarga, desarme e entrada da reserva');
     const al = new MotorAlarmes(sim);
 
     sim.dispararCenario('sobrecarga');
-    const alvo = sim.alvoSobrecarga;
+    const alvo = aguardarAlvoNaElevatoria(sim, al);
     if (!alvo)
       return { hora: null, ok: false, motivo: 'nenhum conjunto em operação para sobrecarregar' };
 
@@ -167,7 +173,7 @@ console.log('\nD4 — Sobrecarga, desarme e entrada da reserva');
       critico,
       reserva,
       piorP,
-      ok: desarmou && critico && piorP >= 10,
+      ok: uid === 'eea-banqueta' && desarmou && critico && piorP >= 10,
     };
   };
 
@@ -187,6 +193,7 @@ console.log('\nD4 — Sobrecarga, desarme e entrada da reserva');
   sim.backfill(24);
   const al = new MotorAlarmes(sim);
   sim.dispararCenario('sobrecarga');
+  aguardarAlvoNaElevatoria(sim, al);
   for (let i = 0; i < 900; i++) sim.avancarReal((10 / 60) * 1000, (dt) => al.avaliar(dt));
   sim.normalizarCenario('sobrecarga');
   for (let i = 0; i < 200; i++) sim._passo(20);

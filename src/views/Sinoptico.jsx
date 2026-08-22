@@ -3,8 +3,8 @@
  *
  * Responde à pergunta que o mapa não responde: por onde a água anda. O mapa
  * mostra ONDE as unidades estão; o sinóptico mostra COMO elas se ligam — que a
- * Elevatória Banqueta recebe da captação e recalca para o reservatório, e que
- * é do reservatório que saem o Centro e Japuíba.
+ * Elevatória Banqueta recebe da captação e recalca para o reservatório; a
+ * EEA Japuíba recebe diretamente da captação e atende o núcleo do Centro.
  */
 
 import { useState } from 'react';
