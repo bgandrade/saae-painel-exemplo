@@ -460,13 +460,39 @@ h3 {
   background: color-mix(in srgb, var(--atencao) 16%, transparent);
   border: 1px solid color-mix(in srgb, var(--atencao) 45%, transparent);
   color: var(--atencao);
+  font: inherit;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    background var(--transicao),
+    border-color var(--transicao),
+    color var(--transicao);
 }
 .selo-simulacao svg {
   width: 11px;
   height: 11px;
+}
+.selo-simulacao:hover {
+  background: color-mix(in srgb, var(--atencao) 24%, transparent);
+  border-color: var(--atencao);
+}
+.selo-simulacao.pausada {
+  background: color-mix(in srgb, var(--atencao) 24%, var(--superficie));
+  border-color: var(--atencao);
+}
+.selo-simulacao.com-cenario {
+  color: var(--critico);
+  background: color-mix(in srgb, var(--critico) 12%, var(--superficie));
+  border-color: color-mix(in srgb, var(--critico) 55%, var(--borda));
+}
+.selo-simulacao-velocidade {
+  padding-left: 6px;
+  border-left: 1px solid currentColor;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  opacity: 0.8;
 }
 
 /* ═══════════════════════════ RODAPÉ ═══════════════════════════ */
@@ -1139,6 +1165,54 @@ h3 {
 
 /* ═══════════════════════════ CENÁRIOS ═══════════════════════════ */
 
+.simulacao-painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e5);
+}
+.simulacao-aviso {
+  padding: var(--e3);
+  border: 1px solid color-mix(in srgb, var(--atencao) 45%, var(--borda));
+  border-radius: var(--raio-sm);
+  background: color-mix(in srgb, var(--atencao) 8%, var(--superficie));
+}
+.simulacao-estado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3);
+  padding: var(--e3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--superficie-2);
+}
+.simulacao-estado.pausada {
+  border-color: color-mix(in srgb, var(--atencao) 55%, var(--borda));
+}
+.simulacao-estado-titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  font-size: var(--t-md);
+  font-weight: 650;
+}
+.simulacao-estado-meta {
+  margin-top: 2px;
+  color: var(--tinta-3);
+  font-size: var(--t-xs);
+}
+.simulacao-velocidades {
+  display: flex;
+  width: 100%;
+}
+.simulacao-velocidades button {
+  flex: 1;
+  padding-block: 7px;
+}
+.simulacao-ajuda {
+  margin-top: var(--e2);
+}
+
 .cenarios {
   display: flex;
   flex-direction: column;
@@ -1195,6 +1269,17 @@ body.quiosque .oculta-quiosque {
 }
 body.quiosque .marca-sub {
   display: none;
+}
+
+/* O mapa é a figura principal da Visão Geral. Em telas estreitas ele continua
+   amplo, sem consumir desnecessariamente toda a altura disponível. */
+.mapa-principal {
+  --mapa-altura-visao-geral: clamp(520px, 62vh, 680px);
+}
+@media (max-width: 1100px) {
+  .mapa-principal {
+    --mapa-altura-visao-geral: clamp(440px, 58vh, 560px);
+  }
 }
 
 /* Utilitários pontuais, para não espalhar style inline pelas telas. */

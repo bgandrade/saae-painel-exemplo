@@ -3,8 +3,8 @@
  *
  * Responde a uma pergunta só: está tudo bem, e se não está, onde olhar?
  * Hierarquia deliberada: indicadores macro em cima (o que se lê de longe),
- * mapa no centro (onde está acontecendo), alarmes e cenários à direita (o que
- * exige ação). Nada aqui pisca a não ser um crítico não reconhecido.
+ * mapa em largura total (onde está acontecendo) e, abaixo, os desvios que
+ * exigem ação. Nada aqui pisca a não ser um crítico não reconhecido.
  */
 
 import { useState } from 'react';
@@ -15,7 +15,6 @@ import { num } from '../ui/formato.js';
 import { GraficoLinha, Legenda, Sparkline, CORES_SERIE } from '../charts/index.js';
 import MapaOperacional from '../mapa/MapaOperacional.jsx';
 import { UNIDADES, LIMITES } from '../data/topologia.js';
-import { CENARIOS } from '../engine/sim.js';
 
 export default function VisaoGeral() {
   const { sim, alarmes } = useSim();
@@ -95,17 +94,18 @@ export default function VisaoGeral() {
         />
       </div>
 
-      <div className="c8">
+      <div className="c12">
         <Card
           titulo="Sistemas de abastecimento e esgotamento — Angra dos Reis"
           meta={<span>{UNIDADES.length} unidades monitoradas</span>}
+          classe="mapa-principal"
           pad={false}
         >
-          <MapaOperacional altura={472} />
+          <MapaOperacional altura="var(--mapa-altura-visao-geral)" />
         </Card>
       </div>
 
-      <div className="c4 pilha">
+      <div className="c8">
         <Card
           titulo="Alarmes ativos"
           meta={
@@ -131,7 +131,9 @@ export default function VisaoGeral() {
             <Vazio>Operação normal — nenhum alarme ativo.</Vazio>
           )}
         </Card>
+      </div>
 
+      <div className="c4">
         <Card titulo="Situação das unidades" classe="compacto">
           <div className="linha wrap" style={{ gap: 6 }}>
             {UNIDADES.map((u) => {
@@ -155,10 +157,6 @@ export default function VisaoGeral() {
               );
             })}
           </div>
-        </Card>
-
-        <Card titulo="Cenários de demonstração" meta={<span>clique para disparar</span>}>
-          <Cenarios />
         </Card>
       </div>
 
@@ -209,40 +207,6 @@ export default function VisaoGeral() {
           />
         </Card>
       </div>
-    </div>
-  );
-}
-
-function Cenarios() {
-  const { sim } = useSim();
-  const [, forcar] = useState(0);
-  return (
-    <div className="cenarios">
-      {CENARIOS.map((c) => {
-        const est = sim.cenarios.get(c.id);
-        const ativo = est.ativo || est.intensidade > 0.01;
-        return (
-          <div className={`cenario${ativo ? ' ativo' : ''}`} key={c.id}>
-            <div style={{ minWidth: 0 }}>
-              <div className="cenario-nome">{c.nome}</div>
-              <div className="cenario-desc">{c.resumo}</div>
-            </div>
-            <span className="espaco" />
-            <button
-              className={`btn${est.ativo ? ' perigo' : ''}`}
-              onClick={() => {
-                sim.alternarCenario(c.id);
-                forcar((x) => x + 1);
-              }}
-            >
-              {est.ativo ? 'Normalizar' : 'Disparar'}
-            </button>
-            <div className="cenario-barra">
-              <i style={{ width: `${est.intensidade * 100}%` }} />
-            </div>
-          </div>
-        );
-      })}
     </div>
   );
 }

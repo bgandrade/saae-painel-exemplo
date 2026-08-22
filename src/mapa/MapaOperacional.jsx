@@ -8,9 +8,7 @@
  * Banqueta e Vila do Abraão com tipografia e colisão profissionais.
  *
  * As unidades viram divIcon com a sigla em caixa opaca, que é o que garante
- * legibilidade sobre qualquer fundo. E como o Leaflet trabalha em graus, o
- * raio dos setores passa a ser metros de verdade, sem a conversão aproximada
- * km→unidades-de-desenho que só valia na latitude de Angra.
+ * legibilidade sobre qualquer fundo.
  *
  * Se os tiles não carregarem, cai sozinho para o contorno do IBGE embutido.
  * O painel abre no auditório sem internet — só que agora com um basemap de
@@ -21,9 +19,10 @@ import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 
 import { BBOX, POLIGONOS } from '../data/angra-geo.js';
-import { UNIDADES, LINHAS, SETORES, VISTAS, TIPOS } from '../data/topologia.js';
+import { UNIDADES, LINHAS, VISTAS, TIPOS } from '../data/topologia.js';
 import { CAMADAS } from './camadas.js';
 import { svgSimbolo, ROTULO_FORMA, FORMAS } from './simbolos.js';
+import { htmlResumoOperacional, resumoTrecho, resumoUnidade } from './resumoOperacional.js';
 import { useSim } from '../hooks/useSimulacao.jsx';
 import { useUI } from '../hooks/useUI.jsx';
 import { num } from '../ui/formato.js';
@@ -35,13 +34,24 @@ function bboxLeaflet(bb) {
   return L.latLngBounds([b.minLat, b.minLon], [b.maxLat, b.maxLon]);
 }
 
+function resumoInicial(titulo, contexto, rodape = null) {
+  return htmlResumoOperacional({
+    titulo,
+    contexto,
+    estado: 'neutro',
+    status: 'Atualizando',
+    metricas: [],
+    rodape,
+  });
+}
+
 export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos' }) {
   const { sim, alarmes, tique } = useSim();
   const { abrirUnidade } = useUI();
 
   const div = useRef(null);
   const mapa = useRef(null);
-  const refs = useRef({ marcadores: new Map(), linhas: new Map(), setores: new Map(), base: null });
+  const refs = useRef({ marcadores: new Map(), linhas: new Map(), base: null });
 
   const [camada, setCamada] = useState('ruas');
   const [vista, setVista] = useState(VISTAS.find((v) => v.padrao)?.id ?? 'continente');
@@ -155,24 +165,9 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     const r = refs.current;
 
     for (const l of r.linhas.values()) m.removeLayer(l);
-    for (const s of r.setores.values()) m.removeLayer(s);
     for (const mk of r.marcadores.values()) m.removeLayer(mk);
     r.linhas.clear();
-    r.setores.clear();
     r.marcadores.clear();
-
-    for (const s of SETORES) {
-      if (!s.centro || s.somenteEsgoto || sistema === 'esgoto') continue;
-      const c = L.circle([s.centro[1], s.centro[0]], {
-        radius: (s.raioKm ?? 2) * 1000,
-        color: 'var(--ok)',
-        weight: 1,
-        opacity: 0.5,
-        fillOpacity: 0.07,
-        interactive: false,
-      }).addTo(m);
-      r.setores.set(s.id, c);
-    }
 
     for (const l of LINHAS) {
       if (sistema !== 'ambos' && l.sistema !== sistema) continue;
@@ -186,7 +181,23 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
           lineJoin: 'round',
         },
       ).addTo(m);
-      pl.bindTooltip(`${l.nome}<br><b>DN ${l.diametroMm} mm</b>`, { sticky: true });
+      pl.bindTooltip(
+        resumoInicial(
+          l.nome,
+          `DN ${l.diametroMm} mm · ${l.sistema === 'esgoto' ? 'esgoto' : 'água'}`,
+          l.confirmada ? null : 'Traçado e vazão estimados',
+        ),
+        {
+          sticky: true,
+          opacity: 1,
+          className: 'tooltip-operacional tooltip-operacional-trecho',
+        },
+      );
+      const caminho = pl.getElement();
+      caminho?.setAttribute('tabindex', '0');
+      caminho?.setAttribute('aria-label', `${l.nome}, DN ${l.diametroMm} milímetros.`);
+      caminho?.addEventListener('focus', () => pl.openTooltip());
+      caminho?.addEventListener('blur', () => pl.closeTooltip());
       r.linhas.set(l.id, pl);
     }
 
@@ -205,11 +216,28 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
                    <div class="mu-simbolo">${svgSimbolo(u.tipo, sist)}</div>
                    <div class="mu-rot" style="--dx:${u.rotuloOffset?.[0] ?? 0}px;--dy:${u.rotuloOffset?.[1] ?? 0}px">${u.sigla} <span class="mu-valor"></span></div>
                  </div>`,
-          iconSize: [0, 0],
+          // Uma caixa real é necessária para o Leaflet detectar hover e foco.
+          // O conteúdo continua centralizado e pode transbordar para o rótulo.
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
         }),
         keyboard: true,
         title: u.nome,
       }).addTo(m);
+      mk.bindTooltip(
+        resumoInicial(u.nome, `${u.sigla} · ${u.bairro}`, 'Clique para abrir os detalhes'),
+        {
+          direction: 'top',
+          offset: [0, -18],
+          opacity: 1,
+          className: 'tooltip-operacional',
+        },
+      );
+      // O Leaflet abre tooltip com mouse, mas não no foco do marcador. Fazer
+      // isso explicitamente dá a mesma leitura a quem navega por teclado.
+      const elemento = mk.getElement();
+      elemento?.addEventListener('focus', () => mk.openTooltip());
+      elemento?.addEventListener('blur', () => mk.closeTooltip());
       mk.on('click', () => abrirUnidade(u));
       r.marcadores.set(u.id, mk);
     }
@@ -254,14 +282,13 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
 
       const emManual = bombas.some((b) => b.modo === 'manual');
       el.classList.toggle('sel', emManual);
-      mk.getElement().title = `${u.nome} — ${TIPOS[u.tipo].rotulo}`;
-    }
-
-    for (const [id, c] of r.setores) {
-      const est = sim.setores.get(id);
-      const p = est?.pressaoMca ?? 0;
-      const cor = p < 10 ? 'var(--critico)' : p < 15 ? 'var(--atencao)' : 'var(--ok)';
-      c.setStyle({ color: cor, fillColor: cor });
+      const descricao = `${u.nome} — ${TIPOS[u.tipo].rotulo}`;
+      mk.getElement().title = descricao;
+      mk.getElement().setAttribute(
+        'aria-label',
+        `${descricao}. Pressione Enter para abrir detalhes.`,
+      );
+      mk.setTooltipContent(htmlResumoOperacional(resumoUnidade(u, sim, alarmes.ativos)));
     }
 
     for (const [id, pl] of r.linhas) {
@@ -280,6 +307,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
             : 'var(--agua)',
         dashArray: rompida ? '8 5' : fluindo ? null : '3 6',
       });
+      pl.setTooltipContent(htmlResumoOperacional(resumoTrecho(l, sim, alarmes.ativos)));
     }
   }, [tique, sim, alarmes]);
 
@@ -350,7 +378,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       </div>
 
       {offline && <div className="mapa-offline">Sem conexão — exibindo contorno IBGE</div>}
-      <div className="mapa-nota">Contorno: IBGE · rede e setores estimados</div>
+      <div className="mapa-nota">Contorno: IBGE · rede estimada</div>
     </div>
   );
 }

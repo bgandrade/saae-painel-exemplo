@@ -13,10 +13,11 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "node tools/check_geo.mjs && node tools/check_telas.mjs && node tools/check_demos.mjs",
+    "check": "node tools/check_geo.mjs && node tools/check_telas.mjs && node tools/check_demos.mjs && node tools/check_mapa_overlay.mjs",
     "check:geo": "node tools/check_geo.mjs",
     "check:telas": "node tools/check_telas.mjs",
-    "check:demos": "node tools/check_demos.mjs"
+    "check:demos": "node tools/check_demos.mjs",
+    "check:mapa": "node tools/check_mapa_overlay.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

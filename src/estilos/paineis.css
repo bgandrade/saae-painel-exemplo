@@ -14,6 +14,9 @@
 .mapa-wrap {
   position: relative;
   width: 100%;
+  /* Leaflet usa z-index 400–600 internamente. Sem um contexto próprio, esses
+     elementos passam por cima de drawers globais que aparecem depois. */
+  isolation: isolate;
 }
 .mapa-leaflet {
   width: 100%;
@@ -59,6 +62,102 @@
 .leaflet-tooltip::before {
   border-top-color: var(--borda-forte) !important;
 }
+.leaflet-tooltip.tooltip-operacional {
+  width: min(292px, calc(100vw - 32px));
+  padding: 0 !important;
+  border-radius: var(--raio) !important;
+  white-space: normal;
+  overflow: hidden;
+}
+.mapa-overlay-operacional {
+  --mo-estado: var(--tinta-3);
+  min-width: 250px;
+  font-variant-numeric: tabular-nums;
+}
+.mapa-overlay-operacional[data-estado='atencao'] {
+  --mo-estado: var(--atencao);
+}
+.mapa-overlay-operacional[data-estado='critico'] {
+  --mo-estado: var(--critico);
+}
+.mo-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e3);
+  padding: 9px 10px 8px;
+  border-top: 3px solid var(--mo-estado);
+  background: var(--superficie-2);
+}
+.mo-cabecalho strong,
+.mo-cabecalho small {
+  display: block;
+}
+.mo-cabecalho strong {
+  line-height: 1.25;
+}
+.mo-cabecalho small {
+  margin-top: 2px;
+  color: var(--tinta-3);
+  font-size: 10px;
+}
+.mo-status {
+  flex: 0 0 auto;
+  max-width: 112px;
+  padding: 2px 6px;
+  border: 1px solid color-mix(in srgb, var(--mo-estado) 55%, var(--borda));
+  border-radius: 999px;
+  color: var(--mo-estado);
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+}
+.mo-metricas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--borda);
+  border-bottom: 1px solid var(--borda);
+}
+.mo-metrica {
+  min-width: 0;
+  padding: 8px 7px;
+  text-align: center;
+}
+.mo-metrica + .mo-metrica {
+  border-left: 1px solid var(--borda);
+}
+.mo-metrica span,
+.mo-metrica b {
+  display: block;
+}
+.mo-metrica span {
+  min-height: 2.3em;
+  color: var(--tinta-3);
+  font-size: 9px;
+  line-height: 1.15;
+}
+.mo-metrica b {
+  margin-top: 3px;
+  color: var(--tinta);
+  font-size: 11px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.mo-alarme {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--borda);
+  background: color-mix(in srgb, var(--mo-estado) 10%, transparent);
+  color: var(--tinta-2);
+  font-size: 10px;
+  line-height: 1.3;
+}
+.mo-rodape {
+  padding: 5px 10px;
+  color: var(--tinta-3);
+  font-size: 9px;
+  text-align: right;
+}
 
 /* Marcador de unidade: símbolo ISA mais etiqueta em caixa opaca. A etiqueta
    com fundo é o que resolve o problema de rótulo ilegível sobre o mapa — foi
@@ -66,12 +165,17 @@
 .marcador-unidade {
   background: none !important;
   border: 0 !important;
+  overflow: visible !important;
 }
 .mu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  width: max-content;
   transform: translate(-50%, -50%);
   cursor: pointer;
 }

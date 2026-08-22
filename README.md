@@ -63,9 +63,11 @@ apresentação.
 | `R`     | rotação automática entre as telas a cada 20 s |
 | `A`     | abre o painel de alarmes                      |
 
-O seletor **1× / 60× / 300×** controla a velocidade do relógio simulado. A 60×
-cada segundo real vale um minuto de operação, o que faz a curva de consumo
-diária aparecer durante a fala. `?tema=light` na URL força o tema claro.
+O botão **SIMULAÇÃO** na barra de estado abre o painel lateral que concentra
+pausa, velocidade e cenários de demonstração. O seletor **1× / 60× / 300×**
+controla a velocidade do relógio simulado. A 60× cada segundo real vale um
+minuto de operação, o que faz a curva de consumo diária aparecer durante a
+fala. `?tema=light` na URL força o tema claro.
 
 ---
 
@@ -76,7 +78,7 @@ aparece em cada aba de propósito, para ensinar a estrutura a quem está vendo.
 
 | Nível | Tela           | Papel                                                      |
 | ----- | -------------- | ---------------------------------------------------------- |
-| **1** | Visão Geral    | Está tudo bem? Onde olhar? KPIs, mapa, alarmes, cenários   |
+| **1** | Visão Geral    | Está tudo bem? Onde olhar? KPIs, mapa, alarmes e unidades  |
 | **2** | Sinóptico      | Como a água anda pelo sistema — diagramas de água e esgoto |
 | **3** | Unidades       | A estação por dentro: barriletes, conjuntos, faceplates    |
 | **3** | Automação      | Malhas, setpoints, regras, intertravamentos, auditoria     |
@@ -116,9 +118,10 @@ depois de uma semana — e o contador mostra quando o líder passa a vez.
 
 ### D4 — Falha e recuperação
 
-Dispare o cenário de **falha na Elevatória Banqueta** na Visão Geral. O relé 51
-desarma um conjunto da estação, sobe alarme crítico, **um conjunto parado entra
-sozinho no lugar** e a pressão do setor não cruza o mínimo da NBR 12218.
+Abra **SIMULAÇÃO** na barra de estado e dispare o cenário de **falha na
+Elevatória Banqueta**. O relé 51 desarma um conjunto da estação, sobe alarme
+crítico, **um conjunto parado entra sozinho no lugar** e a pressão do setor não
+cruza o mínimo da NBR 12218.
 
 > _"Isso aconteceria às três da manhã sem acordar ninguém."_
 

@@ -16,6 +16,7 @@ import { Vazio } from './ui/componentes.jsx';
 import { Drawer } from './ui/Overlay.jsx';
 import LinhaAlarme from './ui/LinhaAlarme.jsx';
 import Icone from './ui/Icone.jsx';
+import PainelSimulacao from './ui/PainelSimulacao.jsx';
 
 import VisaoGeral from './views/VisaoGeral.jsx';
 import Sinoptico from './views/Sinoptico.jsx';
@@ -40,12 +41,6 @@ const VIEWS = [
   { id: 'relatorios', nome: 'Relatórios', nivel: 4, Comp: Relatorios },
 ];
 
-const VELOCIDADES = [
-  { v: 1, rot: '1×', titulo: 'Tempo real' },
-  { v: 60, rot: '60×', titulo: '1 min de operação por segundo' },
-  { v: 300, rot: '300×', titulo: '5 min de operação por segundo' },
-];
-
 const CHAVE_TEMA = 'saae-tema';
 
 export default function App() {
@@ -59,7 +54,7 @@ export default function App() {
 }
 
 function Painel() {
-  const { sim, alarmes } = useSim();
+  const { sim, alarmes, pausado } = useSim();
   const { unidadeAberta, bombaAberta } = useUI();
   const rota = useRota('visao-geral');
   const view = VIEWS.find((v) => v.id === rota) ?? VIEWS[0];
@@ -73,9 +68,9 @@ function Painel() {
     }
   });
   const [painelAlarmes, setPainelAlarmes] = useState(false);
+  const [painelSimulacao, setPainelSimulacao] = useState(false);
   const [quiosque, setQuiosque] = useState(false);
   const [rotacao, setRotacao] = useState(false);
-  const [, forcar] = useState(0);
 
   useEffect(() => {
     document.documentElement.dataset.theme = tema === 'light' ? 'light' : 'dark';
@@ -161,27 +156,6 @@ function Painel() {
         </nav>
 
         <div className="topbar-dir">
-          <div
-            className="segmentado oculta-quiosque"
-            role="group"
-            aria-label="Velocidade da simulação"
-          >
-            {VELOCIDADES.map(({ v, rot, titulo }) => (
-              <button
-                key={v}
-                type="button"
-                title={titulo}
-                aria-pressed={sim.velocidade === v}
-                onClick={() => {
-                  sim.velocidade = v;
-                  forcar((x) => x + 1);
-                }}
-              >
-                {rot}
-              </button>
-            ))}
-          </div>
-
           <button
             className={`badge-alarmes${c.critico ? ' tem-critico' : c.alerta ? ' tem-alerta' : ''}${
               c.critico && c.naoReconhecidos ? ' pulsa' : ''
@@ -254,10 +228,23 @@ function Painel() {
             Rotação automática
           </span>
         )}
-        <span className="selo-simulacao">
-          <Icone nome="alerta" tamanho={11} />
-          SIMULAÇÃO
-        </span>
+        <button
+          className={`selo-simulacao${pausado ? ' pausada' : ''}${
+            [...sim.cenarios.values()].some(
+              (cenario) => cenario.ativo || cenario.intensidade > 0.01,
+            )
+              ? ' com-cenario'
+              : ''
+          }`}
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded={painelSimulacao}
+          onClick={() => setPainelSimulacao(true)}
+        >
+          <Icone nome={pausado ? 'pausa' : 'engrenagem'} tamanho={11} />
+          {pausado ? 'SIMULAÇÃO PAUSADA' : 'SIMULAÇÃO'}
+          <span className="selo-simulacao-velocidade">{sim.velocidade}×</span>
+        </button>
       </div>
 
       <main className="conteudo" key={view.id}>
@@ -288,6 +275,15 @@ function Painel() {
           aoFechar={() => setPainelAlarmes(false)}
         >
           <PainelAlarmes />
+        </Drawer>
+      )}
+      {painelSimulacao && (
+        <Drawer
+          titulo="Controle da simulação"
+          sub="Ferramentas globais da maquete demonstrativa"
+          aoFechar={() => setPainelSimulacao(false)}
+        >
+          <PainelSimulacao />
         </Drawer>
       )}
       {unidadeAberta && <DrawerUnidade unidade={unidadeAberta} />}

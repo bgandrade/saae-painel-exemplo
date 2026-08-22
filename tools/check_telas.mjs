@@ -22,10 +22,27 @@ const TELAS = [
       'Sinóptico',
       'Satélite',
       'Ruas',
+      'mapa-legenda',
+      'mapa-principal',
+      'Alarmes ativos',
+      'Situação das unidades',
+      'Vazão produzida',
+    ],
+  ],
+  [
+    'Controle da simulação',
+    '/src/ui/PainelSimulacao.jsx',
+    null,
+    [
+      'Simulação em andamento',
+      'Velocidade do relógio',
+      'Pausar',
+      '1×',
+      '60×',
+      '300×',
       'Cenários de demonstração',
       'Rompimento da adutora',
-      'mapa-legenda',
-      'Vazão produzida',
+      'Disparar',
     ],
   ],
   [
@@ -145,6 +162,6 @@ await fechar();
 console.log(
   falhas
     ? `\n${falhas} tela(s) com problema`
-    : '\nAs 8 telas e o faceplate renderizam com o conteúdo esperado.',
+    : '\nAs 8 telas, o painel de simulação e o faceplate renderizam com o conteúdo esperado.',
 );
 process.exit(falhas ? 1 : 0);
