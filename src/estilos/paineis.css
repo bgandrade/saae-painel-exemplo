@@ -1,0 +1,456 @@
+/**
+ * Componentes especializados: mapa, sinóptico, conjuntos motobomba, automação
+ * e relatórios.
+ *
+ * O sinóptico é HTML posicionado em porcentagem sobre uma camada SVG de
+ * tubulação. Desenhar os nós em SVG puro daria texto borrado no telão e
+ * tornaria clique e dica um trabalho manual; desenhar os tubos em HTML seria
+ * pior ainda. A costura entre os dois é `vector-effect: non-scaling-stroke`,
+ * que deixa o caminho esticar com o contêiner sem engrossar o traço.
+ */
+
+/* ═══════════════════════════ MAPA ═══════════════════════════ */
+
+.mapa-wrap { position: relative; width: 100%; }
+.mapa-leaflet { width: 100%; height: 100%; background: var(--mapa-mar); }
+
+.leaflet-container { font: inherit; background: var(--mapa-mar); }
+.leaflet-container a { color: var(--agua); }
+.leaflet-control-attribution {
+  background: color-mix(in srgb, var(--superficie) 82%, transparent) !important;
+  color: var(--tinta-3) !important; font-size: 9px !important;
+  padding: 1px 5px !important; border-radius: 3px 0 0 0;
+}
+.leaflet-control-attribution a { color: var(--tinta-2) !important; }
+.leaflet-bar, .leaflet-bar a {
+  background: var(--superficie) !important; color: var(--tinta-2) !important;
+  border-color: var(--borda) !important;
+}
+.leaflet-bar a:hover { background: var(--superficie-3) !important; color: var(--tinta) !important; }
+.leaflet-tooltip {
+  background: var(--superficie) !important; color: var(--tinta) !important;
+  border: 1px solid var(--borda-forte) !important; box-shadow: var(--sombra-flutuante) !important;
+  font-size: var(--t-sm) !important; border-radius: var(--raio-sm) !important;
+}
+.leaflet-tooltip::before { border-top-color: var(--borda-forte) !important; }
+
+/* Marcador de unidade: símbolo ISA mais etiqueta em caixa opaca. A etiqueta
+   com fundo é o que resolve o problema de rótulo ilegível sobre o mapa — foi
+   exatamente isso que faltou na versão anterior, em <text> solto. */
+.marcador-unidade { background: none !important; border: 0 !important; }
+.mu {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  transform: translate(-50%, -50%); cursor: pointer;
+}
+.mu-simbolo { position: relative; display: grid; place-items: center; }
+.mu-simbolo svg { display: block; filter: drop-shadow(0 1px 2px rgb(0 0 0 / 45%)); }
+.mu-rot {
+  padding: 0 5px; border-radius: 3px; white-space: nowrap;
+  background: color-mix(in srgb, var(--superficie) 92%, transparent);
+  border: 1px solid var(--borda);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.02em; color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+  /* Deslocamento vindo do cadastro: unidades vizinhas afastam as etiquetas em
+     direções opostas em vez de imprimirem uma sobre a outra. */
+  transform: translate(var(--dx, 0px), var(--dy, 0px));
+}
+.mu-valor { font-weight: 500; color: var(--tinta-2); }
+.mu.sel .mu-rot { border-color: var(--agua); box-shadow: 0 0 0 2px color-mix(in srgb, var(--agua) 35%, transparent); }
+.mu-halo {
+  position: absolute; inset: -7px; border-radius: 50%;
+  border: 2px solid var(--critico); animation: pulso 1.4s ease-in-out infinite;
+}
+
+.mapa-controles {
+  position: absolute; top: var(--e2); left: var(--e2); z-index: 500;
+  display: flex; flex-direction: column; gap: 5px; align-items: flex-start;
+}
+.mapa-controles .segmentado { background: color-mix(in srgb, var(--superficie) 92%, transparent); backdrop-filter: blur(6px); }
+.mapa-nota {
+  position: absolute; left: var(--e2); bottom: var(--e2); z-index: 500;
+  padding: 2px 7px; border-radius: 3px;
+  background: color-mix(in srgb, var(--superficie) 88%, transparent);
+  border: 1px solid var(--borda);
+  font-size: 9px; color: var(--tinta-3);
+}
+.mapa-legenda {
+  position: absolute; top: var(--e2); right: var(--e2); z-index: 500;
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 6px 9px; border-radius: var(--raio-sm);
+  background: color-mix(in srgb, var(--superficie) 90%, transparent);
+  border: 1px solid var(--borda); backdrop-filter: blur(6px);
+  font-size: 10px; color: var(--tinta-2);
+}
+.mapa-legenda-linha { display: flex; align-items: center; gap: 6px; }
+.mapa-offline {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 600;
+  padding: 6px 12px; border-radius: var(--raio-sm);
+  background: color-mix(in srgb, var(--superficie) 94%, transparent);
+  border: 1px solid var(--atencao); color: var(--atencao);
+  font-size: var(--t-xs); font-weight: 600; pointer-events: none;
+}
+
+/* ═══════════════════════════ SINÓPTICO ═══════════════════════════ */
+
+.sinoptico {
+  position: relative; width: 100%;
+  background:
+    linear-gradient(var(--grade) 1px, transparent 1px) 0 0 / 100% 32px,
+    linear-gradient(90deg, var(--grade) 1px, transparent 1px) 0 0 / 32px 100%,
+    var(--superficie);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+.sinoptico-tubos { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sinoptico-tubos path {
+  fill: none;
+  stroke: var(--tubo);
+  stroke-width: var(--tubo-largura);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.sinoptico-tubos path.interno {
+  stroke: var(--superficie-2);
+  stroke-width: calc(var(--tubo-largura) - 3px);
+}
+/* O fluxo só anda quando há bombeamento de fato a montante: a animação para
+   junto com as bombas quando cai a energia, e isso conta uma história. */
+.sinoptico-tubos path.fluxo {
+  stroke: var(--agua);
+  stroke-width: calc(var(--tubo-largura) - 3px);
+  stroke-dasharray: 3 9;
+  animation: correr 1.1s linear infinite;
+}
+.sinoptico-tubos path.fluxo.esgoto { stroke: var(--esgoto); }
+.sinoptico-tubos path.parado { stroke: var(--tinta-3); stroke-width: calc(var(--tubo-largura) - 3px); opacity: 0.4; }
+.sinoptico-tubos path.rompido { stroke: var(--critico); stroke-dasharray: 7 5; animation: pulso 0.9s ease-in-out infinite; }
+@keyframes correr { to { stroke-dashoffset: -24; } }
+
+.no {
+  position: absolute; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 108px; padding: 7px 9px;
+  background: var(--superficie); border: 1px solid var(--borda-forte);
+  border-radius: var(--raio); box-shadow: var(--sombra);
+  cursor: pointer; transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+.no:hover { border-color: var(--agua); box-shadow: 0 0 0 3px color-mix(in srgb, var(--agua) 18%, transparent); }
+.no.critico { border-color: var(--critico); box-shadow: 0 0 0 3px color-mix(in srgb, var(--critico) 22%, transparent); }
+.no.atencao { border-color: var(--atencao); }
+.no-cab { display: flex; align-items: center; gap: 5px; }
+.no-sigla { font-size: var(--t-sm); font-weight: 700; letter-spacing: 0.02em; }
+.no-tipo { font-size: 9px; color: var(--tinta-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.no-valor { display: flex; align-items: baseline; gap: 3px; font-variant-numeric: tabular-nums; }
+.no-valor b { font-size: var(--t-lg); font-weight: 650; line-height: 1; }
+.no-valor small { font-size: 10px; color: var(--tinta-3); }
+.no-linha { display: flex; justify-content: space-between; gap: var(--e2); font-size: 10px; color: var(--tinta-3); }
+.no-linha b { color: var(--tinta-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Barra de nível embutida no nó do reservatório: mostra o volume e as marcas
+   de setpoint no mesmo lugar, que é onde o operador procura. */
+.no-nivel {
+  position: relative; height: 7px; border-radius: 4px;
+  background: var(--superficie-3); overflow: hidden;
+}
+.no-nivel i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--agua); transition: width 400ms ease; }
+.no-nivel.esgoto i { background: var(--esgoto); }
+.no-nivel i.baixo { background: var(--critico); }
+.no-nivel i.atencao { background: var(--atencao); }
+.no-nivel u { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--tinta); opacity: 0.55; }
+
+.rotulo-tubo {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 1px 6px; border-radius: 3px; white-space: nowrap;
+  background: var(--superficie); border: 1px solid var(--borda);
+  font-size: 10px; font-weight: 600; color: var(--tinta-2);
+  font-variant-numeric: tabular-nums; pointer-events: none;
+}
+.rotulo-tubo small { color: var(--tinta-3); font-weight: 500; }
+
+/* ═══════════════════ CONJUNTO MOTOBOMBA — SÍMBOLO ═══════════════════ */
+
+.estacao {
+  position: relative; padding: var(--e4) var(--e3) var(--e3);
+  background:
+    linear-gradient(var(--grade) 1px, transparent 1px) 0 0 / 100% 28px,
+    linear-gradient(90deg, var(--grade) 1px, transparent 1px) 0 0 / 28px 100%,
+    var(--superficie);
+  border-radius: var(--raio); overflow-x: auto;
+}
+.barrilete {
+  display: flex; align-items: center; gap: var(--e2);
+  padding: 5px var(--e3); border-radius: 20px;
+  background: var(--superficie-2); border: 1px solid var(--borda-forte);
+  font-size: var(--t-xs); color: var(--tinta-3); white-space: nowrap;
+}
+.barrilete b { color: var(--tinta); font-weight: 650; font-variant-numeric: tabular-nums; }
+.barrilete .seta { color: var(--agua); font-weight: 700; }
+
+.bombas-fila { display: flex; gap: var(--e2); padding: var(--e3) 0; min-width: min-content; }
+
+.bomba {
+  flex: 1 1 0; min-width: 132px;
+  display: flex; flex-direction: column; gap: 4px; align-items: stretch;
+  padding: var(--e2); border-radius: var(--raio);
+  background: var(--superficie); border: 1px solid var(--borda);
+  cursor: pointer; transition: all var(--transicao);
+}
+.bomba:hover { border-color: var(--agua); box-shadow: 0 0 0 3px color-mix(in srgb, var(--agua) 15%, transparent); }
+/* Contorno tracejado = conjunto em MANUAL. É o primeiro fato que um operador
+   procura: em manual, a bomba NÃO está protegida pela lógica da malha. */
+.bomba.manual { border-style: dashed; border-color: var(--atencao); }
+.bomba.falha { border-color: var(--critico); background: color-mix(in srgb, var(--critico) 7%, var(--superficie)); }
+.bomba.manutencao { border-color: var(--borda-forte); background: repeating-linear-gradient(45deg, transparent, transparent 6px, var(--superficie-2) 6px, var(--superficie-2) 12px); }
+
+.bomba-topo { display: flex; align-items: center; gap: 4px; }
+.bomba-tag { font-size: var(--t-sm); font-weight: 700; letter-spacing: -0.01em; }
+.bomba-simbolo { display: grid; place-items: center; padding: 2px 0; }
+.bomba-simbolo svg { display: block; }
+.bomba-papel {
+  align-self: center; padding: 0 7px; border-radius: 3px;
+  font-size: 9px; font-weight: 750; letter-spacing: 0.06em;
+  background: var(--superficie-3); color: var(--tinta-3);
+}
+.bomba-papel.lider { background: color-mix(in srgb, var(--agua) 18%, transparent); color: var(--agua); }
+.bomba-papel.manual { background: color-mix(in srgb, var(--atencao) 18%, transparent); color: var(--atencao); }
+.bomba-papel.falha { background: color-mix(in srgb, var(--critico) 18%, transparent); color: var(--critico); }
+
+.selo-modo {
+  padding: 0 5px; border-radius: 3px; font-size: 9px; font-weight: 750; letter-spacing: 0.05em;
+  border: 1px solid var(--borda); color: var(--tinta-3); background: var(--superficie-2);
+}
+.selo-modo.man { border-color: var(--atencao); color: var(--atencao); background: color-mix(in srgb, var(--atencao) 14%, transparent); }
+
+/* Altura fixa: um conjunto parado tem uma linha a menos que um operando, e
+   sem isto os cartões da fila ficam desalinhados — o que numa estação de cinco
+   bombas atrapalha justamente a comparação que a tela existe para permitir. */
+.bomba-valor {
+  text-align: center; font-variant-numeric: tabular-nums; line-height: 1.15;
+  min-height: 34px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.bomba-valor b { font-size: var(--t-lg); font-weight: 650; }
+.bomba-valor small { font-size: 9px; color: var(--tinta-3); }
+.bomba-valor .parada { color: var(--tinta-3); font-size: var(--t-sm); font-weight: 500; }
+
+/* Saúde normal é CINZA, não verde.
+   Filosofia High Performance HMI: cor saturada fica reservada para condição
+   anormal. Cinco barras verdes lado a lado atraem o olho para onde não há
+   nada acontecendo, e treinam a plateia a ignorar exatamente o canal que
+   deveria gritar quando a vibração subir. */
+.saude { height: 5px; border-radius: 3px; background: var(--superficie-3); overflow: hidden; }
+.saude i { display: block; height: 100%; background: var(--borda-forte); transition: width 400ms ease, background var(--transicao); }
+.saude i.atencao { background: var(--atencao); }
+.saude i.critico { background: var(--critico); }
+.saude i.parada { background: var(--tinta-3); opacity: 0.3; }
+
+/* ═══════════════════════════ FACEPLATE ═══════════════════════════ */
+
+.fp-secao { display: flex; flex-direction: column; gap: var(--e2); }
+.fp-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: var(--e2); }
+.metrica {
+  padding: 6px 9px; border-radius: var(--raio-sm);
+  background: var(--superficie-2); border: 1px solid var(--borda);
+}
+.metrica-rot { font-size: 9px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--tinta-3); }
+.metrica-val { font-size: var(--t-lg); font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.metrica-val small { font-size: 10px; color: var(--tinta-3); font-weight: 500; margin-left: 2px; }
+.metrica.atencao { border-color: color-mix(in srgb, var(--atencao) 55%, var(--borda)); }
+.metrica.atencao .metrica-val { color: var(--atencao); }
+.metrica.critico { border-color: var(--critico); background: color-mix(in srgb, var(--critico) 8%, var(--superficie)); }
+.metrica.critico .metrica-val { color: var(--critico); }
+.metrica-sub { font-size: 9px; color: var(--tinta-3); }
+
+.fases { display: flex; align-items: flex-end; gap: 3px; height: 30px; margin-top: 3px; }
+.fase { flex: 1; background: var(--agua); border-radius: 2px 2px 0 0; min-height: 3px; transition: height var(--transicao); }
+
+/* Chave de três posições, o padrão de campo H-O-A. Aqui só duas posições
+   são acionáveis; a terceira ("desligado") corresponde a MANUAL parado. */
+.chave-modo { display: flex; gap: 0; border-radius: var(--raio-sm); overflow: hidden; border: 1px solid var(--borda-forte); }
+.chave-modo button {
+  flex: 1; padding: 8px 4px; border: 0; background: var(--superficie-2);
+  font: inherit; font-size: var(--t-sm); font-weight: 650; letter-spacing: 0.04em;
+  color: var(--tinta-3); cursor: pointer; transition: all var(--transicao);
+}
+.chave-modo button + button { border-left: 1px solid var(--borda-forte); }
+.chave-modo button:hover:not(:disabled) { background: var(--superficie-3); color: var(--tinta); }
+.chave-modo button[aria-pressed='true'] { background: var(--agua); color: #fff; }
+.chave-modo button[aria-pressed='true'].man { background: var(--atencao); color: #1a1205; }
+
+.bloqueio {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 7px 10px; border-radius: var(--raio-sm);
+  background: color-mix(in srgb, var(--critico) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--critico) 40%, transparent);
+  color: var(--critico); font-size: var(--t-xs); line-height: 1.4;
+}
+.bloqueio svg { width: 14px; height: 14px; flex: none; margin-top: 1px; }
+.bloqueio b { font-weight: 700; }
+
+.intertrav { display: flex; flex-direction: column; gap: 1px; }
+.intertrav-linha {
+  display: flex; align-items: center; gap: var(--e2);
+  padding: 4px 6px; border-radius: 3px; font-size: var(--t-xs); color: var(--tinta-3);
+}
+.intertrav-linha.ativo { background: color-mix(in srgb, var(--critico) 9%, transparent); color: var(--tinta-2); }
+.intertrav-linha .tag {
+  margin-left: auto; font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
+  color: var(--tinta-3);
+}
+.intertrav-linha.ativo .tag { color: var(--critico); }
+
+.slider-linha { display: flex; align-items: center; gap: var(--e3); }
+input[type='range'] {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 4px; border-radius: 2px; background: var(--superficie-3); outline: none; cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--agua); border: 2px solid var(--superficie); cursor: grab;
+  box-shadow: var(--sombra);
+}
+input[type='range']::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--agua); border: 2px solid var(--superficie); cursor: grab;
+}
+input[type='range']:disabled { opacity: 0.4; cursor: not-allowed; }
+.slider-val {
+  min-width: 58px; text-align: right; font-size: var(--t-md); font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════ AUTOMAÇÃO ═══════════════════════════ */
+
+.malha { display: flex; flex-direction: column; gap: var(--e3); }
+.malha-topo { display: flex; align-items: center; gap: var(--e2); }
+.malha-pv { display: flex; flex-direction: column; gap: 4px; }
+.malha-pv-topo { display: flex; align-items: baseline; justify-content: space-between; }
+.malha-pv-val { font-size: var(--t-xl); font-weight: 700; font-variant-numeric: tabular-nums; }
+/* Barra alta o bastante para as marcas de setpoint terem duas faixas de
+   rótulo: liga e desliga em cima, emergência embaixo. Empilhados numa faixa
+   só, "emerg." e "liga 30" se atropelavam sempre que os dois ficavam perto. */
+.malha-trilho {
+  position: relative; height: 34px; border-radius: var(--raio-sm);
+  background: var(--superficie-3); border: 1px solid var(--borda); overflow: hidden;
+}
+.malha-trilho i { position: absolute; left: 0; top: 0; bottom: 0; background: color-mix(in srgb, var(--agua) 55%, transparent); transition: width 400ms ease; }
+.malha-trilho i.baixo { background: color-mix(in srgb, var(--critico) 55%, transparent); }
+.malha-trilho i.atencao { background: color-mix(in srgb, var(--atencao) 55%, transparent); }
+.malha-sp {
+  position: absolute; top: 0; bottom: 0; width: 2px; background: var(--tinta);
+  transition: left var(--transicao);
+}
+.malha-sp::after {
+  content: attr(data-rot); position: absolute; top: 1px; left: 4px;
+  padding: 0 3px; border-radius: 2px;
+  background: color-mix(in srgb, var(--superficie) 82%, transparent);
+  font-size: 9px; font-weight: 700; color: var(--tinta); white-space: nowrap;
+}
+.malha-sp.emerg { background: var(--critico); }
+.malha-sp.emerg::after { top: auto; bottom: 1px; color: var(--critico); }
+
+.regras { display: flex; flex-direction: column; gap: 1px; }
+.regra {
+  display: flex; align-items: center; gap: var(--e2);
+  padding: 5px 8px; border-radius: 3px;
+  font-size: var(--t-xs); font-family: var(--fonte-mono); line-height: 1.4;
+  color: var(--tinta-3); transition: background var(--transicao), color var(--transicao);
+}
+.regra.ativa { background: color-mix(in srgb, var(--ok) 10%, transparent); color: var(--tinta); }
+.regra.ativa.bloqueio-r { background: color-mix(in srgb, var(--critico) 10%, transparent); }
+.regra.ativa.emergencia-r { background: color-mix(in srgb, var(--atencao) 12%, transparent); }
+.regra .tag-regra {
+  margin-left: auto; flex: none; font-family: var(--fonte);
+  font-size: 9px; font-weight: 750; letter-spacing: 0.05em; opacity: 0;
+}
+.regra.ativa .tag-regra { opacity: 1; color: var(--ok); }
+.regra.ativa.bloqueio-r .tag-regra { color: var(--critico); }
+.regra.ativa.emergencia-r .tag-regra { color: var(--atencao); }
+
+.auditoria { font-family: var(--fonte-mono); font-size: var(--t-xs); }
+.auditoria td { padding: 4px var(--e3); }
+.auditoria .bloqueado { color: var(--critico); font-weight: 700; }
+.auditoria .aceito { color: var(--ok); }
+.auditoria tr.linha-bloqueada { background: color-mix(in srgb, var(--critico) 7%, transparent); }
+
+.horimetro-barras { display: flex; flex-direction: column; gap: 6px; }
+.hb { display: grid; grid-template-columns: 92px 1fr 74px; align-items: center; gap: var(--e2); font-size: var(--t-xs); }
+.hb-trilho { height: 14px; border-radius: 3px; background: var(--superficie-3); overflow: hidden; }
+.hb-trilho i { display: block; height: 100%; background: var(--seq-4); transition: width 400ms ease; }
+.hb-val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
+
+/* ═══════════════════════════ RELATÓRIOS ═══════════════════════════ */
+
+.snis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--e3); }
+.snis-item {
+  padding: var(--e3); border-radius: var(--raio);
+  background: var(--superficie-2); border: 1px solid var(--borda);
+}
+.snis-cod {
+  display: inline-block; padding: 0 6px; border-radius: 3px; margin-bottom: 5px;
+  background: var(--superficie-3); border: 1px solid var(--borda);
+  font-family: var(--fonte-mono); font-size: 10px; font-weight: 700; color: var(--tinta-2);
+}
+.snis-nome { font-size: var(--t-xs); color: var(--tinta-3); line-height: 1.35; margin-bottom: 3px; }
+.snis-val { font-size: var(--t-2xl); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1.1; }
+.snis-val small { font-size: var(--t-sm); color: var(--tinta-3); font-weight: 500; margin-left: 3px; }
+.snis-ref { font-size: 10px; color: var(--tinta-3); margin-top: 3px; }
+
+.cabecalho-relatorio { display: none; }
+
+/* ═══════════════════════════ GRÁFICOS ═══════════════════════════ */
+
+.gr { width: 100%; display: block; overflow: visible; }
+.gr text { font-family: var(--fonte); fill: var(--tinta-3); font-size: 10px; }
+.gr .eixo-linha { stroke: var(--eixo); stroke-width: 1; }
+.gr .grade-linha { stroke: var(--grade); stroke-width: 1; }
+.gr .marca-linha { fill: none; stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+.gr .marca-area { stroke: none; }
+.gr .faixa-norma { fill: var(--ok); opacity: 0.07; }
+.gr .limite-linha { stroke: var(--critico); stroke-width: 1; stroke-dasharray: 4 3; opacity: 0.7; }
+.gr .cursor-linha { stroke: var(--tinta-3); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 4px var(--e4); padding: var(--e2) var(--e4) 0; }
+.legenda-item { display: flex; align-items: center; gap: 6px; font-size: var(--t-xs); color: var(--tinta-2); }
+.legenda-marca { width: 11px; height: 3px; border-radius: 2px; flex: none; }
+
+.dica {
+  position: fixed; z-index: 200; pointer-events: none;
+  padding: 7px 10px; border-radius: var(--raio-sm);
+  background: var(--superficie); border: 1px solid var(--borda-forte);
+  box-shadow: var(--sombra-flutuante); font-size: var(--t-xs); min-width: 132px;
+}
+.dica-tit { font-size: var(--t-sm); font-weight: 650; margin-bottom: 2px; }
+.dica-sub { font-size: 10px; color: var(--tinta-3); margin-bottom: 5px; }
+.dica-linha { display: flex; align-items: center; gap: var(--e3); justify-content: space-between; }
+.dica-linha b { font-variant-numeric: tabular-nums; font-weight: 650; }
+.dica-marca { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+
+.gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.gauge-valor { font-size: var(--t-xl); font-weight: 700; line-height: 1; }
+.gauge-rot { font-size: 10px; color: var(--tinta-3); }
+.gauge .trilha { stroke: var(--superficie-3); }
+.gauge .faixa-ok { stroke: color-mix(in srgb, var(--ok) 42%, transparent); }
+.gauge .arco { stroke: var(--serie-1); stroke-linecap: round; transition: stroke-dashoffset 400ms ease; }
+
+/* Linha do tempo de operação: barra preenchida = conjunto ligado. */
+.gantt-linha { font-size: 10px; }
+.gantt-nome { fill: var(--tinta-2); font-weight: 600; }
+.gantt-trilho { fill: var(--superficie-3); }
+.gantt-barra { fill: var(--serie-1); }
+.gantt-barra.falha { fill: var(--critico); }
+.gantt-barra.manual { fill: var(--atencao); }
+.gantt-grade { stroke: var(--grade); stroke-width: 1; }
+
+/* Curva H×Q da bomba. */
+.curva-bomba .curva { fill: none; stroke: var(--serie-1); stroke-width: 2; }
+.curva-bomba .curva-rot { fill: none; stroke: var(--serie-1); stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.75; }
+.curva-bomba .sistema { fill: none; stroke: var(--serie-2); stroke-width: 1.75; }
+.curva-bomba .bep { fill: var(--ok); opacity: 0.1; }
+.curva-bomba .ponto { fill: var(--tinta); stroke: var(--superficie); stroke-width: 2; }
+.curva-bomba .ponto.fora { fill: var(--atencao); }
+.curva-bomba .guia { stroke: var(--tinta-3); stroke-width: 1; stroke-dasharray: 2 3; }
+
+@keyframes girar { to { transform: rotate(360deg); } }

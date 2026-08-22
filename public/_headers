@@ -1,0 +1,29 @@
+# Cloudflare Pages — cabeçalhos do site estático.
+
+/assets/*
+  # Conteúdo com hash no nome, gerado pelo build: pode ficar muito tempo em cache.
+  Cache-Control: public, max-age=31536000, immutable
+
+/index.html
+  # Único ponto de entrada, roteamento por hash: revalidar sempre aqui basta
+  # para uma republicação aparecer na hora.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  # O painel carrega tiles de mapa de dois provedores e NADA MAIS — nem fonte,
+  # nem CDN de script, nem telemetria. A CSP abaixo trava isso: se algum dia
+  # alguém acrescentar outra dependência externa, ela falha aqui em vez de
+  # falhar no auditório.
+  #
+  # Se os tiles não carregarem, o mapa cai sozinho para o contorno do IBGE
+  # embutido no pacote — ver src/mapa/MapaOperacional.jsx. Remover os dois
+  # domínios abaixo deixa o painel 100 % offline, com o sinóptico no lugar do
+  # mapa de ruas.
+  #
+  # `style-src 'unsafe-inline'` é exigido por dois usos legítimos: os estilos
+  # inline do React (barras de nível, larguras de gráfico, posições do
+  # sinóptico) e a folha que o Vite injeta. Nenhum script inline é permitido —
+  # `script-src` continua restrito a 'self'.
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://*.basemaps.cartocdn.com https://server.arcgisonline.com; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'

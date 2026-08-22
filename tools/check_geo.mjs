@@ -4,7 +4,7 @@
  *
  *   node tools/check_geo.mjs
  *
- * Rode isto sempre que acrescentar uma unidade em assets/data/topologia.js —
+ * Rode isto sempre que acrescentar uma unidade em src/data/topologia.js —
  * é o que protege contra uma coordenada trocada de sinal ou com lat/lon
  * invertidos, que no mapa apareceria como um marcador solto no oceano.
  *
@@ -12,8 +12,8 @@
  * das coordenadas vive aqui, então não há como as duas fontes divergirem.
  */
 
-import { BBOX, POLIGONOS, MUNICIPIO } from '../assets/data/angra-geo.js';
-import { UNIDADES, LINHAS, LOCALIDADES, VISTAS, TIPOS, BOMBAS, SETORES, porId } from '../assets/data/topologia.js';
+import { BBOX, POLIGONOS, MUNICIPIO } from '../src/data/angra-geo.js';
+import { UNIDADES, LINHAS, VISTAS, TIPOS, BOMBAS, SETORES, porId } from '../src/data/topologia.js';
 
 /** Ray casting padrão. `anel` é uma lista de pares [lon, lat]. */
 function dentroDoAnel(lon, lat, anel) {
@@ -78,11 +78,11 @@ for (const l of LINHAS) {
   else if (fora > 0) avisos.push(`${l.id}: ${fora} vértice(s) fora do polígono (aceitável em trecho litorâneo)`);
 }
 
-/* ── Rótulos e presets ────────────────────────────────────────────────── */
-const rotulosFora = LOCALIDADES.filter((p) => !localizar(p.lon, p.lat));
-console.log(`\nLOCALIDADES: ${LOCALIDADES.length} rótulos, ${rotulosFora.length} fora do polígono`);
-for (const p of rotulosFora) avisos.push(`rótulo "${p.nome}" fora do polígono`);
-
+/* ── Presets de enquadramento ─────────────────────────────────────────────
+ * Os rótulos de localidade saíram do cadastro: quem nomeia Japuíba, Banqueta
+ * e Vila do Abraão agora é o basemap, com colisão de tipografia resolvida.
+ * Não há mais lista própria para validar aqui.
+ */
 console.log('\nPRESETS DE VISTA');
 for (const v of VISTAS) {
   if (!v.bbox) { console.log(`   ok   ${v.id.padEnd(16)} município inteiro`); continue; }

@@ -7,58 +7,9 @@
 <meta name="description" content="Painel demonstrativo de supervisão e automação dos sistemas de abastecimento de água e esgotamento sanitário de Angra dos Reis. Dados simulados.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='19' font-size='20'>💧</text></svg>">
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-
-<header class="topbar">
-  <div class="marca">
-    <div class="marca-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/>
-      </svg>
-    </div>
-    <div>
-      <div class="marca-sigla">SAAE Angra dos Reis</div>
-    </div>
-    <div class="marca-sub">Centro de Controle Operacional</div>
-  </div>
-
-  <nav class="abas" id="abas" aria-label="Telas do painel"></nav>
-
-  <div class="topbar-dir">
-    <div class="segmentado" id="velocidade" role="group" aria-label="Velocidade da simulação"></div>
-    <button class="badge-alarmes" id="badge-alarmes" type="button" aria-label="Alarmes ativos">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 1 21h22L12 2Zm0 6v6m0 3v.5"/></svg>
-      <span class="badge-cont" id="badge-cont">0</span>
-    </button>
-    <div class="relogio">
-      <div class="relogio-hora" id="relogio-hora">--:--:--</div>
-      <div class="relogio-data" id="relogio-data">—</div>
-    </div>
-    <button class="btn btn-icone" id="btn-tema" type="button" aria-label="Alternar tema"></button>
-    <button class="btn btn-icone" id="btn-quiosque" type="button" aria-label="Modo quiosque (F)" title="Modo quiosque — tecla F">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v11H3zM8 20h8M12 16v4"/></svg>
-    </button>
-  </div>
-</header>
-
-<main id="app"></main>
-
-<footer class="rodape">
-  <span class="rodape-aviso">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 1 21h22L12 2Zm0 6v6m0 3v.5"/></svg>
-    DADOS SIMULADOS — MAQUETE DEMONSTRATIVA
-  </span>
-  <span class="rodape-item oculta-quiosque">Contorno municipal: IBGE (malha 3300100)</span>
-  <span class="rodape-item oculta-quiosque">Unidades: coordenadas SAAE · rede e setores estimados</span>
-  <div class="rodape-dir">
-    <span class="rodape-item"><i class="led" id="led-clp"></i><span id="clp-status">CLPs —</span></span>
-    <span class="rodape-item">Operador: <b>plantão A</b></span>
-  </div>
-</footer>
-
-<script type="module" src="assets/js/app.js"></script>
+<div id="raiz"></div>
+<script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
