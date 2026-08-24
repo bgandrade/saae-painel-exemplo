@@ -350,39 +350,20 @@ hash, revalidação das páginas e a CSP. O roteamento do painel é por hash
 (`#/bombas`), então não é preciso regra de reescrita para SPA e qualquer aba pode
 ser aberta por link direto.
 
-Um `pnpm build` produz **um único deploy com três endereços**:
-
-| Endereço    | Conteúdo                   |
-| ----------- | -------------------------- |
-| `/`         | capa, com os dois caminhos |
-| `/projeto/` | a proposta técnica         |
-| `/painel/`  | esta maquete               |
-
-As três são entradas do build. Capa e documento não importam módulo nenhum —
-são HTML com estilo embutido, e os recursos comuns vivem em `public/`. Precisam
-ser entradas, e não arquivos dentro de `public/`, porque o servidor de
-desenvolvimento resolve índice de diretório a partir da raiz: um `index.html`
-em `public/` funciona no build mas dá 404 no `pnpm dev`.
-
-A CSP proíbe recurso externo, então a tipografia fica embarcada em
-`public/fontes/` — as três páginas funcionam num auditório sem rede. A origem de
-cada imagem está em [`docs/creditos-imagens.md`](docs/creditos-imagens.md), que
-separa as fotografias de licença livre das fotos de catálogo de fabricante e
-registra a situação jurídica de cada grupo.
+Um `pnpm build` publica somente a maquete demonstrativa em `/`. O projeto
+técnico permanece como documento-fonte em
+[`docs/projeto-tecnico.md`](docs/projeto-tecnico.md) e não entra no pacote de
+produção.
 
 ---
 
 ## Estrutura
 
 ```
-index.html                       capa do site              ─┐
-projeto/index.html               a proposta técnica         │ as três entradas
-painel/index.html                shell do Vite — a maquete  ┘ do build
+index.html                       shell do Vite — a maquete
 vite.config.js                   build, sem configuração exótica
 
 public/                          copiado literalmente, sem passar pelo build
-  estilo.css                     tokens, tipografia e impressão das páginas
-  fontes/  img/                  tipografia embarcada e fotografias
   _headers                       cache e CSP do Cloudflare Pages
 
 src/
@@ -420,9 +401,8 @@ módulos ES puros, testáveis por linha de comando, e é por isso que
 
 ## O que viria depois
 
-O caminho da maquete até o sistema real está na **proposta técnica**, publicada
-em `/projeto/` e versionada em
-[`docs/projeto-tecnico.md`](docs/projeto-tecnico.md): parte da operação manual de
+O caminho da maquete até o sistema real está na **proposta técnica**, mantida
+somente em [`docs/projeto-tecnico.md`](docs/projeto-tecnico.md): parte da operação manual de
 hoje — cloro lido em comparador de prisma, ficha de papel, bomba em automático
 simples — e mostra com quais tecnologias e quais equipamentos ela é substituída
 por registro digital, medição contínua e supervisão centralizada.

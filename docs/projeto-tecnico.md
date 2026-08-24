@@ -3,12 +3,6 @@
 **Pré-projeto — versão 3.3, agosto de 2026**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis
 
-> Versão em texto do documento publicado em `/projeto/`, destinada também à circulação impressa e
-> eventual anexação a processo administrativo. As fotografias dos equipamentos estão na versão
-> publicada; aqui permanecem as referências técnicas e documentais.
-
----
-
 ## Nota preliminar — escopo e origem das informações
 
 Este documento é um **pré-projeto**. Ele propõe uma sequência de trabalho e uma arquitetura
@@ -20,7 +14,7 @@ critério de escolha**. A definição do que instalar, em qual unidade e com qua
 ser feita posteriormente, com dados atuais e participação dos profissionais responsáveis pelas áreas
 envolvidas.
 
-Fui servidor administrativo da autarquia por quinze anos e estou afastado desde 2020, com retorno
+Fui servidor administrativo da autarquia por dezesseis anos e estou afastado desde 2020, com retorno
 previsto. As descrições operacionais deste documento se referem à **rotina que conheci até o
 afastamento** e às informações públicas que consegui consultar. Não tenho acesso à situação interna
 atual e, portanto, não sei quais procedimentos, equipamentos, contratos ou sistemas foram alterados
@@ -29,8 +23,6 @@ desde então.
 O levantamento inicial proposto neste documento tem justamente essa finalidade: confirmar o que
 permanece válido, registrar o que já evoluiu e substituir premissas por dados atuais da própria
 autarquia.
-
----
 
 ## 1. Ponto de partida
 
@@ -43,11 +35,10 @@ contínua e supervisão onde houver benefício demonstrável**.
 
 ### Bombeamento: comando local e pouca informação histórica
 
-Na rotina que conheci, conjuntos motobomba operavam, conforme a unidade, por comando manual ou por
-automação local simples, como boia e pressostato. Esse tipo de comando pode funcionar adequadamente
-para ligar e desligar o equipamento, mas não produz, por si só, informações como curva de nível,
-histórico de partidas, horas por conjunto, relação entre consumo e horário ou evolução de grandezas
-elétricas.
+Conjuntos motobomba operavam, conforme a unidade, por comando manual ou por automação local simples,
+como boia de nível. Esse tipo de comando pode funcionar adequadamente para ligar e desligar o
+equipamento, mas não produz, por si só, informações como curva de nível, histórico de partidas,
+horas por conjunto, relação entre consumo e horário ou evolução de grandezas elétricas.
 
 Quando esses dados não são registrados, o rodízio entre conjuntos, a manutenção e a análise de
 consumo dependem mais da rotina da equipe e de verificações locais. A instrumentação proposta
@@ -56,9 +47,9 @@ regras de controle mais completas.
 
 ### Cloro e pH: leitura pontual
 
-O controle de cloro residual livre e pH que conheci utilizava **comparador colorimétrico visual de
-prisma**, do tipo Dellab DLH-2000. A rotina consiste em coletar a amostra, aplicar o reagente,
-aguardar a reação e comparar a cor observada com a escala do instrumento.
+O controle de cloro residual livre e pH utilizava **comparador colorimétrico visual de prisma**, do
+tipo Dellab DLH-2000. A rotina consistia em coletar a amostra, aplicar o reagente, aguardar a reação
+e comparar a cor observada com a escala do instrumento.
 
 Esse procedimento é adequado à **verificação pontual**. Sua limitação para fins de supervisão é
 temporal: entre uma leitura e outra não há registro contínuo da grandeza. Uma alteração transitória
@@ -82,7 +73,7 @@ conferências e relatórios podem ser produzidos pelo próprio sistema.
 
 | Atividade                         | Forma de execução que conheci      | Informação adicional que a digitalização pode produzir |
 | --------------------------------- | ---------------------------------- | ------------------------------------------------------ |
-| Ligar e desligar bomba            | boia, pressostato ou deslocamento  | horas, partidas, rodízio e horário                     |
+| Ligar e desligar bomba            | boia ou deslocamento               | horas, partidas, rodízio e horário                     |
 | Ler cloro residual e pH           | comparador de prisma, com reagente | histórico estruturado e comparação entre períodos      |
 | Verificar nível de reservatório   | inspeção visual ou comunicação     | curva de nível e tendência                             |
 | Verificar nível de poço de esgoto | inspeção local                     | tendência de subida e alarme antecipado                |
@@ -178,10 +169,9 @@ barreira de segurança.
 de exportação devem permanecer sob domínio do SAAE, independentemente de quem forneça sensores ou
 serviços de apoio.
 
-> **Sobre a demonstração que acompanha este pré-projeto.** A maquete publicada em `/painel/` utiliza
-> **dados simulados**. Ela serve para demonstrar conceitos de interface, simulação, alarmes e
-> intertravamentos. Não representa a planta atual do município e não deve ser tratada como sistema
-> já implantado.
+> **Sobre a demonstração que acompanha este pré-projeto.** A maquete utiliza **dados simulados**.
+> Ela serve para demonstrar conceitos de interface, simulação, alarmes e intertravamentos. Não
+> representa a planta atual do município e não deve ser tratada como sistema já implantado.
 
 ---
 
