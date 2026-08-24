@@ -3,88 +3,80 @@
 **Pré-projeto — versão 3.3, agosto de 2026**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis
 
-> Versão em texto do documento publicado em `/projeto/`, destinada também à
-> circulação impressa e eventual anexação a processo administrativo. As
-> fotografias dos equipamentos estão na versão publicada; aqui permanecem as
-> referências técnicas e documentais.
+> Versão em texto do documento publicado em `/projeto/`, destinada também à circulação impressa e
+> eventual anexação a processo administrativo. As fotografias dos equipamentos estão na versão
+> publicada; aqui permanecem as referências técnicas e documentais.
 
 ---
 
 ## Nota preliminar — escopo e origem das informações
 
-Este documento é um **pré-projeto**. Ele propõe uma sequência de trabalho e uma
-arquitetura possível, mas não substitui levantamento de campo, projeto executivo,
-especificação de equipamentos, orçamento formal, cronograma de obra ou
-responsabilidade técnica.
+Este documento é um **pré-projeto**. Ele propõe uma sequência de trabalho e uma arquitetura
+possível, mas não substitui levantamento de campo, projeto executivo, especificação de equipamentos,
+orçamento formal, cronograma de obra ou responsabilidade técnica.
 
-Quando são citados equipamentos, protocolos ou tecnologias, a finalidade é indicar
-**tipo, função e critério de escolha**. A definição do que instalar, em qual
-unidade e com qual dimensionamento deve ser feita posteriormente, com dados atuais
-e participação dos profissionais responsáveis pelas áreas envolvidas.
+Quando são citados equipamentos, protocolos ou tecnologias, a finalidade é indicar **tipo, função e
+critério de escolha**. A definição do que instalar, em qual unidade e com qual dimensionamento deve
+ser feita posteriormente, com dados atuais e participação dos profissionais responsáveis pelas áreas
+envolvidas.
 
-Fui servidor administrativo da autarquia por quinze anos e estou afastado desde
-2020, com retorno previsto. As descrições operacionais deste documento se referem
-à **rotina que conheci até o afastamento** e às informações públicas que consegui
-consultar. Não tenho acesso à situação interna atual e, portanto, não sei quais
-procedimentos, equipamentos, contratos ou sistemas foram alterados desde então.
+Fui servidor administrativo da autarquia por quinze anos e estou afastado desde 2020, com retorno
+previsto. As descrições operacionais deste documento se referem à **rotina que conheci até o
+afastamento** e às informações públicas que consegui consultar. Não tenho acesso à situação interna
+atual e, portanto, não sei quais procedimentos, equipamentos, contratos ou sistemas foram alterados
+desde então.
 
-O levantamento inicial proposto neste documento tem justamente essa finalidade:
-confirmar o que permanece válido, registrar o que já evoluiu e substituir
-premissas por dados atuais da própria autarquia.
+O levantamento inicial proposto neste documento tem justamente essa finalidade: confirmar o que
+permanece válido, registrar o que já evoluiu e substituir premissas por dados atuais da própria
+autarquia.
 
 ---
 
 ## 1. Ponto de partida
 
-Na rotina que conheci, uma parte relevante das informações operacionais era obtida
-por inspeção local, leitura manual de instrumentos, telefone e registros em papel.
-Esses procedimentos cumprem sua função, mas produzem dados descontínuos e exigem
-trabalho posterior de consolidação.
+Na rotina que conheci, uma parte relevante das informações operacionais era obtida por inspeção
+local, leitura manual de instrumentos, telefone e registros em papel. Esses procedimentos cumprem
+sua função, mas produzem dados descontínuos e exigem trabalho posterior de consolidação.
 
-A proposta parte desse ponto: **preservar o que já funciona e acrescentar registro
-digital, medição contínua e supervisão onde houver benefício demonstrável**.
+A proposta parte desse ponto: **preservar o que já funciona e acrescentar registro digital, medição
+contínua e supervisão onde houver benefício demonstrável**.
 
 ### Bombeamento: comando local e pouca informação histórica
 
-Na rotina que conheci, conjuntos motobomba operavam, conforme a unidade, por
-comando manual ou por automação local simples, como boia e pressostato. Esse tipo
-de comando pode funcionar adequadamente para ligar e desligar o equipamento, mas
-não produz, por si só, informações como curva de nível, histórico de partidas,
-horas por conjunto, relação entre consumo e horário ou evolução de grandezas
+Na rotina que conheci, conjuntos motobomba operavam, conforme a unidade, por comando manual ou por
+automação local simples, como boia e pressostato. Esse tipo de comando pode funcionar adequadamente
+para ligar e desligar o equipamento, mas não produz, por si só, informações como curva de nível,
+histórico de partidas, horas por conjunto, relação entre consumo e horário ou evolução de grandezas
 elétricas.
 
-Quando esses dados não são registrados, o rodízio entre conjuntos, a manutenção e
-a análise de consumo dependem mais da rotina da equipe e de verificações locais.
-A instrumentação proposta adiante não substitui essas proteções; acrescenta
-informação e, em etapas posteriores, permite regras de controle mais completas.
+Quando esses dados não são registrados, o rodízio entre conjuntos, a manutenção e a análise de
+consumo dependem mais da rotina da equipe e de verificações locais. A instrumentação proposta
+adiante não substitui essas proteções; acrescenta informação e, em etapas posteriores, permite
+regras de controle mais completas.
 
 ### Cloro e pH: leitura pontual
 
-O controle de cloro residual livre e pH que conheci utilizava **comparador
-colorimétrico visual de prisma**, do tipo Dellab DLH-2000. A rotina consiste em
-coletar a amostra, aplicar o reagente, aguardar a reação e comparar a cor observada
-com a escala do instrumento.
+O controle de cloro residual livre e pH que conheci utilizava **comparador colorimétrico visual de
+prisma**, do tipo Dellab DLH-2000. A rotina consiste em coletar a amostra, aplicar o reagente,
+aguardar a reação e comparar a cor observada com a escala do instrumento.
 
-Esse procedimento é adequado à **verificação pontual**. Sua limitação para fins de
-supervisão é temporal: entre uma leitura e outra não há registro contínuo da
-grandeza. Uma alteração transitória que ocorra nesse intervalo pode não aparecer
-na ficha seguinte.
+Esse procedimento é adequado à **verificação pontual**. Sua limitação para fins de supervisão é
+temporal: entre uma leitura e outra não há registro contínuo da grandeza. Uma alteração transitória
+que ocorra nesse intervalo pode não aparecer na ficha seguinte.
 
-Um analisador em linha, se tecnicamente indicado e corretamente mantido, pode
-acrescentar esse acompanhamento contínuo. A rotina laboratorial continua
-necessária para controle, verificação e aferição segundo o método adotado pela
-autarquia e as exigências sanitárias aplicáveis.
+Um analisador em linha, se tecnicamente indicado e corretamente mantido, pode acrescentar esse
+acompanhamento contínuo. A rotina laboratorial continua necessária para controle, verificação e
+aferição segundo o método adotado pela autarquia e as exigências sanitárias aplicáveis.
 
 ### Registro em papel e consolidação manual
 
-Cada leitura registrada em ficha precisa ser posteriormente armazenada,
-conferida e, quando necessário, digitada para consolidação mensal. Esse processo
-consome tempo e cria pontos adicionais de transcrição.
+Cada leitura registrada em ficha precisa ser posteriormente armazenada, conferida e, quando
+necessário, digitada para consolidação mensal. Esse processo consome tempo e cria pontos adicionais
+de transcrição.
 
-O principal ganho da digitalização não é substituir a coleta. É fazer com que o
-dado já nasça estruturado: unidade, parâmetro, valor, data, hora e responsável.
-A partir daí, histórico, gráficos, conferências e relatórios podem ser produzidos
-pelo próprio sistema.
+O principal ganho da digitalização não é substituir a coleta. É fazer com que o dado já nasça
+estruturado: unidade, parâmetro, valor, data, hora e responsável. A partir daí, histórico, gráficos,
+conferências e relatórios podem ser produzidos pelo próprio sistema.
 
 ### A rotina, atividade por atividade
 
@@ -98,9 +90,8 @@ pelo próprio sistema.
 | Consolidar o mês                  | digitação e cálculo                | relatório gerado a partir dos registros                |
 | Identificar ocorrência            | inspeção, alarme local ou chamado  | correlação entre evento e grandezas registradas        |
 
-A diferença essencial é passar de registros isolados para uma **série histórica
-consultável**, sem retirar da equipe operacional a decisão sobre como a unidade
-deve ser conduzida.
+A diferença essencial é passar de registros isolados para uma **série histórica consultável**, sem
+retirar da equipe operacional a decisão sobre como a unidade deve ser conduzida.
 
 ### O que os indicadores públicos permitem observar
 
@@ -115,51 +106,46 @@ Os indicadores públicos consultados para o município são:
 | Índice de hidrometração        | 73,9 %           | **oficial** SINISA 2024     |
 | Consumo por habitante          | 239,6 L/dia      | **oficial** SINISA 2024     |
 
-O índice de perdas informado, de **21,3 %**, está abaixo da média nacional usada
-como referência neste documento. Isso é positivo. Ao mesmo tempo, o índice de
-hidrometração de **73,9 %** mostra que uma parcela das ligações não é medida
-individualmente.
+O índice de perdas informado, de **21,3 %**, está abaixo da média nacional usada como referência
+neste documento. Isso é positivo. Ao mesmo tempo, o índice de hidrometração de **73,9 %** mostra que
+uma parcela das ligações não é medida individualmente.
 
-Essa condição não invalida os indicadores, que seguem a metodologia oficial, mas
-aumenta a dependência de estimativas. Quanto maior a cobertura de medição e a
-macromedição da rede, maior a capacidade da autarquia de conferir os próprios
-números, separar perdas reais de aparentes e explicar variações ao longo do tempo.
+Essa condição não invalida os indicadores, que seguem a metodologia oficial, mas aumenta a
+dependência de estimativas. Quanto maior a cobertura de medição e a macromedição da rede, maior a
+capacidade da autarquia de conferir os próprios números, separar perdas reais de aparentes e
+explicar variações ao longo do tempo.
 
-O objetivo, portanto, não é partir da premissa de que o índice oficial está
-errado. É criar condições para que ele possa ser **confrontado com medições mais
-detalhadas da própria operação**.
+O objetivo, portanto, não é partir da premissa de que o índice oficial está errado. É criar
+condições para que ele possa ser **confrontado com medições mais detalhadas da própria operação**.
 
 ---
 
 ## 2. O que proponho
 
-A implantação é dividida em quatro movimentos. Cada um deve produzir resultado
-independente antes de avançar para o seguinte.
+A implantação é dividida em quatro movimentos. Cada um deve produzir resultado independente antes de
+avançar para o seguinte.
 
-**Etapa 0 — digitalizar o registro.** A leitura feita pelo laboratório ou pela
-equipe de campo passa a ser lançada diretamente no sistema, pelo telefone ou
-computador. O registro recebe autor e horário, forma uma série histórica e
-alimenta os relatórios.
+**Etapa 0 — digitalizar o registro.** A leitura feita pelo laboratório ou pela equipe de campo passa
+a ser lançada diretamente no sistema, pelo telefone ou computador. O registro recebe autor e
+horário, forma uma série histórica e alimenta os relatórios.
 
-**Etapa 1 — digitalizar a medição.** Onde houver justificativa técnica, instrumentos
-em linha passam a enviar medições ao mesmo banco de dados. A leitura manual e a
-medição automática passam a conviver no mesmo histórico.
+**Etapa 1 — digitalizar a medição.** Onde houver justificativa técnica, instrumentos em linha passam
+a enviar medições ao mesmo banco de dados. A leitura manual e a medição automática passam a conviver
+no mesmo histórico.
 
-**Etapa 2 — automatizar.** Em unidades selecionadas, controladores locais podem
-executar regras de operação como rodízio, limites de nível, intervalo mínimo entre
-partidas e programação horária, sempre preservando as proteções físicas e os
-requisitos do projeto elétrico.
+**Etapa 2 — automatizar.** Em unidades selecionadas, controladores locais podem executar regras de
+operação como rodízio, limites de nível, intervalo mínimo entre partidas e programação horária,
+sempre preservando as proteções físicas e os requisitos do projeto elétrico.
 
-**Etapa 3 — supervisionar e controlar.** As unidades instrumentadas passam a ser
-visualizadas de forma centralizada. Comando à distância só é considerado onde
-houver projeto, segurança, autorização e procedimento operacional definidos.
+**Etapa 3 — supervisionar e controlar.** As unidades instrumentadas passam a ser visualizadas de
+forma centralizada. Comando à distância só é considerado onde houver projeto, segurança, autorização
+e procedimento operacional definidos.
 
 ### Por que começar pela etapa 0
 
-A etapa 0 resolve um problema administrativo e operacional sem interferir em
-painel elétrico, bomba, reservatório ou processo de tratamento. Exige
-principalmente software, banco de dados, perfis de acesso e definição da rotina de
-registro.
+A etapa 0 resolve um problema administrativo e operacional sem interferir em painel elétrico, bomba,
+reservatório ou processo de tratamento. Exige principalmente software, banco de dados, perfis de
+acesso e definição da rotina de registro.
 
 Entregas previstas:
 
@@ -170,41 +156,39 @@ Entregas previstas:
 - alerta quando um valor lançado estiver fora da faixa configurada;
 - consulta por perfis autorizados em computador ou telefone.
 
-O custo dessa etapa tende a ser predominantemente de **horas de desenvolvimento,
-configuração e infraestrutura de servidor**, aproveitando o que já existir na
-autarquia sempre que possível.
+O custo dessa etapa tende a ser predominantemente de **horas de desenvolvimento, configuração e
+infraestrutura de servidor**, aproveitando o que já existir na autarquia sempre que possível.
 
-Quando instrumentos automáticos forem incorporados, eles podem alimentar a mesma
-estrutura de dados. Assim, a série histórica iniciada com a leitura manual não
-precisa ser descartada.
+Quando instrumentos automáticos forem incorporados, eles podem alimentar a mesma estrutura de dados.
+Assim, a série histórica iniciada com a leitura manual não precisa ser descartada.
 
 ### Princípios de arquitetura
 
-**1. Preferência por padrões abertos.** Sempre que tecnicamente possível, a
-especificação deve privilegiar protocolos documentados, formatos de dados abertos
-e componentes sem dependência exclusiva de um único fornecedor. Isso reduz custo
-de migração e amplia as alternativas de manutenção futura.
+**1. Preferência por padrões abertos.** Sempre que tecnicamente possível, a especificação deve
+privilegiar protocolos documentados, formatos de dados abertos e componentes sem dependência
+exclusiva de um único fornecedor. Isso reduz custo de migração e amplia as alternativas de
+manutenção futura.
 
-**2. Proteção crítica independente do software de supervisão.** Boias, relés,
-intertravamentos elétricos e demais proteções necessárias devem continuar atuando
-mesmo que servidor, rede ou interface estejam indisponíveis. O software acrescenta
-informação e controle; não deve ser a única barreira de segurança.
+**2. Proteção crítica independente do software de supervisão.** Boias, relés, intertravamentos
+elétricos e demais proteções necessárias devem continuar atuando mesmo que servidor, rede ou
+interface estejam indisponíveis. O software acrescenta informação e controle; não deve ser a única
+barreira de segurança.
 
-**3. Dados sob controle da autarquia.** Banco de dados, políticas de cópia de
-segurança e capacidade de exportação devem permanecer sob domínio do SAAE,
-independentemente de quem forneça sensores ou serviços de apoio.
+**3. Dados sob controle da autarquia.** Banco de dados, políticas de cópia de segurança e capacidade
+de exportação devem permanecer sob domínio do SAAE, independentemente de quem forneça sensores ou
+serviços de apoio.
 
-> **Sobre a demonstração que acompanha este pré-projeto.** A maquete publicada em
-> `/painel/` utiliza **dados simulados**. Ela serve para demonstrar conceitos de
-> interface, simulação, alarmes e intertravamentos. Não representa a planta atual
-> do município e não deve ser tratada como sistema já implantado.
+> **Sobre a demonstração que acompanha este pré-projeto.** A maquete publicada em `/painel/` utiliza
+> **dados simulados**. Ela serve para demonstrar conceitos de interface, simulação, alarmes e
+> intertravamentos. Não representa a planta atual do município e não deve ser tratada como sistema
+> já implantado.
 
 ---
 
 ## 3. Arquitetura técnica proposta
 
-A arquitetura é dividida em camadas para permitir que campo, comunicação, servidor
-e interface evoluam de forma relativamente independente.
+A arquitetura é dividida em camadas para permitir que campo, comunicação, servidor e interface
+evoluam de forma relativamente independente.
 
 | Camada                 | Tecnologias de referência                                        | Critério principal                                                      |
 | ---------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -214,15 +198,14 @@ e interface evoluam de forma relativamente independente.
 | **Servidor**           | Debian/Ubuntu, containers, Mosquitto, PostgreSQL/TimescaleDB     | tecnologias amplamente utilizadas e sem licença por ponto               |
 | **Telas e relatórios** | serviços web, React e Grafana, conforme a função                 | separação entre regra de negócio, dados e interface                     |
 
-Os protocolos acima são **referências preferenciais**, não uma restrição absoluta.
-Equipamentos existentes podem utilizar outras interfaces, gateways ou protocolos,
-e isso deve ser verificado no inventário de campo.
+Os protocolos acima são **referências preferenciais**, não uma restrição absoluta. Equipamentos
+existentes podem utilizar outras interfaces, gateways ou protocolos, e isso deve ser verificado no
+inventário de campo.
 
 ### Leitura e controle são etapas diferentes
 
-Para apenas adquirir uma grandeza, um concentrador de telemetria pode ser
-suficiente. Um controlador lógico passa a ser necessário quando a própria unidade
-precisa tomar decisões de processo.
+Para apenas adquirir uma grandeza, um concentrador de telemetria pode ser suficiente. Um controlador
+lógico passa a ser necessário quando a própria unidade precisa tomar decisões de processo.
 
 | Função                                        | Solução típica                                     |
 | --------------------------------------------- | -------------------------------------------------- |
@@ -230,43 +213,41 @@ precisa tomar decisões de processo.
 | Ajustar parâmetros de operação                | concentrador com saídas apropriadas ou controlador |
 | Executar rodízio, partidas e intertravamentos | controlador lógico programável                     |
 
-A **primeira etapa de instrumentação não precisa alterar a lógica de controle da
-unidade**. O instrumento e o concentrador podem operar em paralelo ao comando já
-existente. Se a telemetria for retirada de serviço, a unidade deve continuar
-operando segundo sua lógica local atual.
+A **primeira etapa de instrumentação não precisa alterar a lógica de controle da unidade**. O
+instrumento e o concentrador podem operar em paralelo ao comando já existente. Se a telemetria for
+retirada de serviço, a unidade deve continuar operando segundo sua lógica local atual.
 
 ### Decisões críticas devem permanecer locais
 
-Rede de comunicação pode falhar. Por isso, funções necessárias à continuidade e à
-segurança da unidade devem permanecer no próprio local, por lógica elétrica ou
-controlador adequado.
+Rede de comunicação pode falhar. Por isso, funções necessárias à continuidade e à segurança da
+unidade devem permanecer no próprio local, por lógica elétrica ou controlador adequado.
 
-O servidor central supervisiona, armazena e apresenta informações. Em etapas
-posteriores, pode enviar parâmetros ou comandos autorizados, mas a aceitação e os
-intertravamentos devem ser avaliados localmente.
+O servidor central supervisiona, armazena e apresenta informações. Em etapas posteriores, pode
+enviar parâmetros ou comandos autorizados, mas a aceitação e os intertravamentos devem ser avaliados
+localmente.
 
-Se a comunicação cair, o concentrador deve continuar registrando as medições
-quando possuir capacidade para isso e retransmiti-las após o restabelecimento do
-enlace, preservando o horário de origem.
+Se a comunicação cair, o concentrador deve continuar registrando as medições quando possuir
+capacidade para isso e retransmiti-las após o restabelecimento do enlace, preservando o horário de
+origem.
 
 ### Transporte das medições
 
-Entre instrumento e aquisição local, **4–20 mA e Modbus** são interfaces comuns e
-adequadas a muitas aplicações. Da unidade até a sede, **MQTT** é uma alternativa
-para transporte de mensagens; a especificação **Sparkplug** acrescenta convenções
-para identificação de pontos, estado da estação e carimbo de tempo.
+Entre instrumento e aquisição local, **4–20 mA e Modbus** são interfaces comuns e adequadas a muitas
+aplicações. Da unidade até a sede, **MQTT** é uma alternativa para transporte de mensagens; a
+especificação **Sparkplug** acrescenta convenções para identificação de pontos, estado da estação e
+carimbo de tempo.
 
-O relógio do equipamento de aquisição deve permanecer sincronizado e possuir
-estratégia para períodos sem comunicação. Dependendo do equipamento, isso pode
-envolver RTC com bateria e sincronização por NTP ou mecanismo equivalente.
+O relógio do equipamento de aquisição deve permanecer sincronizado e possuir estratégia para
+períodos sem comunicação. Dependendo do equipamento, isso pode envolver RTC com bateria e
+sincronização por NTP ou mecanismo equivalente.
 
-A frequência de transmissão também deve ser adequada à grandeza. Em muitos casos
-faz sentido transmitir por mudança significativa e por intervalo máximo, evitando
-tráfego e armazenamento desnecessários sem perder eventos relevantes.
+A frequência de transmissão também deve ser adequada à grandeza. Em muitos casos faz sentido
+transmitir por mudança significativa e por intervalo máximo, evitando tráfego e armazenamento
+desnecessários sem perder eventos relevantes.
 
-Para o histórico, PostgreSQL com TimescaleDB é uma possibilidade adequada a séries
-temporais. O dimensionamento de armazenamento deve ser feito depois de conhecido o
-número de pontos, a frequência de amostragem e a política de retenção.
+Para o histórico, PostgreSQL com TimescaleDB é uma possibilidade adequada a séries temporais. O
+dimensionamento de armazenamento deve ser feito depois de conhecido o número de pontos, a frequência
+de amostragem e a política de retenção.
 
 ### O que arquitetura aberta significa na prática
 
@@ -278,9 +259,9 @@ número de pontos, a frequência de amostragem e a política de retenção.
 | Contratar manutenção       | universo restrito de fornecedores           | maior disponibilidade de profissionais e empresas                   |
 | Auditar regras do software | depende do acesso concedido pelo fornecedor | código e critérios podem ser inspecionados quando publicados        |
 
-Padrão aberto **não significa troca instantânea**. Mesmo dois equipamentos que
-utilizam Modbus podem ter mapas de registradores, escalas e configurações
-diferentes. A vantagem é reduzir a barreira de integração, não eliminá-la.
+Padrão aberto **não significa troca instantânea**. Mesmo dois equipamentos que utilizam Modbus podem
+ter mapas de registradores, escalas e configurações diferentes. A vantagem é reduzir a barreira de
+integração, não eliminá-la.
 
 ### Software de servidor
 
@@ -294,24 +275,22 @@ diferentes. A vantagem é reduzir a barreira de integração, não eliminá-la.
 | Interface                 | React                    | livre                            |
 | Monitoramento             | Prometheus + Grafana     | livre em configuração compatível |
 
-A ausência de licença por ponto na camada de software não elimina outros custos:
-servidor, armazenamento, enlaces, cópias de segurança, capacitação, suporte,
-equipamentos de campo e manutenção permanecem necessários.
+A ausência de licença por ponto na camada de software não elimina outros custos: servidor,
+armazenamento, enlaces, cópias de segurança, capacitação, suporte, equipamentos de campo e
+manutenção permanecem necessários.
 
-A IEC 61131-3 padroniza linguagens usadas em controladores industriais e **facilita
-a migração de lógica entre plataformas**, mas não torna diferentes fabricantes
-inteiramente intercambiáveis. Bibliotecas, blocos proprietários, endereçamento e
-ferramentas de engenharia podem exigir adaptação.
+A IEC 61131-3 padroniza linguagens usadas em controladores industriais e **facilita a migração de
+lógica entre plataformas**, mas não torna diferentes fabricantes inteiramente intercambiáveis.
+Bibliotecas, blocos proprietários, endereçamento e ferramentas de engenharia podem exigir adaptação.
 
 ### Segurança da informação
 
-Um sistema com possibilidade de interação com equipamento físico deve separar a
-rede de operação da camada usada para consulta administrativa.
+Um sistema com possibilidade de interação com equipamento físico deve separar a rede de operação da
+camada usada para consulta administrativa.
 
 **Plano de campo e comando:**
 
-- rede de automação segmentada da internet e, quando aplicável, da rede
-  administrativa;
+- rede de automação segmentada da internet e, quando aplicável, da rede administrativa;
 - comunicação com as unidades preferencialmente iniciada de dentro para fora;
 - comando remoto restrito a rede e perfis definidos pela autarquia;
 - autenticação dos equipamentos e comunicação cifrada onde houver suporte;
@@ -324,68 +303,64 @@ rede de operação da camada usada para consulta administrativa.
 - sem rota direta entre a interface pública e controladores de campo;
 - operações administrativas realizadas pela camada de serviços e banco de dados.
 
-Nos dois planos devem existir trilha de auditoria e rotina de cópia de segurança
-com teste periódico de restauração.
+Nos dois planos devem existir trilha de auditoria e rotina de cópia de segurança com teste periódico
+de restauração.
 
 ---
 
 ## 4. Equipamentos e critérios de escolha
 
-Este capítulo apresenta tipos de instrumento e ordens de grandeza. **Não define
-quantidade, modelo final ou unidade de instalação.** Esses itens dependem do
-levantamento de campo, das condições hidráulicas e elétricas e do projeto
-executivo.
+Este capítulo apresenta tipos de instrumento e ordens de grandeza. **Não define quantidade, modelo
+final ou unidade de instalação.** Esses itens dependem do levantamento de campo, das condições
+hidráulicas e elétricas e do projeto executivo.
 
-Os modelos citados servem como referência de função e preço. A especificação
-posterior deve admitir alternativas tecnicamente equivalentes sempre que houver.
+Os modelos citados servem como referência de função e preço. A especificação posterior deve admitir
+alternativas tecnicamente equivalentes sempre que houver.
 
 ### Analisador de cloro residual livre e pH em linha
 
-Instalado em derivação apropriada, permite acompanhar continuamente as grandezas e
-enviá-las ao sistema.
+Instalado em derivação apropriada, permite acompanhar continuamente as grandezas e enviá-las ao
+sistema.
 
 - **Função:** complementar as verificações pontuais com acompanhamento contínuo;
 - **Interfaces usuais:** 4–20 mA, Modbus e saídas de alarme, conforme o modelo;
-- **Tecnologias:** amperométrica ou colorimétrica, com requisitos de manutenção
-  diferentes;
-- **Instalação:** exige condições adequadas de amostra, vazão, filtragem,
-  calibração e manutenção;
-- **Ordem de preço consultada:** aproximadamente **R$ 17 mil** **preço** para o
-  instrumento de referência, sem infraestrutura e instalação.
+- **Tecnologias:** amperométrica ou colorimétrica, com requisitos de manutenção diferentes;
+- **Instalação:** exige condições adequadas de amostra, vazão, filtragem, calibração e manutenção;
+- **Ordem de preço consultada:** aproximadamente **R$ 17 mil** **preço** para o instrumento de
+  referência, sem infraestrutura e instalação.
 
-O analisador em linha **não deve ser tratado como substituto automático dos
-procedimentos de controle previstos na Portaria GM/MS 888/2021**. A relação entre
-medição contínua, método de referência e rotina laboratorial deve ser definida com
-a área responsável pela qualidade da água.
+O analisador em linha **não deve ser tratado como substituto automático dos procedimentos de
+controle previstos na Portaria GM/MS 888/2021**. A relação entre medição contínua, método de
+referência e rotina laboratorial deve ser definida com a área responsável pela qualidade da água.
 
-Uma funcionalidade útil do sistema é registrar a leitura manual realizada no mesmo
-período da medição automática. Com isso, torna-se possível acompanhar diferenças
-entre os dois registros e identificar necessidade de verificação, limpeza ou
-calibração do analisador.
+Uma funcionalidade útil do sistema é registrar a leitura manual realizada no mesmo período da
+medição automática. Com isso, torna-se possível acompanhar diferenças entre os dois registros e
+identificar necessidade de verificação, limpeza ou calibração do analisador.
 
-> **Referência de preço.** Um serviço municipal de saneamento do interior paulista
-> divulgou investimento de aproximadamente **R$ 17 mil** em analisador de cloro e
-> economia de cerca de **R$ 13 mil por ano em reagente**. O caso serve apenas como
-> referência externa; não é projeção de economia para o SAAE.
+> **Referência de preço.** Um serviço municipal de saneamento do interior paulista divulgou
+> investimento de aproximadamente **R$ 17 mil** em analisador de cloro e
+> economia de cerca de **R$
+> 13 mil por ano em reagente**. O caso serve apenas como referência externa; não é projeção de
+> economia para o SAAE.
 
 ### Transmissor de pressão
 
-A pressão medida continuamente ajuda a identificar condições de baixa pressão,
-excesso de pressão e mudanças de comportamento da rede antes que a análise dependa
-somente de reclamações ou inspeção posterior.
+A pressão medida continuamente ajuda a identificar condições de baixa pressão, excesso de pressão e
+mudanças de comportamento da rede antes que a análise dependa somente de reclamações ou inspeção
+posterior.
 
 - **Comunicação comum:** 4–20 mA;
 - **Locais possíveis:** saída de recalque, entrada de setor e pontos críticos;
-- **Projeto:** deve considerar faixa de medição, proteção contra surto, válvula de
-  bloqueio e condições de manutenção;
-- **Ordem de preço consultada:** a partir de **R$ 1.418** **preço** para o
-  instrumento de referência.
+- **Projeto:** deve considerar faixa de medição, proteção contra surto, válvula de bloqueio e
+  condições de manutenção;
+- **Ordem de preço consultada:** a partir de **R$ 1.418** **preço** para o instrumento de
+  referência.
 
 ### Medição de vazão
 
-A macromedição é necessária para balanço hídrico e setorização. A escolha do
-medidor depende de exatidão requerida, diâmetro, material da tubulação, condição de
-instalação, possibilidade de parada e custo total.
+A macromedição é necessária para balanço hídrico e setorização. A escolha do medidor depende de
+exatidão requerida, diâmetro, material da tubulação, condição de instalação, possibilidade de parada
+e custo total.
 
 |                   | Eletromagnético                      | Ultrassônico externo                                         |
 | ----------------- | ------------------------------------ | ------------------------------------------------------------ |
@@ -394,47 +369,43 @@ instalação, possibilidade de parada e custo total.
 | Parada da adutora | pode ser necessária                  | normalmente não é necessária                                 |
 | Uso típico        | macromedição permanente e balanço    | campanha, diagnóstico ou locais com restrição de intervenção |
 
-Não existe escolha universal. Para balanço permanente, o eletromagnético tende a
-ser mais adequado quando as condições de instalação permitem. Para campanha de
-medição ou locais onde não se pode intervir na tubulação, o ultrassônico externo
-pode oferecer melhor relação entre informação e facilidade de instalação.
+Não existe escolha universal. Para balanço permanente, o eletromagnético tende a ser mais adequado
+quando as condições de instalação permitem. Para campanha de medição ou locais onde não se pode
+intervir na tubulação, o ultrassônico externo pode oferecer melhor relação entre informação e
+facilidade de instalação.
 
 ### Medição de nível
 
-A medição contínua de nível permite registrar a curva de reservatórios e poços e
-configurar alarmes de tendência.
+A medição contínua de nível permite registrar a curva de reservatórios e poços e configurar alarmes
+de tendência.
 
-- **reservatório de água:** ultrassônico, radar ou hidrostático, conforme ambiente
-  e geometria;
-- **poço de elevatória de esgoto:** radar ou solução adequada à presença de vapor,
-  espuma, incrustação e atmosfera classificada;
-- **alternativa submersa:** transmissor hidrostático, com manutenção compatível
-  com o meio;
+- **reservatório de água:** ultrassônico, radar ou hidrostático, conforme ambiente e geometria;
+- **poço de elevatória de esgoto:** radar ou solução adequada à presença de vapor, espuma,
+  incrustação e atmosfera classificada;
+- **alternativa submersa:** transmissor hidrostático, com manutenção compatível com o meio;
 - **interfaces:** 4–20 mA, HART ou Modbus, conforme o modelo.
 
-Em poços de esgoto, a classificação de área e a seleção de equipamentos devem ser
-feitas por profissional habilitado, considerando a série **ABNT NBR IEC 60079** e
-as condições reais da instalação.
+Em poços de esgoto, a classificação de área e a seleção de equipamentos devem ser feitas por
+profissional habilitado, considerando a série **ABNT NBR IEC 60079** e as condições reais da
+instalação.
 
-As boias de proteção não precisam ser retiradas. O medidor contínuo acrescenta
-informação; as proteções independentes permanecem no circuito onde forem
-necessárias.
+As boias de proteção não precisam ser retiradas. O medidor contínuo acrescenta informação; as
+proteções independentes permanecem no circuito onde forem necessárias.
 
 ### Multimedidor de grandezas elétricas
 
-Conjuntos motobomba representam parcela relevante do consumo de energia em
-sistemas de abastecimento. Medir por painel ou por conjunto permite conhecer
-corrente, tensão, fator de potência, potência e energia acumulada.
+Conjuntos motobomba representam parcela relevante do consumo de energia em sistemas de
+abastecimento. Medir por painel ou por conjunto permite conhecer corrente, tensão, fator de
+potência, potência e energia acumulada.
 
 - **Comunicação típica:** RS-485/Modbus;
 - **Ordem de preço consultada:** aproximadamente **R$ 519 a R$ 910** **preço**;
-- **Itens adicionais:** transformadores de corrente, proteção, bornes, cabeamento e
-  intervenção por profissional habilitado.
+- **Itens adicionais:** transformadores de corrente, proteção, bornes, cabeamento e intervenção por
+  profissional habilitado.
 
 ### Monitoramento de conjuntos motobomba
 
-Algumas informações úteis podem ser obtidas com medição elétrica e sinais já
-existentes no painel:
+Algumas informações úteis podem ser obtidas com medição elétrica e sinais já existentes no painel:
 
 | Grandeza                | Origem possível  | Uso                                 |
 | ----------------------- | ---------------- | ----------------------------------- |
@@ -445,58 +416,56 @@ existentes no painel:
 | Falha de proteção       | entrada digital  | registrar instante da parada        |
 | Horas e partidas        | contador local   | apoiar rodízio e manutenção         |
 
-Mudanças persistentes de corrente, vibração ou temperatura **podem indicar
-alteração de condição do equipamento**, mas diagnóstico de falha exige histórico,
-limites adequados e avaliação de manutenção. O sistema deve apoiar essa análise,
-não substituir o diagnóstico técnico.
+Mudanças persistentes de corrente, vibração ou temperatura **podem indicar alteração de condição do
+equipamento**, mas diagnóstico de falha exige histórico, limites adequados e avaliação de
+manutenção. O sistema deve apoiar essa análise, não substituir o diagnóstico técnico.
 
 ### Inversor de frequência
 
-Inversor de frequência e automação do comando são assuntos relacionados, mas não
-idênticos. É possível implementar rodízio, intervalos de partida e controle por
-nível com partida convencional. O inversor passa a ser interessante quando há
-benefício em variar rotação, por exemplo para controle de pressão ou vazão.
+Inversor de frequência e automação do comando são assuntos relacionados, mas não idênticos. É
+possível implementar rodízio, intervalos de partida e controle por nível com partida convencional. O
+inversor passa a ser interessante quando há benefício em variar rotação, por exemplo para controle
+de pressão ou vazão.
 
-Em recalques com altura estática predominante, a economia obtida pela redução de
-rotação deve ser avaliada pela curva real do sistema. Por isso, a decisão de usar
-inversor deve ficar para o projeto executivo.
+Em recalques com altura estática predominante, a economia obtida pela redução de rotação deve ser
+avaliada pela curva real do sistema. Por isso, a decisão de usar inversor deve ficar para o projeto
+executivo.
 
-Quando aplicado, o projeto deve considerar motor, harmônicas, comprimento de cabo,
-ventilação, proteção e condições do painel. A intervenção pertence à disciplina
-elétrica e deve ter responsabilidade técnica correspondente.
+Quando aplicado, o projeto deve considerar motor, harmônicas, comprimento de cabo, ventilação,
+proteção e condições do painel. A intervenção pertence à disciplina elétrica e deve ter
+responsabilidade técnica correspondente.
 
 ### Controlador lógico programável
 
-O CLP entra quando a unidade precisa executar decisões locais: rodízio, partida,
-parada, intertravamentos e tratamento de comandos.
+O CLP entra quando a unidade precisa executar decisões locais: rodízio, partida, parada,
+intertravamentos e tratamento de comandos.
 
-A programação em linguagens previstas na **IEC 61131-3** favorece manutenção e
-migração, mas a portabilidade entre marcas deve ser verificada caso a caso.
+A programação em linguagens previstas na **IEC 61131-3** favorece manutenção e migração, mas a
+portabilidade entre marcas deve ser verificada caso a caso.
 
-A primeira etapa de leitura pode ser implantada sem alterar a lógica de controle e,
-portanto, sem exigir CLP novo onde ele não for necessário.
+A primeira etapa de leitura pode ser implantada sem alterar a lógica de controle e, portanto, sem
+exigir CLP novo onde ele não for necessário.
 
 ### Pontos de rede sem alimentação local
 
-Pressão e vazão em setores podem precisar ser medidas em locais sem painel ou
-energia. Nesses casos, uma alternativa é **datalogger autônomo**, com bateria e
-comunicação própria, configurado para registrar continuamente e transmitir em
-intervalos compatíveis com a autonomia desejada.
+Pressão e vazão em setores podem precisar ser medidas em locais sem painel ou energia. Nesses casos,
+uma alternativa é **datalogger autônomo**, com bateria e comunicação própria, configurado para
+registrar continuamente e transmitir em intervalos compatíveis com a autonomia desejada.
 
 ### Infraestrutura de painel e comunicação
 
-O custo de instrumentação inclui fonte, proteção contra surto, aterramento,
-grau de proteção, separação entre circuitos de potência e sinal, cabeamento,
-conectividade e adequações civis ou elétricas.
+O custo de instrumentação inclui fonte, proteção contra surto, aterramento, grau de proteção,
+separação entre circuitos de potência e sinal, cabeamento, conectividade e adequações civis ou
+elétricas.
 
-A comunicação pode variar por unidade: fibra, rede móvel, rádio ou solução
-específica para áreas insulares. Essa diversidade reforça a necessidade de
-**autonomia local** quando a unidade possui função de controle.
+A comunicação pode variar por unidade: fibra, rede móvel, rádio ou solução específica para áreas
+insulares. Essa diversidade reforça a necessidade de **autonomia local** quando a unidade possui
+função de controle.
 
 ### Faixas preliminares por tipo de unidade
 
-As faixas abaixo são apenas **cálculo preliminar de material**, sem instalação,
-obra ou projeto executivo. Devem ser refeitas depois do inventário.
+As faixas abaixo são apenas **cálculo preliminar de material**, sem instalação, obra ou projeto
+executivo. Devem ser refeitas depois do inventário.
 
 | Tipo de unidade                 | Instrumentação considerada                       | Faixa preliminar |
 | ------------------------------- | ------------------------------------------------ | ---------------- |
@@ -507,16 +476,15 @@ obra ou projeto executivo. Devem ser refeitas depois do inventário.
 | Estação de tratamento de esgoto | nível, vazão, OD, pH e energia                   | R$ 39 – 105 mil  |
 | Ponto de rede por setor         | pressão e vazão, com solução autônoma            | R$ 15 – 42 mil   |
 
-A primeira implantação pode usar apenas parte dessa instrumentação. Não há motivo
-para adquirir todos os itens antes de o levantamento indicar onde cada medição
-produz benefício.
+A primeira implantação pode usar apenas parte dessa instrumentação. Não há motivo para adquirir
+todos os itens antes de o levantamento indicar onde cada medição produz benefício.
 
 ---
 
 ## 5. Integração e operação
 
-O valor do sistema está na ligação entre registro, medição, histórico, alarme e
-relatório. Os exemplos abaixo mostram como essa cadeia pode funcionar.
+O valor do sistema está na ligação entre registro, medição, histórico, alarme e relatório. Os
+exemplos abaixo mostram como essa cadeia pode funcionar.
 
 ### Caso 1 — registro de cloro em duas etapas
 
@@ -526,11 +494,10 @@ relatório. Os exemplos abaixo mostram como essa cadeia pode funcionar.
 
 **Etapa 1:** acrescenta acompanhamento automático onde houver analisador.
 
-> analisador em linha → aquisição local → comunicação → banco → histórico, alarme
-> e relatório
+> analisador em linha → aquisição local → comunicação → banco → histórico, alarme e relatório
 
-A leitura manual continua registrada e pode ser usada para comparação e controle
-da medição automática, conforme procedimento definido pela área responsável.
+A leitura manual continua registrada e pode ser usada para comparação e controle da medição
+automática, conforme procedimento definido pela área responsável.
 
 | Situação atual conhecida                       | Etapa 0                              | Etapa 1                                             |
 | ---------------------------------------------- | ------------------------------------ | --------------------------------------------------- |
@@ -539,9 +506,9 @@ da medição automática, conforme procedimento definido pela área responsável
 | Alteração entre duas visitas pode não aparecer | alerta no momento do lançamento      | possibilidade de alarme contínuo                    |
 | Histórico disperso em fichas                   | série histórica desde a implantação  | mesma série acrescida da medição automática         |
 
-Automação da dosagem em malha fechada **não faz parte desta primeira proposta**.
-Se futuramente for considerada, deve depender de histórico de estabilidade,
-limites de segurança, projeto de processo e responsabilidade técnica.
+Automação da dosagem em malha fechada **não faz parte desta primeira proposta**. Se futuramente for
+considerada, deve depender de histórico de estabilidade, limites de segurança, projeto de processo e
+responsabilidade técnica.
 
 ### Caso 2 — bombeamento com lógica local
 
@@ -556,9 +523,8 @@ Em etapa posterior, um controlador pode considerar:
 | Corrente                         | multimedidor           | alarme e bloqueio conforme critério de engenharia |
 | Tempo desde a última partida     | temporizador           | reduzir partidas sucessivas                       |
 
-Um comando remoto não deve atuar diretamente sobre o contator. Ele deve ser
-interpretado pelo controlador local e submetido aos intertravamentos definidos no
-projeto.
+Um comando remoto não deve atuar diretamente sobre o contator. Ele deve ser interpretado pelo
+controlador local e submetido aos intertravamentos definidos no projeto.
 
 ### Barreiras para comando remoto
 
@@ -585,12 +551,12 @@ Princípios:
 1. a chave física local deve ter prioridade sobre o comando remoto;
 2. o controlador deve validar as condições antes de executar;
 3. recusas e comandos devem entrar na trilha de auditoria;
-4. perda de comunicação deve levar a um estado local previamente definido e
-   seguro para aquela unidade;
+4. perda de comunicação deve levar a um estado local previamente definido e seguro para aquela
+   unidade;
 5. comando deve ficar restrito à rede, aos equipamentos e aos perfis autorizados.
 
-O comportamento em falha **não pode ser genérico**. Cada unidade precisa ter seu
-estado seguro definido no projeto e no procedimento operacional.
+O comportamento em falha **não pode ser genérico**. Cada unidade precisa ter seu estado seguro
+definido no projeto e no procedimento operacional.
 
 ### Liberação gradual
 
@@ -603,8 +569,7 @@ A passagem de leitura para comando pode ser feita por degraus:
 | **3**  | comando assistido                | projeto, ART quando aplicável e ensaio documentado                 |
 | **4**  | comando remoto pleno             | histórico satisfatório da etapa anterior e autorização operacional |
 
-Não há necessidade de avançar para o próximo degrau se o anterior já resolver a
-demanda da unidade.
+Não há necessidade de avançar para o próximo degrau se o anterior já resolver a demanda da unidade.
 
 ### Perfis de acesso
 
@@ -617,34 +582,30 @@ demanda da unidade.
 | Diretoria e presidência      | consulta                                        |
 | Auditoria e controle interno | consulta e trilha de auditoria                  |
 
-O sistema deve tratar lançamento como **registro**, não como edição livre. Uma
-correção gera novo lançamento com justificativa e mantém o valor anterior para
-consulta.
+O sistema deve tratar lançamento como **registro**, não como edição livre. Uma correção gera novo
+lançamento com justificativa e mantém o valor anterior para consulta.
 
 ---
 
 ## 6. Benefícios e hipóteses econômicas
 
-Nesta etapa do pré-projeto, valores econômicos devem ser tratados como **ordem de
-grandeza ou cenário a verificar**, não como promessa de economia.
+Nesta etapa do pré-projeto, valores econômicos devem ser tratados como **ordem de grandeza ou
+cenário a verificar**, não como promessa de economia.
 
 ### Energia
 
-Não localizei indicador municipal público de consumo de energia elétrica do
-sistema. A partir do volume produzido — **13,641 milhões de m³/ano** — e da
-referência nacional de **0,59 kWh/m³**, obtém-se aproximadamente **8,05 GWh/ano**
-**cálculo**.
+Não localizei indicador municipal público de consumo de energia elétrica do sistema. A partir do
+volume produzido — **13,641 milhões de m³/ano** — e da referência nacional de **0,59 kWh/m³**,
+obtém-se aproximadamente **8,05 GWh/ano** **cálculo**.
 
-Essa conta serve apenas para dimensionar ordem de grandeza. O consumo específico
-local pode ser diferente por topografia, tecnologia de tratamento, eficiência dos
-conjuntos e condições operacionais. O valor correto deve ser obtido nas faturas e
-nos registros da própria autarquia.
+Essa conta serve apenas para dimensionar ordem de grandeza. O consumo específico local pode ser
+diferente por topografia, tecnologia de tratamento, eficiência dos conjuntos e condições
+operacionais. O valor correto deve ser obtido nas faturas e nos registros da própria autarquia.
 
 ### Horário de ponta
 
-Em unidades enquadradas em modalidade horária, pode haver benefício em deslocar
-parte do bombeamento para fora do horário de ponta **quando existir reservação e
-margem operacional suficientes**.
+Em unidades enquadradas em modalidade horária, pode haver benefício em deslocar parte do bombeamento
+para fora do horário de ponta **quando existir reservação e margem operacional suficientes**.
 
 O ganho não pode ser calculado sem conhecer, por unidade:
 
@@ -654,41 +615,36 @@ O ganho não pode ser calculado sem conhecer, por unidade:
 - capacidade útil do reservatório;
 - restrições hidráulicas e operacionais.
 
-O levantamento das faturas deve anteceder qualquer afirmação de economia. A
-telemetria posteriormente permite comparar a estratégia com o consumo real.
+O levantamento das faturas deve anteceder qualquer afirmação de economia. A telemetria
+posteriormente permite comparar a estratégia com o consumo real.
 
 ### Perdas de água
 
-O indicador público de **21,3 % de perdas na distribuição** reúne informações que
-dependem de volumes produzidos, distribuídos e consumidos. Sem uma decomposição
-local mais detalhada, **não é correto tratar todo esse percentual como perda física
-recuperável** nem multiplicá-lo diretamente pelo custo de produção para afirmar uma
-economia.
+O indicador público de **21,3 % de perdas na distribuição** reúne informações que dependem de
+volumes produzidos, distribuídos e consumidos. Sem uma decomposição local mais detalhada, **não é
+correto tratar todo esse percentual como perda física recuperável** nem multiplicá-lo diretamente
+pelo custo de produção para afirmar uma economia.
 
-A contribuição da telemetria é outra: macromedição por setor, pressão e vazão
-noturna permitem localizar onde aprofundar a investigação. A partir daí, programas
-de redução de perdas podem combinar setorização, controle de pressão, pesquisa de
-vazamentos, substituição de rede e melhoria da micromedição.
+A contribuição da telemetria é outra: macromedição por setor, pressão e vazão noturna permitem
+localizar onde aprofundar a investigação. A partir daí, programas de redução de perdas podem
+combinar setorização, controle de pressão, pesquisa de vazamentos, substituição de rede e melhoria
+da micromedição.
 
-A **vazão mínima noturna** é uma das técnicas úteis para esse diagnóstico, desde
-que interpretada com conhecimento do consumo legítimo do setor e das condições de
-operação.
+A **vazão mínima noturna** é uma das técnicas úteis para esse diagnóstico, desde que interpretada
+com conhecimento do consumo legítimo do setor e das condições de operação.
 
 ### Referência de custo de serviço externo
 
-Foi localizada referência pública de outra autarquia com contrato de aproximadamente
-**R$ 532.825,48 por ano** **oficial** para operacionalização de sistema de
-telemetria.
+Foi localizada referência pública de outra autarquia com contrato de aproximadamente **R$ 532.825,48
+por ano** **oficial** para operacionalização de sistema de telemetria.
 
-Esse valor é útil como comparação de ordem de grandeza, mas **não demonstra que o
-SAAE teria o mesmo custo nem que toda contratação externa deixaria de ser
-necessária**. Uma implantação interna pode reduzir a dependência de operação
-terceirizada e aproveitar competências já existentes no quadro da autarquia.
-Projeto, responsabilidade técnica, instalação e manutenção podem ser executados
-por profissionais próprios quando houver atribuição profissional compatível,
-condições de segurança e disponibilidade operacional. Contratação externa
-permanece como alternativa para escopos que não possam ser atendidos internamente
-ou que exijam apoio especializado.
+Esse valor é útil como comparação de ordem de grandeza, mas **não demonstra que o SAAE teria o mesmo
+custo nem que toda contratação externa deixaria de ser necessária**. Uma implantação interna pode
+reduzir a dependência de operação terceirizada e aproveitar competências já existentes no quadro da
+autarquia. Projeto, responsabilidade técnica, instalação e manutenção podem ser executados por
+profissionais próprios quando houver atribuição profissional compatível, condições de segurança e
+disponibilidade operacional. Contratação externa permanece como alternativa para escopos que não
+possam ser atendidos internamente ou que exijam apoio especializado.
 
 ### Custos de execução interna
 
@@ -703,36 +659,32 @@ ou que exijam apoio especializado.
 | Horas técnicas de engenharia e responsabilidade técnica | quadro próprio quando houver atribuição compatível; contratação se necessária |
 | Instrumentação e instalação                             | investimento, horas de equipe e manutenção                                    |
 
-A comparação adequada é entre **custo total de propriedade**, continuidade,
-capacidade de manutenção e independência tecnológica — não apenas entre licença de
-software e valor de contrato. O aproveitamento de profissionais do próprio quadro
-pode reduzir custos externos, desde que respeitadas as atribuições profissionais,
-as condições de segurança e a disponibilidade das equipes.
+A comparação adequada é entre **custo total de propriedade**, continuidade, capacidade de manutenção
+e independência tecnológica — não apenas entre licença de software e valor de contrato. O
+aproveitamento de profissionais do próprio quadro pode reduzir custos externos, desde que
+respeitadas as atribuições profissionais, as condições de segurança e a disponibilidade das equipes.
 
 ### Redução de deslocamentos de rotina
 
-Medição remota pode reduzir deslocamentos destinados exclusivamente a conferir
-nível, estado ou leitura que já esteja disponível no sistema. Isso não significa
-redução automática de quadro. O tempo pode ser redirecionado para inspeção,
-manutenção, calibração e atendimento de ocorrências indicadas pelos próprios
-dados.
+Medição remota pode reduzir deslocamentos destinados exclusivamente a conferir nível, estado ou
+leitura que já esteja disponível no sistema. Isso não significa redução automática de quadro. O
+tempo pode ser redirecionado para inspeção, manutenção, calibração e atendimento de ocorrências
+indicadas pelos próprios dados.
 
 ---
 
 ## 7. Capacidade de execução e continuidade
 
-A tecnologia utilizada é conhecida no mercado. O desafio principal é organizar
-responsabilidades, documentar a solução e evitar concentração excessiva de
-conhecimento.
+A tecnologia utilizada é conhecida no mercado. O desafio principal é organizar responsabilidades,
+documentar a solução e evitar concentração excessiva de conhecimento.
 
 ### Competências envolvidas na execução
 
-O SAAE dispõe de profissionais das áreas de elétrica e engenharia civil. Antes de
-prever contratação externa para projeto, instalação ou responsabilidade técnica,
-o levantamento inicial deve identificar as atribuições profissionais registradas,
-a experiência disponível e a capacidade operacional dessas equipes. A contratação
-externa passa a ser uma opção para complementar competências ou capacidade, e não
-uma premissa do projeto.
+O SAAE dispõe de profissionais das áreas de elétrica e engenharia civil. Antes de prever contratação
+externa para projeto, instalação ou responsabilidade técnica, o levantamento inicial deve
+identificar as atribuições profissionais registradas, a experiência disponível e a capacidade
+operacional dessas equipes. A contratação externa passa a ser uma opção para complementar
+competências ou capacidade, e não uma premissa do projeto.
 
 | Atividade                                   | Forma proposta                                                                                          |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -746,16 +698,14 @@ uma premissa do projeto.
 | Adequações civis e hidráulicas              | equipe própria habilitada ou contratação, conforme escopo e atribuições                                 |
 | Operação e manutenção do software           | equipe interna com retaguarda definida                                                                  |
 
-A primeira entrega — registro digital — independe de programação de CLP e de
-intervenção em unidades. Isso permite começar pela competência de software e
-incorporar elétrica, engenharia, operação e demais disciplinas à medida que o
-projeto avançar.
+A primeira entrega — registro digital — independe de programação de CLP e de intervenção em
+unidades. Isso permite começar pela competência de software e incorporar elétrica, engenharia,
+operação e demais disciplinas à medida que o projeto avançar.
 
-A responsabilidade técnica deve acompanhar a disciplina e o escopo efetivamente
-assumidos. A existência de profissionais no quadro não significa que qualquer um
-deles possa responder por qualquer atividade: cada ART, quando aplicável, deve ser
-registrada por profissional legalmente habilitado e com atribuição compatível com
-o serviço executado.
+A responsabilidade técnica deve acompanhar a disciplina e o escopo efetivamente assumidos. A
+existência de profissionais no quadro não significa que qualquer um deles possa responder por
+qualquer atividade: cada ART, quando aplicável, deve ser registrada por profissional legalmente
+habilitado e com atribuição compatível com o serviço executado.
 
 ### Continuidade após a saída de quem desenvolver
 
@@ -771,17 +721,15 @@ Esse risco deve ser tratado desde o início:
 
 ### Publicação de código
 
-Há vantagem em publicar partes reutilizáveis do software sob licença livre,
-principalmente aplicação, modelos de dados genéricos e ferramentas que não
-revelem informação operacional sensível.
+Há vantagem em publicar partes reutilizáveis do software sob licença livre, principalmente
+aplicação, modelos de dados genéricos e ferramentas que não revelem informação operacional sensível.
 
-A definição do que pode ser público deve anteceder a publicação. **Endereços,
-topologia real, credenciais, certificados, parâmetros de proteção e configurações
-operacionais não devem integrar repositório público.**
+A definição do que pode ser público deve anteceder a publicação. **Endereços, topologia real,
+credenciais, certificados, parâmetros de proteção e configurações operacionais não devem integrar
+repositório público.**
 
-A publicação da lógica de controle industrial deve ser avaliada caso a caso,
-considerando segurança, criticidade e orientação da equipe responsável pela
-infraestrutura operacional.
+A publicação da lógica de controle industrial deve ser avaliada caso a caso, considerando segurança,
+criticidade e orientação da equipe responsável pela infraestrutura operacional.
 
 ### Riscos principais
 
@@ -800,94 +748,118 @@ infraestrutura operacional.
 
 ## 8. O que este projeto pode representar para o SAAE
 
-Os capítulos anteriores tratam principalmente de operação, arquitetura, custos e
-riscos. Há também um resultado institucional possível. O projeto pode ampliar a capacidade técnica do SAAE e dar
+Os capítulos anteriores tratam principalmente de operação, arquitetura, custos e riscos. Há também
+um resultado institucional possível. O projeto pode ampliar a capacidade técnica do SAAE e dar
 visibilidade a uma experiência produzida dentro da própria autarquia.
 
 ### 1. Capacidade de demonstrar os próprios indicadores
 
-O marco regulatório do saneamento reforça metas, qualidade, eficiência e
-acompanhamento por indicadores. Quanto maior a qualidade da medição, do histórico
-e da trilha de auditoria, maior a capacidade do prestador de explicar seus números
-a reguladores, órgãos de controle e à própria gestão.
+O marco regulatório do saneamento reforça metas, qualidade, eficiência e acompanhamento por
+indicadores. Quanto maior a qualidade da medição, do histórico e da trilha de auditoria, maior a
+capacidade do prestador de explicar seus números a reguladores, órgãos de controle e à própria
+gestão.
 
-O sistema não torna um indicador correto por si só. Ele fornece **evidência
-operacional** para revisar premissas, identificar divergências e sustentar os
-cálculos utilizados pela autarquia.
+O sistema não torna um indicador correto por si só. Ele fornece **evidência operacional** para
+revisar premissas, identificar divergências e sustentar os cálculos utilizados pela autarquia.
 
 ### 2. Transparência e controle
 
-Com registros estruturados, torna-se possível responder perguntas operacionais com
-data, hora, unidade e histórico: quando um alarme ocorreu, qual valor foi medido,
-quando uma intervenção foi registrada e como determinado indicador foi calculado.
+Com registros estruturados, torna-se possível responder perguntas operacionais com data, hora,
+unidade e histórico: quando um alarme ocorreu, qual valor foi medido, quando uma intervenção foi
+registrada e como determinado indicador foi calculado.
 
-Isso também significa que falhas e desvios ficam registrados. A utilidade da
-trilha de auditoria está justamente em permitir análise posterior e melhoria de
-procedimento, e não em produzir apenas registros favoráveis.
+Isso também significa que falhas e desvios ficam registrados. A utilidade da trilha de auditoria
+está justamente em permitir análise posterior e melhoria de procedimento, e não em produzir apenas
+registros favoráveis.
 
 ### 3. Capacidade tecnológica própria
 
-Desenvolver a camada de software e integrar as competências de operação, elétrica
-e engenharia cria conhecimento que permanece dentro da autarquia. O valor não está
-somente no sistema instalado, mas também na capacidade de entender sua arquitetura,
-modificá-lo, acrescentar unidades e avaliar tecnicamente fornecedores futuros.
+Desenvolver a camada de software e integrar as competências de operação, elétrica e engenharia cria
+conhecimento que permanece dentro da autarquia. O valor não está somente no sistema instalado, mas
+também na capacidade de entender sua arquitetura, modificá-lo, acrescentar unidades e avaliar
+tecnicamente fornecedores futuros.
 
-Essa capacidade não elimina a contratação de empresas quando ela for necessária.
-Ela muda a posição do SAAE na contratação: a autarquia passa a especificar melhor,
-comparar alternativas com mais informação e preservar o domínio sobre seus dados e
-sobre a lógica do sistema.
+Essa capacidade não elimina a contratação de empresas quando ela for necessária. Ela muda a posição
+do SAAE na contratação: a autarquia passa a especificar melhor, comparar alternativas com mais
+informação e preservar o domínio sobre seus dados e sobre a lógica do sistema.
 
 ### 4. Potencial de referência e projeção institucional
 
-A arquitetura proposta trata de problemas comuns a muitos prestadores municipais:
-registro de campo, telemetria, histórico, alarmes, relatórios, integração entre
-unidades e redução da dependência de soluções fechadas.
+A arquitetura proposta trata de problemas comuns a muitos prestadores municipais: registro de campo,
+telemetria, histórico, alarmes, relatórios, integração entre unidades e redução da dependência de
+soluções fechadas.
 
-Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa equivalente de prestador público municipal de saneamento no Brasil** que reúna este mesmo conjunto de características: desenvolvimento interno de software, arquitetura baseada em padrões abertos, telemetria e supervisão, com possibilidade de publicação de componentes como software livre. Isso não é base suficiente para anunciar o projeto como "o primeiro do Brasil". Essa condição precisa ser confirmada antes de qualquer divulgação externa. Ainda assim, o levantamento indica um potencial real de pioneirismo associado ao uso e à possível publicação de software livre.
+Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa equivalente de
+prestador público municipal de saneamento no Brasil** que reúna este mesmo conjunto de
+características: desenvolvimento interno de software, arquitetura baseada em padrões abertos,
+telemetria e supervisão, com possibilidade de publicação de componentes como software livre. Isso
+não é base suficiente para anunciar o projeto como "o primeiro do Brasil". Essa condição precisa ser
+confirmada antes de qualquer divulgação externa. Ainda assim, o levantamento indica um potencial
+real de pioneirismo associado ao uso e à possível publicação de software livre.
 
-Com resultados documentados, a experiência pode ser apresentada em **congressos de saneamento e gestão pública**, documentada em **artigo técnico**, submetida a **premiações de inovação ou gestão pública** e compartilhada com outros prestadores municipais. A própria troca com outras autarquias pode trazer retorno técnico, novas contribuições ao software e cooperação entre equipes que enfrentam problemas semelhantes.
+Com resultados documentados, a experiência pode ser apresentada em **congressos de saneamento e
+gestão pública**, documentada em **artigo técnico**, submetida a **premiações de inovação ou gestão
+pública** e compartilhada com outros prestadores municipais. A própria troca com outras autarquias
+pode trazer retorno técnico, novas contribuições ao software e cooperação entre equipes que
+enfrentam problemas semelhantes.
 
-Esse não é o benefício operacional principal do projeto, mas é um valor
-institucional legítimo. Uma autarquia que desenvolve, mede, documenta e compartilha
-uma solução passa a ser vista também como **produtora de capacidade técnica**, e
-não apenas como compradora de tecnologia.
+Esse não é o benefício operacional principal do projeto, mas é um valor institucional legítimo. Uma
+autarquia que desenvolve, mede, documenta e compartilha uma solução passa a ser vista também como
+**produtora de capacidade técnica**, e não apenas como compradora de tecnologia.
 
 ### 5. Um resultado identificável da gestão que implantar
 
-Projetos desse tipo deixam ativos que permanecem: software, documentação, série
-histórica, equipamentos, procedimentos e conhecimento interno. Se a implantação
-for conduzida com continuidade, esses ativos podem continuar evoluindo mesmo
-depois da primeira entrega e independentemente de mudanças futuras de equipe ou de
-fornecedor.
+Projetos desse tipo deixam ativos que permanecem: software, documentação, série histórica,
+equipamentos, procedimentos e conhecimento interno. Se a implantação for conduzida com continuidade,
+esses ativos podem continuar evoluindo mesmo depois da primeira entrega e independentemente de
+mudanças futuras de equipe ou de fornecedor.
 
-Isso permite que o projeto se torne uma iniciativa identificável da gestão que o
-estruturou e colocou em funcionamento, com resultados que podem ser mostrados por
-indicadores, demonstrações e documentação. O reconhecimento externo, se vier, é
-consequência de uma entrega concreta e mensurável.
+Isso permite que o projeto se torne uma iniciativa identificável da gestão que o estruturou e
+colocou em funcionamento, com resultados que podem ser mostrados por indicadores, demonstrações e
+documentação. O reconhecimento externo, se vier, é consequência de uma entrega concreta e
+mensurável.
 
 ---
 
 ## O que peço
 
-Este pré-projeto não propõe início imediato da implantação. Minha situação funcional ainda depende das providências necessárias à reintegração e da organização de períodos de licença já adquiridos. Por essa razão, minha previsão atual de disponibilidade para assumir de forma contínua a execução do projeto é **fevereiro de 2027**.
+Este pré-projeto não propõe início imediato da implantação. Minha situação funcional ainda depende
+das providências necessárias à reintegração e da organização de períodos de licença já adquiridos.
+Por essa razão, minha previsão atual de disponibilidade para assumir de forma contínua a execução do
+projeto é **fevereiro de 2027**.
 
-Até lá, proponho que a Administração possa avaliar a iniciativa, confrontá-la com a realidade atual do SAAE e, caso considere oportuno prosseguir, preparar as condições institucionais e materiais necessárias à futura implantação.
+Até lá, proponho que a Administração possa avaliar a iniciativa, confrontá-la com a realidade atual
+do SAAE e, caso considere oportuno prosseguir, preparar as condições institucionais e materiais
+necessárias à futura implantação.
 
 ### 1. Definir a condução institucional do projeto
 
-Caso a proposta seja acolhida, considero importante que, antes do início do desenvolvimento e da implantação, seja definida a unidade ou instância à qual o projeto ficará vinculado e a forma pela qual será atribuída sua condução inicial.
+Caso a proposta seja acolhida, considero importante que, antes do início do desenvolvimento e da
+implantação, seja definida a unidade ou instância à qual o projeto ficará vinculado e a forma pela
+qual será atribuída sua condução inicial.
 
-Essa definição pode ajudar a evitar que uma iniciativa transversal seja executada de maneira informal, sem responsabilidades claramente estabelecidas ou dependente apenas de entendimentos pessoais.
+Essa definição pode ajudar a evitar que uma iniciativa transversal seja executada de maneira
+informal, sem responsabilidades claramente estabelecidas ou dependente apenas de entendimentos
+pessoais.
 
-A proposta é que o projeto seja institucional desde o início, preservando-se, na fase inicial de implantação, a continuidade entre o trabalho já desenvolvido e sua execução, ao mesmo tempo em que o conhecimento seja progressivamente compartilhado com as áreas envolvidas.
+A proposta é que o projeto seja institucional desde o início, preservando-se, na fase inicial de
+implantação, a continuidade entre o trabalho já desenvolvido e sua execução, ao mesmo tempo em que o
+conhecimento seja progressivamente compartilhado com as áreas envolvidas.
 
 ### 2. Preparar a infraestrutura de desenvolvimento e homologação
 
-Caso haja interesse em prosseguir, o período anterior ao início da execução também pode ser utilizado para verificar a infraestrutura disponível e identificar eventuais necessidades de adequação.
+Caso haja interesse em prosseguir, o período anterior ao início da execução também pode ser
+utilizado para verificar a infraestrutura disponível e identificar eventuais necessidades de
+adequação.
 
-Para o desenvolvimento serão utilizados simultaneamente ambiente de programação, containers, banco de dados, serviços, ferramentas de monitoramento e ambientes de teste. Como referência inicial, considero adequada uma estação de desenvolvimento com **32 GB de memória RAM**, armazenamento SSD e processador atual de bom desempenho, cabendo ao Departamento de Informática avaliar a configuração e verificar se já existe equipamento compatível.
+Para o desenvolvimento serão utilizados simultaneamente ambiente de programação, containers, banco
+de dados, serviços, ferramentas de monitoramento e ambientes de teste. Como referência inicial,
+considero adequada uma estação de desenvolvimento com **32 GB de memória RAM**, armazenamento SSD e
+processador atual de bom desempenho, cabendo ao Departamento de Informática avaliar a configuração e
+verificar se já existe equipamento compatível.
 
-Não havendo equipamento disponível, sua aquisição antecipada permitiria que o desenvolvimento começasse sem depender dessa providência após o início da implantação.
+Não havendo equipamento disponível, sua aquisição antecipada permitiria que o desenvolvimento
+começasse sem depender dessa providência após o início da implantação.
 
 Também podem ser avaliados previamente:
 
@@ -898,7 +870,9 @@ Também podem ser avaliados previamente:
 - acessos e permissões necessários;
 - forma de integração com a infraestrutura já mantida pelo Departamento de Informática.
 
-O objetivo não é criar uma estrutura paralela de tecnologia, mas aproveitar a infraestrutura existente e preparar apenas o que for necessário para o desenvolvimento e a futura operação do sistema.
+O objetivo não é criar uma estrutura paralela de tecnologia, mas aproveitar a infraestrutura
+existente e preparar apenas o que for necessário para o desenvolvimento e a futura operação do
+sistema.
 
 ### 3. Iniciar a etapa 0 — registro digital
 
@@ -913,17 +887,22 @@ A partir do início da execução, proponho desenvolver e colocar em teste contr
 
 O cronograma pode ser definido depois de confirmados os requisitos com os usuários.
 
-Ao fim do piloto, será possível avaliar adesão, qualidade dos registros e ajustes necessários antes da expansão.
+Ao fim do piloto, será possível avaliar adesão, qualidade dos registros e ajustes necessários antes
+da expansão.
 
 ### 4. Prova de conceito em bancada e levantamento de campo
 
-Em paralelo à etapa 0, ou após sua estabilização, proponho montar uma bancada sem ligação com unidade real para validar a cadeia:
+Em paralelo à etapa 0, ou após sua estabilização, proponho montar uma bancada sem ligação com
+unidade real para validar a cadeia:
 
 > instrumento → aquisição → comunicação → banco → tela → alarme → relatório
 
-A faixa preliminar de material estudada é de **R$ 5.500 a R$ 16.500** **cálculo**, sem o analisador de cloro, e deverá ser confirmada por cotações.
+A faixa preliminar de material estudada é de **R$ 5.500 a R$ 16.500** **cálculo**, sem o analisador
+de cloro, e deverá ser confirmada por cotações.
 
-O levantamento de campo deverá verificar o que já existe, identificar os pontos de maior interesse para medição e reunir os dados necessários para substituir as estimativas deste pré-projeto por informações atuais do próprio SAAE.
+O levantamento de campo deverá verificar o que já existe, identificar os pontos de maior interesse
+para medição e reunir os dados necessários para substituir as estimativas deste pré-projeto por
+informações atuais do próprio SAAE.
 
 A partir daí, poderá ser definida a primeira unidade a ser estudada para instrumentação.
 
@@ -1004,9 +983,8 @@ Consultadas em 22 de agosto de 2026.
 
 ---
 
-_Este documento é um pré-projeto e não constitui projeto executivo. Os indicadores
-municipais utilizados como referência provêm das fontes indicadas acima e podem
-não refletir a operação atual. Valores marcados como cálculo são estimativas
-baseadas em premissas declaradas e não constituem orçamento ou cotação. A
-maquete que acompanha o documento utiliza dados simulados e não está conectada a
-equipamento real._
+_Este documento é um pré-projeto e não constitui projeto executivo. Os indicadores municipais
+utilizados como referência provêm das fontes indicadas acima e podem não refletir a operação atual.
+Valores marcados como cálculo são estimativas baseadas em premissas declaradas e não constituem
+orçamento ou cotação. A maquete que acompanha o documento utiliza dados simulados e não está
+conectada a equipamento real._
