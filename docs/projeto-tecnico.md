@@ -1,6 +1,6 @@
 # Digitalizar, automatizar e controlar
 
-**Pré-projeto — versão 3.1, agosto de 2026**  
+**Pré-projeto — versão 3.2, agosto de 2026**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis
 
 > Versão em texto do documento publicado em `/projeto/`, destinada também à
@@ -682,9 +682,13 @@ telemetria.
 
 Esse valor é útil como comparação de ordem de grandeza, mas **não demonstra que o
 SAAE teria o mesmo custo nem que toda contratação externa deixaria de ser
-necessária**. Uma implantação interna pode reduzir dependência de operação
-terceirizada, enquanto ainda utiliza contratos pontuais de projeto, instalação,
-retaguarda e manutenção especializada.
+necessária**. Uma implantação interna pode reduzir a dependência de operação
+terceirizada e aproveitar competências já existentes no quadro da autarquia.
+Projeto, responsabilidade técnica, instalação e manutenção podem ser executados
+por profissionais próprios quando houver atribuição profissional compatível,
+condições de segurança e disponibilidade operacional. Contratação externa
+permanece como alternativa para escopos que não possam ser atendidos internamente
+ou que exijam apoio especializado.
 
 ### Custos de execução interna
 
@@ -695,13 +699,15 @@ retaguarda e manutenção especializada.
 | Horas de desenvolvimento e administração          | pessoal próprio |
 | Plantão ou sobreaviso, se necessário              | a definir pela gestão |
 | Capacitação                                       | investimento inicial e contínuo |
-| Retaguarda especializada                          | contratação eventual ou recorrente |
-| Projeto elétrico e responsabilidade técnica       | por etapa/unidade |
-| Instrumentação e instalação                       | investimento e manutenção |
+| Apoio especializado, se necessário                | equipe própria e/ou contratação eventual |
+| Horas técnicas de engenharia e responsabilidade técnica | quadro próprio quando houver atribuição compatível; contratação se necessária |
+| Instrumentação e instalação                       | investimento, horas de equipe e manutenção |
 
 A comparação adequada é entre **custo total de propriedade**, continuidade,
 capacidade de manutenção e independência tecnológica — não apenas entre licença de
-software e valor de contrato.
+software e valor de contrato. O aproveitamento de profissionais do próprio quadro
+pode reduzir custos externos, desde que respeitadas as atribuições profissionais,
+as condições de segurança e a disponibilidade das equipes.
 
 ### Redução de deslocamentos de rotina
 
@@ -719,22 +725,37 @@ A tecnologia utilizada é conhecida no mercado. O desafio principal é organizar
 responsabilidades, documentar a solução e evitar concentração excessiva de
 conhecimento.
 
-### O que pode ser desenvolvido internamente e o que exige apoio especializado
+### Competências envolvidas na execução
+
+O SAAE dispõe de profissionais das áreas de elétrica e engenharia civil. Antes de
+prever contratação externa para projeto, instalação ou responsabilidade técnica,
+o levantamento inicial deve identificar as atribuições profissionais registradas,
+a experiência disponível e a capacidade operacional dessas equipes. A contratação
+externa passa a ser uma opção para complementar competências ou capacidade, e não
+uma premissa do projeto.
 
 | Atividade                                         | Forma proposta |
 | ------------------------------------------------- | -------------- |
 | Camada de serviços, banco e telas                 | desenvolvimento interno |
 | Registro digital, perfis e relatórios             | desenvolvimento interno |
 | Integração de protocolos de telemetria            | interna, com apoio quando necessário |
-| Lógica de CLP                                     | capacitação interna e/ou contratação pontual |
-| Projeto elétrico e responsabilidade técnica       | profissional habilitado |
-| Intervenção em painel de potência                 | profissional habilitado |
-| Instalação de instrumentação                      | conforme disciplina e responsabilidade técnica |
+| Lógica de CLP                                     | verificar conhecimento existente; capacitação interna e/ou apoio pontual se necessário |
+| Projeto elétrico e responsabilidade técnica       | equipe própria com profissional habilitado e atribuição compatível; contratação se necessária |
+| Intervenção em painel de potência                 | equipe própria habilitada, quando houver atribuição e condições de segurança; contratação se necessária |
+| Instalação de instrumentação                      | equipe própria, execução conjunta ou contratada, conforme disciplina, atribuições e escopo |
+| Adequações civis e hidráulicas                    | equipe própria habilitada ou contratação, conforme escopo e atribuições |
 | Operação e manutenção do software                 | equipe interna com retaguarda definida |
 
 A primeira entrega — registro digital — independe de programação de CLP e de
 intervenção em unidades. Isso permite começar pela competência de software e
-incorporar as demais disciplinas à medida que o projeto avançar.
+incorporar elétrica, engenharia, operação e demais disciplinas à medida que o
+projeto avançar.
+
+A responsabilidade técnica deve acompanhar a disciplina e o escopo efetivamente
+assumidos. A existência de profissionais no quadro não significa que qualquer um
+deles possa responder por qualquer atividade: cada ART, quando aplicável, deve ser
+registrada por profissional legalmente habilitado e com atribuição compatível com
+o serviço executado.
 
 ### Continuidade após a saída de quem desenvolver
 
@@ -767,7 +788,7 @@ infraestrutura operacional.
 | Risco                                              | Prob. | Impacto | Tratamento proposto |
 | -------------------------------------------------- | ----- | ------- | ------------------- |
 | Concentração de conhecimento                       | alta  | alto    | documentação, versionamento, capacitação e retaguarda |
-| Competência em CLP ainda a constituir              | alta  | médio   | não necessária na etapa 0; capacitação/contratação posterior |
+| Conhecimento interno de CLP ainda não levantado    | a avaliar | médio | mapear competências existentes; capacitar ou buscar apoio pontual se necessário |
 | Resistência a comando remoto                       | média | alto    | implantação gradual e proteção local independente |
 | Descontinuidade entre gestões                      | média | alto    | etapas autônomas, cada uma com entrega própria |
 | Custo real superior às estimativas                 | média | médio   | levantamento antes de compromisso de investimento |
