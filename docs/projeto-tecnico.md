@@ -1,6 +1,6 @@
 # Digitalizar, automatizar e controlar
 
-**Pré-projeto — versão 3.2, agosto de 2026**  
+**Pré-projeto — versão 3.3, agosto de 2026**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis
 
 > Versão em texto do documento publicado em `/projeto/`, destinada também à
@@ -798,21 +798,24 @@ infraestrutura operacional.
 
 ---
 
-## 8. Resultado institucional
+## 8. O que este projeto pode representar para o SAAE
 
-Além do efeito operacional, a digitalização melhora a capacidade de documentar e
-explicar o serviço.
+Os capítulos anteriores tratam principalmente de operação, arquitetura, custos e
+riscos. Há também um resultado institucional possível. Se a implantação for bem
+executada e documentada, o projeto pode ampliar a capacidade técnica do SAAE e dar
+visibilidade a uma experiência produzida dentro da própria autarquia.
 
-### Implantação com risco progressivo
+### 1. Implantação com risco progressivo
 
 A etapa 0 não interfere no funcionamento das unidades. A etapa 1 pode ser executada
 por unidade e por ponto de medição. Controle automático e comando remoto ficam para
 fases posteriores, depois de projeto e validação.
 
-Esse formato permite interromper ou redimensionar a implantação sem perder o que
-já estiver funcionando. Cada etapa deve ter critério próprio de aceite.
+Esse formato permite interromper, corrigir ou redimensionar a implantação sem
+perder o que já estiver funcionando. Cada etapa deve ter critério próprio de
+aceite e resultado verificável antes da seguinte.
 
-### Capacidade de demonstrar os próprios indicadores
+### 2. Capacidade de demonstrar os próprios indicadores
 
 O marco regulatório do saneamento reforça metas, qualidade, eficiência e
 acompanhamento por indicadores. Quanto maior a qualidade da medição, do histórico
@@ -823,7 +826,7 @@ O sistema não torna um indicador correto por si só. Ele fornece **evidência
 operacional** para revisar premissas, identificar divergências e sustentar os
 cálculos utilizados pela autarquia.
 
-### Transparência e controle
+### 3. Transparência e controle
 
 Com registros estruturados, torna-se possível responder perguntas operacionais com
 data, hora, unidade e histórico: quando um alarme ocorreu, qual valor foi medido,
@@ -833,12 +836,88 @@ Isso também significa que falhas e desvios ficam registrados. A utilidade da
 trilha de auditoria está justamente em permitir análise posterior e melhoria de
 procedimento, e não em produzir apenas registros favoráveis.
 
-### Potencial de reaproveitamento
+### 4. Capacidade tecnológica própria
+
+Desenvolver a camada de software e integrar as competências de operação, elétrica
+e engenharia cria conhecimento que permanece dentro da autarquia. O valor não está
+somente no sistema instalado, mas também na capacidade de entender sua arquitetura,
+modificá-lo, acrescentar unidades e avaliar tecnicamente fornecedores futuros.
+
+Essa capacidade não elimina a contratação de empresas quando ela for necessária.
+Ela muda a posição do SAAE na contratação: a autarquia passa a especificar melhor,
+comparar alternativas com mais informação e preservar o domínio sobre seus dados e
+sobre a lógica do sistema.
+
+### 5. Potencial de referência e projeção institucional
+
+A arquitetura proposta trata de problemas comuns a muitos prestadores municipais:
+registro de campo, telemetria, histórico, alarmes, relatórios, integração entre
+unidades e redução da dependência de soluções fechadas.
+
+Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa de
+prestador público municipal de saneamento no Brasil que reúna de forma claramente
+documentada este mesmo conjunto de características: desenvolvimento interno de
+software, arquitetura baseada em padrões abertos, telemetria e supervisão, com
+possibilidade de publicação de componentes como software livre.** Isso não é base
+suficiente para anunciar o projeto como "o primeiro do Brasil". Essa condição deve
+ser confirmada antes de qualquer divulgação externa. Ainda assim, o levantamento
+indica um potencial real de diferenciação e pioneirismo.
+
+Se a implantação produzir resultados, a experiência pode ser apresentada em
+**congressos de saneamento e gestão pública**, documentada em **artigo técnico**,
+submetida a **premiações de inovação ou gestão pública** e compartilhada com
+outros prestadores municipais. A própria troca com outras autarquias pode trazer
+retorno técnico, novas contribuições ao software e cooperação entre equipes que
+enfrentam problemas semelhantes.
+
+Esse não é o benefício operacional principal do projeto, mas é um valor
+institucional legítimo. Uma autarquia que desenvolve, mede, documenta e compartilha
+uma solução passa a ser vista também como **produtora de capacidade técnica**, e
+não apenas como compradora de tecnologia.
+
+### 6. Documentar desde o início para transformar resultado em referência
+
+Esse potencial só existe se houver evidência. Por isso, cada etapa deve registrar,
+desde o início:
+
+- situação anterior e problema que motivou a intervenção;
+- escopo, custo e prazo efetivamente realizados;
+- responsáveis e áreas participantes;
+- indicadores escolhidos antes da implantação;
+- resultados observados depois da implantação;
+- falhas, limitações e correções feitas durante o processo;
+- redução de trabalho manual ou deslocamentos quando puder ser medida;
+- efeitos sobre qualidade do registro, disponibilidade de informação e tempo de
+  resposta;
+- documentação técnica suficiente para que outra equipe compreenda o que foi
+  feito.
+
+Esse material atende à gestão do próprio projeto e, se os resultados justificarem,
+forma a base de um **case técnico verificável**. Artigo, apresentação ou premiação
+passam a decorrer de dados reais da implantação, e não de expectativa criada antes
+dela.
+
+### 7. Um resultado identificável da gestão que implantar
+
+Projetos desse tipo deixam ativos que permanecem: software, documentação, série
+histórica, equipamentos, procedimentos e conhecimento interno. Se a implantação
+for conduzida com continuidade, esses ativos podem continuar evoluindo mesmo
+depois da primeira entrega e independentemente de mudanças futuras de equipe ou de
+fornecedor.
+
+Isso permite que o projeto se torne uma iniciativa identificável da gestão que o
+estruturou e colocou em funcionamento, com resultados que podem ser mostrados por
+indicadores, demonstrações e documentação. O reconhecimento externo, se vier, é
+consequência de uma entrega concreta e mensurável.
+
+### 8. Potencial de reaproveitamento
 
 Se a solução for desenvolvida com componentes genéricos e documentação adequada,
 parte do software pode ser reutilizada por outras unidades do próprio município ou
 por outros prestadores de saneamento. Eventual publicação externa pode ser
-avaliada depois de o sistema estar validado internamente.
+avaliada depois de o sistema estar validado internamente e depois de definida a
+separação entre código reutilizável e informações operacionais que devem permanecer
+restritas.
 
 ---
 
