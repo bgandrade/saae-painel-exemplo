@@ -90,7 +90,15 @@ const TELAS = [
     'Qualidade',
     '/src/views/Qualidade.jsx',
     null,
-    ['GM/MS 888/2021', 'Cloro residual livre', 'Fluoreto', 'Turbidez'],
+    [
+      'GM/MS 888/2021',
+      'Cloro residual livre',
+      'Fluoreto',
+      'Turbidez',
+      'Verificação manual da medição em linha',
+      'Registrar verificação',
+      'Etapa 0',
+    ],
   ],
   [
     'Esgoto e ETEs',

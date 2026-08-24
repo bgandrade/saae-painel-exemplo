@@ -253,6 +253,11 @@ export class Simulacao {
     // interface edita, e é por isso que arrastar um slider muda a operação
     // sem tocar em arquivo nenhum.
     this.comandos = [];
+    // Lançamentos manuais ficam separados da telemetria: cada verificação
+    // preserva o valor informado e uma fotografia da medição automática no
+    // mesmo instante. Na maquete a coleção vive em memória; no sistema real,
+    // seria persistida com autenticação e trilha de correção no servidor.
+    this.leiturasManuais = [];
     this.operador = 'plantão A';
     this.ultimaPartida = new Map();
     this.recalques = new Map();
@@ -522,6 +527,34 @@ export class Simulacao {
   registrar(tipo, mensagem, severidade = 'info') {
     this.eventos.unshift({ t: this.tempo, tipo, mensagem, severidade });
     if (this.eventos.length > 200) this.eventos.length = 200;
+  }
+
+  /** Registra uma verificação laboratorial sem alterar a série da telemetria. */
+  registrarLeituraManual({ unidadeId, parametro, valor, responsavel, observacao = '' }) {
+    const qualidade = this.qualidade.get(unidadeId);
+    const valorNumerico = Number(valor);
+    const valorAutomatico = qualidade?.[parametro];
+    if (!qualidade || !Number.isFinite(valorNumerico) || !Number.isFinite(valorAutomatico)) {
+      return null;
+    }
+
+    const leitura = {
+      id: `manual-${this.tempo}-${this.leiturasManuais.length + 1}`,
+      t: this.tempo,
+      unidadeId,
+      parametro,
+      valor: valorNumerico,
+      valorAutomatico,
+      responsavel: String(responsavel ?? '').trim() || this.operador,
+      observacao: String(observacao ?? '').trim(),
+    };
+    this.leiturasManuais.unshift(leitura);
+    if (this.leiturasManuais.length > 100) this.leiturasManuais.length = 100;
+    this.registrar(
+      'qualidade',
+      `${qualidade.unidade.sigla}: verificação manual registrada por ${leitura.responsavel}`,
+    );
+    return leitura;
   }
 
   /* ───────────── comandos do operador ─────────────

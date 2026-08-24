@@ -8,9 +8,10 @@
  * Portaria GM/MS 888/2021 cobra.
  */
 
+import { useState } from 'react';
 import { useSim, janela } from '../hooks/useSimulacao.jsx';
 import { Card, Kpi, Chip, FaixaNormativa } from '../ui/componentes.jsx';
-import { num, estadoFaixa } from '../ui/formato.js';
+import { num, estadoFaixa, dataHora } from '../ui/formato.js';
 import { GraficoLinha, Legenda, CORES_SERIE } from '../charts/index.js';
 import { SETORES, LIMITES, porId } from '../data/topologia.js';
 
@@ -168,6 +169,8 @@ export default function Qualidade() {
         </Card>
       </div>
 
+      <VerificacaoManual producao={producao} />
+
       <div className="c12">
         <Card
           titulo="Pontos de coleta na rede de distribuição"
@@ -228,6 +231,149 @@ export default function Qualidade() {
           </p>
         </Card>
       </div>
+    </div>
+  );
+}
+
+function VerificacaoManual({ producao }) {
+  const { sim } = useSim();
+  const [unidadeId, setUnidadeId] = useState(producao[0]?.unidade.id ?? '');
+  const [parametro, setParametro] = useState('cloroMgL');
+  const [valor, setValor] = useState('');
+  const [responsavel, setResponsavel] = useState('Laboratório');
+  const [observacao, setObservacao] = useState('Verificação de rotina');
+  const [confirmacao, setConfirmacao] = useState('');
+  const p = PARAMS.find((item) => item.chave === parametro) ?? PARAMS[0];
+  const automatico = sim.qualidade.get(unidadeId)?.[parametro];
+
+  function enviar(e) {
+    e.preventDefault();
+    const leitura = sim.registrarLeituraManual({
+      unidadeId,
+      parametro,
+      valor: valor.replace(',', '.'),
+      responsavel,
+      observacao,
+    });
+    if (!leitura) return;
+    setValor('');
+    setConfirmacao(`Registro ${leitura.id} incluído sem alterar a telemetria.`);
+  }
+
+  return (
+    <div className="c12">
+      <Card
+        titulo="Verificação manual da medição em linha"
+        meta={<span>Etapa 0 · registro com autoria e horário</span>}
+      >
+        <div className="registro-layout">
+          <form className="registro-form" onSubmit={enviar}>
+            <label>
+              Unidade
+              <select value={unidadeId} onChange={(e) => setUnidadeId(e.target.value)}>
+                {producao.map((q) => (
+                  <option key={q.unidade.id} value={q.unidade.id}>
+                    {q.unidade.sigla} — {q.unidade.nome}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Parâmetro
+              <select value={parametro} onChange={(e) => setParametro(e.target.value)}>
+                {PARAMS.map((item) => (
+                  <option key={item.chave} value={item.chave}>
+                    {item.nome}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Leitura manual ({p.unidade || 'valor'})
+              <input
+                required
+                inputMode="decimal"
+                placeholder={Number.isFinite(automatico) ? num(automatico, p.casas) : ''}
+                value={valor}
+                onChange={(e) => setValor(e.target.value)}
+              />
+            </label>
+            <label>
+              Responsável
+              <input
+                required
+                value={responsavel}
+                onChange={(e) => setResponsavel(e.target.value)}
+              />
+            </label>
+            <label className="registro-observacao">
+              Observação
+              <input value={observacao} onChange={(e) => setObservacao(e.target.value)} />
+            </label>
+            <div className="registro-acao">
+              <span>
+                Medição automática agora:{' '}
+                <b>
+                  {num(automatico, p.casas)} {p.unidade}
+                </b>
+              </span>
+              <button className="btn primario" type="submit">
+                Registrar verificação
+              </button>
+            </div>
+            {confirmacao && (
+              <p className="registro-confirmacao" role="status">
+                {confirmacao}
+              </p>
+            )}
+          </form>
+
+          <div className="registro-historico">
+            <div className="drawer-secao-tit">Últimos lançamentos desta sessão</div>
+            {!sim.leiturasManuais.length ? (
+              <p className="nota">
+                Nenhuma leitura manual registrada. O primeiro lançamento aparecerá aqui sem
+                substituir a medição automática.
+              </p>
+            ) : (
+              <div className="rolagem">
+                <table className="tabela">
+                  <thead>
+                    <tr>
+                      <th>Horário / autor</th>
+                      <th>Parâmetro</th>
+                      <th className="n">Manual</th>
+                      <th className="n">Automática</th>
+                      <th className="n">Diferença</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sim.leiturasManuais.slice(0, 5).map((r) => {
+                      const def = PARAMS.find((item) => item.chave === r.parametro) ?? PARAMS[0];
+                      return (
+                        <tr key={r.id} title={r.observacao}>
+                          <td className="principal">
+                            {dataHora(r.t)}
+                            <small>{r.responsavel}</small>
+                          </td>
+                          <td>{def.nome}</td>
+                          <td className="n">{num(r.valor, def.casas)}</td>
+                          <td className="n">{num(r.valorAutomatico, def.casas)}</td>
+                          <td className="n">{num(r.valor - r.valorAutomatico, def.casas)}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+        <p className="nota registro-nota">
+          Demonstração em memória: os lançamentos somem ao recarregar a página. Em produção,
+          autenticação, persistência e correções justificadas pertencem à camada de serviços.
+        </p>
+      </Card>
     </div>
   );
 }

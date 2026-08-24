@@ -1294,3 +1294,77 @@ input[type='range']:disabled {
     transform: rotate(360deg);
   }
 }
+/* Registro manual de qualidade — aproxima a maquete da Etapa 0 sem dar a
+   entender que o navegador já é um banco de dados de produção. */
+.registro-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.8fr) minmax(520px, 1.2fr);
+  gap: var(--e5);
+}
+.registro-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e3);
+}
+.registro-form label {
+  display: grid;
+  gap: var(--e1);
+  color: var(--tinta-2);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.registro-form input,
+.registro-form select {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio-sm);
+  color: var(--tinta);
+  background: var(--superficie-2);
+  font: inherit;
+}
+.registro-observacao,
+.registro-acao,
+.registro-confirmacao {
+  grid-column: 1 / -1;
+}
+.registro-acao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3);
+  color: var(--tinta-2);
+  font-size: var(--t-sm);
+}
+.registro-confirmacao {
+  margin: 0;
+  color: var(--ok);
+  font-size: var(--t-sm);
+}
+.registro-historico small {
+  display: block;
+  color: var(--tinta-3);
+  font-weight: 400;
+}
+.registro-nota {
+  margin: var(--e4) 0 0;
+  padding-top: var(--e3);
+  border-top: 1px solid var(--borda);
+}
+
+@media (max-width: 1100px) {
+  .registro-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .registro-form {
+    grid-template-columns: 1fr;
+  }
+  .registro-acao {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

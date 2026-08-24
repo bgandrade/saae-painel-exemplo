@@ -11,7 +11,7 @@
  *
  * 2. O estado da simulação NÃO é copiado para dentro do React. O contexto
  *    carrega a instância e um contador de tique; as telas leem o estado mutável
- *    direto no render. Copiar 19 bombas × 7 séries a 2 Hz para dentro do estado
+ *    direto no render. Copiar 16 bombas × 7 séries a 2 Hz para dentro do estado
  *    do React derrubaria o quadro e não traria nada em troca.
  */
 

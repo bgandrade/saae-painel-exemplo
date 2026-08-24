@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* As quatro demonstrações do roteiro, verificadas no motor.
+/* A Etapa 0 e as quatro demonstrações do roteiro, verificadas no motor.
    Se alguma falhar aqui, falha no auditório. */
 import { Simulacao } from '../src/engine/sim.js';
 import { MotorAlarmes } from '../src/engine/alarms.js';
@@ -15,6 +15,31 @@ const checar = (ok, msg) => {
   console.log(`   ${ok ? '✓' : '✗'} ${msg}`);
   if (!ok) falhas++;
 };
+
+/* ───────────── Etapa 0: registro manual ───────────── */
+console.log('\nEtapa 0 — Registrar leitura manual ao lado da telemetria');
+{
+  const sim = new Simulacao({ velocidade: 1 });
+  sim.backfill(24);
+  const qualidade = sim.qualidade.get('cap-banqueta');
+  const automatico = qualidade.cloroMgL;
+  const leitura = sim.registrarLeituraManual({
+    unidadeId: 'cap-banqueta',
+    parametro: 'cloroMgL',
+    valor: 1.62,
+    responsavel: 'Laboratório',
+    observacao: 'Verificação de rotina',
+  });
+  checar(leitura?.valor === 1.62, 'o valor manual foi preservado como novo registro');
+  checar(
+    leitura?.valorAutomatico === automatico && qualidade.cloroMgL === automatico,
+    'a medição automática foi fotografada, sem ser sobrescrita',
+  );
+  checar(
+    leitura?.responsavel === 'Laboratório' && leitura?.t === sim.tempo,
+    'autoria e horário foram registrados',
+  );
+}
 
 /* ───────────── D1: setpoint ao vivo ───────────── */
 console.log('\nD1 — Arrastar o setpoint de partida de 30 % para 55 %');
@@ -204,6 +229,8 @@ console.log('\nD4 — Sobrecarga, desarme e entrada da reserva');
 }
 
 console.log(
-  falhas ? `\n${falhas} verificação(ões) falharam` : '\nAs quatro demonstrações funcionam',
+  falhas
+    ? `\n${falhas} verificação(ões) falharam`
+    : '\nA Etapa 0 e as quatro demonstrações funcionam',
 );
 process.exit(falhas ? 1 : 0);
