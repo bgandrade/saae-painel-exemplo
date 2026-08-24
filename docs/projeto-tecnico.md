@@ -843,19 +843,9 @@ A arquitetura proposta trata de problemas comuns a muitos prestadores municipais
 registro de campo, telemetria, histórico, alarmes, relatórios, integração entre
 unidades e redução da dependência de soluções fechadas.
 
-Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa equivalente no Brasil**
-que reúna este mesmo conjunto de características: desenvolvimento interno de software, arquitetura baseada em padrões
-abertos, telemetria e supervisão, com possibilidade de publicação de componentes como
-software livre. Isso não é base suficiente para anunciar o projeto como "o primeiro do Brasil".
-Essa condição precisa ser confirmada antes de qualquer divulgação externa. Ainda assim, o levantamento
-indica um potencial real de pioneirismo associado ao uso e à possível publicação de
-software livre.
+Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa equivalente de prestador público municipal de saneamento no Brasil** que reúna este mesmo conjunto de características: desenvolvimento interno de software, arquitetura baseada em padrões abertos, telemetria e supervisão, com possibilidade de publicação de componentes como software livre. Isso não é base suficiente para anunciar o projeto como "o primeiro do Brasil". Essa condição precisa ser confirmada antes de qualquer divulgação externa. Ainda assim, o levantamento indica um potencial real de pioneirismo associado ao uso e à possível publicação de software livre.
 
-A experiência pode ser apresentada em **congressos de saneamento e gestão pública**, documentada em **artigo técnico**,
-submetida a **premiações de inovação ou gestão pública** e compartilhada com
-outros prestadores municipais. A própria troca com outras autarquias pode trazer
-retorno técnico, novas contribuições ao software e cooperação entre equipes que
-enfrentam problemas semelhantes.
+Com resultados documentados, a experiência pode ser apresentada em **congressos de saneamento e gestão pública**, documentada em **artigo técnico**, submetida a **premiações de inovação ou gestão pública** e compartilhada com outros prestadores municipais. A própria troca com outras autarquias pode trazer retorno técnico, novas contribuições ao software e cooperação entre equipes que enfrentam problemas semelhantes.
 
 Esse não é o benefício operacional principal do projeto, mas é um valor
 institucional legítimo. Uma autarquia que desenvolve, mede, documenta e compartilha
@@ -879,11 +869,40 @@ consequência de uma entrega concreta e mensurável.
 
 ## O que peço
 
-Duas autorizações iniciais, ambas sem intervenção direta em unidade em operação.
+Este pré-projeto não propõe início imediato da implantação. Minha situação funcional ainda depende das providências necessárias à reintegração e da organização de períodos de licença já adquiridos. Por essa razão, minha previsão atual de disponibilidade para assumir de forma contínua a execução do projeto é **fevereiro de 2027**.
 
-### 1. Executar a etapa 0 — registro digital
+Até lá, proponho que a Administração possa avaliar a iniciativa, confrontá-la com a realidade atual do SAAE e, caso considere oportuno prosseguir, preparar as condições institucionais e materiais necessárias à futura implantação.
 
-Desenvolver e colocar em teste controlado:
+### 1. Definir a condução institucional do projeto
+
+Caso a proposta seja acolhida, considero importante que, antes do início do desenvolvimento e da implantação, seja definida a unidade ou instância à qual o projeto ficará vinculado e a forma pela qual será atribuída sua condução inicial.
+
+Essa definição pode ajudar a evitar que uma iniciativa transversal seja executada de maneira informal, sem responsabilidades claramente estabelecidas ou dependente apenas de entendimentos pessoais.
+
+A proposta é que o projeto seja institucional desde o início, preservando-se, na fase inicial de implantação, a continuidade entre o trabalho já desenvolvido e sua execução, ao mesmo tempo em que o conhecimento seja progressivamente compartilhado com as áreas envolvidas.
+
+### 2. Preparar a infraestrutura de desenvolvimento e homologação
+
+Caso haja interesse em prosseguir, o período anterior ao início da execução também pode ser utilizado para verificar a infraestrutura disponível e identificar eventuais necessidades de adequação.
+
+Para o desenvolvimento serão utilizados simultaneamente ambiente de programação, containers, banco de dados, serviços, ferramentas de monitoramento e ambientes de teste. Como referência inicial, considero adequada uma estação de desenvolvimento com **32 GB de memória RAM**, armazenamento SSD e processador atual de bom desempenho, cabendo ao Departamento de Informática avaliar a configuração e verificar se já existe equipamento compatível.
+
+Não havendo equipamento disponível, sua aquisição antecipada permitiria que o desenvolvimento começasse sem depender dessa providência após o início da implantação.
+
+Também podem ser avaliados previamente:
+
+- ambiente de desenvolvimento e homologação;
+- capacidade de servidor e armazenamento;
+- rotina de cópia de segurança;
+- repositório e política de versionamento do código;
+- acessos e permissões necessários;
+- forma de integração com a infraestrutura já mantida pelo Departamento de Informática.
+
+O objetivo não é criar uma estrutura paralela de tecnologia, mas aproveitar a infraestrutura existente e preparar apenas o que for necessário para o desenvolvimento e a futura operação do sistema.
+
+### 3. Iniciar a etapa 0 — registro digital
+
+A partir do início da execução, proponho desenvolver e colocar em teste controlado:
 
 - lançamento de leitura pelo laboratório e pelo pessoal de campo;
 - autenticação e perfis de acesso;
@@ -892,40 +911,21 @@ Desenvolver e colocar em teste controlado:
 - geração de boletim;
 - consulta por gerência e diretoria.
 
-O cronograma deve ser definido depois de confirmados os requisitos com os usuários.
-A infraestrutura inicial pode aproveitar servidor existente, se houver capacidade
-e condições adequadas de segurança e cópia de dados.
+O cronograma pode ser definido depois de confirmados os requisitos com os usuários.
 
-Ao fim do piloto, será possível avaliar adesão, qualidade dos registros e ajustes
-necessários antes da expansão.
+Ao fim do piloto, será possível avaliar adesão, qualidade dos registros e ajustes necessários antes da expansão.
 
-### 2. Prova de conceito em bancada e levantamento de campo
+### 4. Prova de conceito em bancada e levantamento de campo
 
-Montar uma bancada sem ligação com unidade real para validar a cadeia:
+Em paralelo à etapa 0, ou após sua estabilização, proponho montar uma bancada sem ligação com unidade real para validar a cadeia:
 
 > instrumento → aquisição → comunicação → banco → tela → alarme → relatório
 
-A faixa preliminar de material estudada é de **R$ 5.500 a R$ 16.500** **cálculo**,
-sem o analisador de cloro. Essa faixa precisa ser confirmada por cotações.
+A faixa preliminar de material estudada é de **R$ 5.500 a R$ 16.500** **cálculo**, sem o analisador de cloro, e deverá ser confirmada por cotações.
 
-O analisador de cloro utilizado como referência custa aproximadamente **R$ 17 mil**
-e, portanto, deve ser tratado separadamente. Uma unidade de demonstração ou cessão
-temporária pode ser avaliada; não sendo possível, a bancada pode validar a
-arquitetura com outros instrumentos.
+O levantamento de campo deverá verificar o que já existe, identificar os pontos de maior interesse para medição e reunir os dados necessários para substituir as estimativas deste pré-projeto por informações atuais do próprio SAAE.
 
-O levantamento de campo deve produzir:
-
-- inventário de equipamentos e sistemas existentes;
-- identificação dos pontos de maior interesse para medição;
-- situação dos painéis e das proteções;
-- meios de comunicação disponíveis;
-- faturas de energia e enquadramento tarifário por unidade;
-- consumo de reagentes e demais custos relevantes;
-- cotações formais e requisitos de instalação.
-
-A partir desses dados, as estimativas deste pré-projeto podem ser substituídas por
-números próprios e o projeto executivo da primeira unidade poderá ser decidido com
-base em informação atual.
+A partir daí, poderá ser definida a primeira unidade a ser estudada para instrumentação.
 
 ---
 
