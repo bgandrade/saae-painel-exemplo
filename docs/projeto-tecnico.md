@@ -1,9 +1,18 @@
 # Digitalizar, automatizar e controlar
 
 **Pré-projeto — versão 3.3, agosto de 2026**  
-Serviço Autônomo de Água e Esgoto de Angra dos Reis
+Serviço Autônomo de Água e Esgoto de Angra dos Reis  
+**Autor:** Bruno Andrade · **Matrícula:** 190545
 
-## Nota preliminar — escopo e origem das informações
+## A proposta
+
+Este pré-projeto apresenta uma proposta de digitalização, telemetria, automação e supervisão
+operacional para o SAAE de Angra dos Reis.
+
+A proposta prevê implantação gradual, a partir da estrutura existente e das necessidades que forem
+identificadas no levantamento e nas etapas posteriores.
+
+## Sobre este pré-projeto
 
 Este documento é um **pré-projeto**. Ele propõe uma sequência de trabalho e uma arquitetura
 possível, mas não substitui levantamento de campo, projeto executivo, especificação de equipamentos,
@@ -175,7 +184,39 @@ serviços de apoio.
 
 ---
 
-## 3. Arquitetura técnica proposta
+## 3. Demonstração interativa
+
+Este pré-projeto é acompanhado por uma demonstração interativa do sistema de supervisão proposto.
+
+A demonstração está disponível em:
+
+**https://saae-painel.pages.dev/**
+
+Ela foi desenvolvida para uso em **computador ou notebook**, em formato semelhante ao de uma estação
+de trabalho ou telão de sala de controle.
+
+### O que a demonstração apresenta
+
+O painel reúne, em ambiente simulado, telas de visão geral, sinóptico, unidades, automação, rede e
+pressão, qualidade, esgoto e relatórios.
+
+Também permite observar alarmes, históricos, intertravamentos, rodízio de conjuntos, alteração de
+setpoints e cenários de falha.
+
+### Limites da demonstração
+
+Todos os valores operacionais são **simulados**. O painel não está conectado a equipamentos ou
+sistemas do SAAE.
+
+Nomes e localizações de algumas unidades correspondem a referências reais, mas capacidades, vazões,
+setpoints, traçados e demais parâmetros podem ser aproximados ou estimados.
+
+A finalidade é demonstrar conceitos de interface, supervisão e automação. A configuração real deverá
+ser definida posteriormente, a partir de levantamento de campo e das condições atuais da autarquia.
+
+---
+
+## 4. Arquitetura técnica proposta
 
 A arquitetura é dividida em camadas para permitir que campo, comunicação, servidor e interface
 evoluam de forma relativamente independente.
@@ -298,7 +339,7 @@ de restauração.
 
 ---
 
-## 4. Equipamentos e critérios de escolha
+## 5. Equipamentos e critérios de escolha
 
 Este capítulo apresenta tipos de instrumento e ordens de grandeza. **Não define quantidade, modelo
 final ou unidade de instalação.** Esses itens dependem do levantamento de campo, das condições
@@ -471,7 +512,7 @@ todos os itens antes de o levantamento indicar onde cada medição produz benef�
 
 ---
 
-## 5. Integração e operação
+## 6. Integração e operação
 
 O valor do sistema está na ligação entre registro, medição, histórico, alarme e relatório. Os
 exemplos abaixo mostram como essa cadeia pode funcionar.
@@ -577,7 +618,7 @@ lançamento com justificativa e mantém o valor anterior para consulta.
 
 ---
 
-## 6. Benefícios e hipóteses econômicas
+## 7. Benefícios e hipóteses econômicas
 
 Nesta etapa do pré-projeto, valores econômicos devem ser tratados como **ordem de grandeza ou
 cenário a verificar**, não como promessa de economia.
@@ -663,7 +704,7 @@ indicadas pelos próprios dados.
 
 ---
 
-## 7. Capacidade de execução e continuidade
+## 8. Capacidade de execução e continuidade
 
 A tecnologia utilizada é conhecida no mercado. O desafio principal é organizar responsabilidades,
 documentar a solução e evitar concentração excessiva de conhecimento.
@@ -736,7 +777,7 @@ criticidade e orientação da equipe responsável pela infraestrutura operaciona
 
 ---
 
-## 8. O que este projeto pode representar para o SAAE
+## 9. O que este projeto pode representar para o SAAE
 
 Os capítulos anteriores tratam principalmente de operação, arquitetura, custos e riscos. Há também
 um resultado institucional possível. O projeto pode ampliar a capacidade técnica do SAAE e dar
@@ -811,7 +852,7 @@ mensurável.
 
 ---
 
-## O que peço
+## 10. Encaminhamento proposto
 
 Este pré-projeto não propõe início imediato da implantação. Minha situação funcional ainda depende
 das providências necessárias à reintegração e da organização de períodos de licença já adquiridos.

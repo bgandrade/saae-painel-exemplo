@@ -1,5 +1,7 @@
 # Painel de Controle SAAE Angra dos Reis
 
+**Autor:** Bruno Andrade · **Matrícula:** 190545
+
 Maquete demonstrativa de um sistema de **supervisão e automação** para os sistemas de abastecimento
 de água e esgotamento sanitário de Angra dos Reis, feita para ser projetada como se fosse o telão de
 uma sala de controle.
