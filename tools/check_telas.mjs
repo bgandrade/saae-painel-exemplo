@@ -46,6 +46,33 @@ const TELAS = [
     ],
   ],
   [
+    'Ajuda da demonstração',
+    '/src/ui/PainelAjuda.jsx',
+    null,
+    [
+      'Comece aqui',
+      'Etapa 0',
+      'Etapa 1',
+      'Etapa 2',
+      'Etapa 3',
+      'Conheça as oito telas',
+      'Visão Geral',
+      'Relatórios',
+      'Ensaios guiados',
+      'D1',
+      'D2',
+      'D3',
+      'D4',
+      'Rompimento da adutora',
+      'Falta de energia',
+      'Cloro fora de faixa',
+      'Falha em conjunto',
+      'Chuva intensa',
+      'Pico de consumo de feriado',
+      'Todos os valores operacionais são simulados',
+    ],
+  ],
+  [
     'Sinóptico',
     '/src/views/Sinoptico.jsx',
     null,
@@ -170,6 +197,6 @@ await fechar();
 console.log(
   falhas
     ? `\n${falhas} tela(s) com problema`
-    : '\nAs 8 telas, o painel de simulação e o faceplate renderizam com o conteúdo esperado.',
+    : '\nAs 8 telas, a ajuda, o painel de simulação e o faceplate renderizam com o conteúdo esperado.',
 );
 process.exit(falhas ? 1 : 0);

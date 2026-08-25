@@ -61,7 +61,7 @@ defina `CHROMIUM_BIN` com seu caminho. A apresentação impressa fica em
 | Comando            | O que confere                                                                                                               |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | `pnpm check:geo`   | cada coordenada cai dentro do município (malha IBGE) e todas as referências entre unidades, bombas, setores e linhas fecham |
-| `pnpm check:telas` | as 8 telas e o faceplate renderizam sem erro e contêm o conteúdo esperado                                                   |
+| `pnpm check:telas` | as 8 telas, a ajuda e o faceplate renderizam sem erro e contêm o conteúdo esperado                                          |
 | `pnpm check:demos` | o registro da Etapa 0 e as quatro demonstrações do roteiro funcionam de ponta a ponta                                       |
 | `pnpm check:mapa`  | os resumos e estados operacionais apresentados no mapa permanecem coerentes                                                 |
 
@@ -83,6 +83,11 @@ O botão **SIMULAÇÃO** na barra de estado abre o painel lateral que concentra 
 cenários de demonstração. O seletor **1× / 60× / 300×** controla a velocidade do relógio simulado. A
 60× cada segundo real vale um minuto de operação, o que faz a curva de consumo diária aparecer
 durante a fala. `?tema=light` na URL força o tema claro.
+
+O botão de **ajuda** no cabeçalho abre um guia autônomo com a relação entre a maquete e as Etapas
+0–3 da proposta, o papel das oito telas, ensaios reproduzíveis, cenários de falha e os limites dos
+dados apresentados. Na primeira visita, uma chamada discreta aponta para esse guia; depois de aberta
+ou dispensada, ela permanece oculta no mesmo navegador.
 
 ---
 

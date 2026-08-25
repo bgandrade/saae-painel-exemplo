@@ -13,10 +13,11 @@ import { ProvedorSimulacao, useSim } from './hooks/useSimulacao.jsx';
 import { ProvedorUI, useRota, useUI } from './hooks/useUI.jsx';
 import { hora, dataLonga } from './ui/formato.js';
 import { Vazio } from './ui/componentes.jsx';
-import { Drawer } from './ui/Overlay.jsx';
+import { Drawer, Modal } from './ui/Overlay.jsx';
 import LinhaAlarme from './ui/LinhaAlarme.jsx';
 import Icone from './ui/Icone.jsx';
 import PainelSimulacao from './ui/PainelSimulacao.jsx';
+import PainelAjuda from './ui/PainelAjuda.jsx';
 
 import VisaoGeral from './views/VisaoGeral.jsx';
 import Sinoptico from './views/Sinoptico.jsx';
@@ -42,6 +43,7 @@ const VIEWS = [
 ];
 
 const CHAVE_TEMA = 'saae-tema';
+const CHAVE_CONVITE_AJUDA = 'saae-ajuda-convite-v1';
 
 export default function App() {
   return (
@@ -69,8 +71,40 @@ function Painel() {
   });
   const [painelAlarmes, setPainelAlarmes] = useState(false);
   const [painelSimulacao, setPainelSimulacao] = useState(false);
+  const [painelAjuda, setPainelAjuda] = useState(false);
+  const [conviteAjuda, setConviteAjuda] = useState(() => {
+    try {
+      return localStorage.getItem(CHAVE_CONVITE_AJUDA) !== 'oculto';
+    } catch {
+      return true;
+    }
+  });
   const [quiosque, setQuiosque] = useState(false);
   const [rotacao, setRotacao] = useState(false);
+
+  const ocultarConviteAjuda = useCallback(() => {
+    setConviteAjuda(false);
+    try {
+      localStorage.setItem(CHAVE_CONVITE_AJUDA, 'oculto');
+    } catch {
+      /* modo privativo: o convite permanece oculto até recarregar */
+    }
+  }, []);
+
+  const abrirAjuda = useCallback(() => {
+    ocultarConviteAjuda();
+    setPainelAjuda(true);
+  }, [ocultarConviteAjuda]);
+
+  const navegarPelaAjuda = useCallback((destino) => {
+    setPainelAjuda(false);
+    location.hash = `#/${destino}`;
+  }, []);
+
+  const abrirSimulacaoPelaAjuda = useCallback(() => {
+    setPainelAjuda(false);
+    setPainelSimulacao(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = tema === 'light' ? 'light' : 'dark';
@@ -190,6 +224,37 @@ function Painel() {
           >
             <Icone nome="tela" />
           </button>
+          <div className="topbar-ajuda">
+            <button
+              className="btn btn-icone"
+              type="button"
+              title="Entender esta demonstração"
+              aria-label="Abrir ajuda da demonstração"
+              aria-haspopup="dialog"
+              aria-expanded={painelAjuda}
+              onClick={abrirAjuda}
+            >
+              <Icone nome="info" />
+            </button>
+            {conviteAjuda && (
+              <div
+                className="ajuda-convite"
+                role="region"
+                aria-label="Convite para conhecer a demonstração"
+              >
+                <strong>Primeira visita?</strong>
+                <span>Conheça os recursos, ensaios e limites desta maquete.</span>
+                <div className="ajuda-convite-acoes">
+                  <button className="btn primario" type="button" onClick={abrirAjuda}>
+                    Conhecer a demonstração
+                  </button>
+                  <button className="btn" type="button" onClick={ocultarConviteAjuda}>
+                    Dispensar
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -285,6 +350,16 @@ function Painel() {
         >
           <PainelSimulacao />
         </Drawer>
+      )}
+      {painelAjuda && (
+        <Modal
+          titulo="Ajuda da demonstração"
+          sub="Recursos, ensaios, cenários e relação com a proposta técnica"
+          aoFechar={() => setPainelAjuda(false)}
+          largo
+        >
+          <PainelAjuda aoNavegar={navegarPelaAjuda} aoAbrirSimulacao={abrirSimulacaoPelaAjuda} />
+        </Modal>
       )}
       {unidadeAberta && <DrawerUnidade unidade={unidadeAberta} />}
       {bombaAberta && <FaceplateBomba idBomba={bombaAberta} />}

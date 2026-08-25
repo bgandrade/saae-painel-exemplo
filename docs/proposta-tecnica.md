@@ -199,6 +199,11 @@ pressão, qualidade, esgoto e relatórios.
 Também permite observar alarmes, históricos, intertravamentos, rodízio de conjuntos, alteração de
 setpoints e cenários de falha.
 
+Um guia integrado, acessível pelo botão de ajuda no cabeçalho, relaciona esses recursos às Etapas
+0–3 desta proposta e orienta o visitante a reproduzir os principais ensaios mesmo sem a presença do
+autor. O guia também explica os cenários e diferencia referências reais, parâmetros estimados e
+valores simulados.
+
 ### Limites da demonstração
 
 Todos os valores operacionais são **simulados**. O painel não está conectado a equipamentos ou
