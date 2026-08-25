@@ -341,4 +341,22 @@ code {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  #anexo-iii-fontes + p + table a {
+    text-decoration: none;
+  }
+
+  #anexo-iii-fontes + p + table a::after {
+    content: attr(href);
+    display: block;
+    margin-top: 1mm;
+    color: #64748b;
+    font-size: 6.5pt;
+    font-weight: 400;
+    hyphens: none;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    word-break: break-all;
+  }
 }
