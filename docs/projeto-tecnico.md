@@ -1,22 +1,22 @@
 # Digitalizar, automatizar e controlar
 
-**Pré-projeto — versão 3.3, agosto de 2026**  
+**Proposta Técnica Preliminar — agosto de 2026**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis  
 **Autor:** Bruno Andrade · **Matrícula:** 190545
 
 ## A proposta
 
-Este pré-projeto apresenta uma proposta de digitalização, telemetria, automação e supervisão
+Este documento apresenta uma proposta de digitalização, telemetria, automação e supervisão
 operacional para o SAAE de Angra dos Reis.
 
 A proposta prevê implantação gradual, a partir da estrutura existente e das necessidades que forem
 identificadas no levantamento e nas etapas posteriores.
 
-## Sobre este pré-projeto
+## Sobre esta proposta técnica preliminar
 
-Este documento é um **pré-projeto**. Ele propõe uma sequência de trabalho e uma arquitetura
-possível, mas não substitui levantamento de campo, projeto executivo, especificação de equipamentos,
-orçamento formal, cronograma de obra ou responsabilidade técnica.
+Este documento constitui uma **proposta técnica preliminar**. Ele apresenta uma sequência de
+trabalho e uma arquitetura possível, mas não substitui levantamento de campo, projeto executivo,
+especificação de equipamentos, orçamento formal, cronograma de obra ou responsabilidade técnica.
 
 Quando são citados equipamentos, protocolos ou tecnologias, a finalidade é indicar **tipo, função e
 critério de escolha**. A definição do que instalar, em qual unidade e com qual dimensionamento deve
@@ -178,19 +178,19 @@ barreira de segurança.
 de exportação devem permanecer sob domínio do SAAE, independentemente de quem forneça sensores ou
 serviços de apoio.
 
-> **Sobre a demonstração que acompanha este pré-projeto.** A maquete utiliza **dados simulados**.
-> Ela serve para demonstrar conceitos de interface, simulação, alarmes e intertravamentos. Não
+> **Sobre a demonstração que acompanha esta proposta.** A maquete utiliza **dados simulados**. Ela
+> serve para demonstrar conceitos de interface, simulação, alarmes e intertravamentos. Não
 > representa a planta atual do município e não deve ser tratada como sistema já implantado.
 
 ---
 
 ## 3. Demonstração interativa
 
-Este pré-projeto é acompanhado por uma demonstração interativa do sistema de supervisão proposto.
+Esta proposta é acompanhada por uma demonstração interativa do sistema de supervisão proposto.
 
-A demonstração está disponível em:
+A demonstração pode ser acessada em:
 
-**https://saae-painel.pages.dev/**
+**[https://saae-painel.pages.dev/](https://saae-painel.pages.dev/)**
 
 Ela foi desenvolvida para uso em **computador ou notebook**, em formato semelhante ao de uma estação
 de trabalho ou telão de sala de controle.
@@ -620,8 +620,8 @@ lançamento com justificativa e mantém o valor anterior para consulta.
 
 ## 7. Benefícios e hipóteses econômicas
 
-Nesta etapa do pré-projeto, valores econômicos devem ser tratados como **ordem de grandeza ou
-cenário a verificar**, não como promessa de economia.
+Nesta etapa preliminar, valores econômicos devem ser tratados como **ordem de grandeza ou cenário a
+verificar**, não como promessa de economia.
 
 ### Energia
 
@@ -773,7 +773,7 @@ criticidade e orientação da equipe responsável pela infraestrutura operaciona
 | Custo real superior às estimativas              | média     | médio      | levantamento antes de compromisso de investimento                               |
 | Incidente de segurança                          | baixa     | muito alto | segmentação, autenticação, auditoria e revisão técnica                          |
 | Falha de comunicação                            | alta      | variável   | autonomia local definida por unidade                                            |
-| Expectativa acima da primeira entrega           | alta      | médio      | distinção explícita entre maquete, pré-projeto e sistema real                   |
+| Expectativa acima da primeira entrega           | alta      | médio      | distinção explícita entre maquete, proposta preliminar e sistema real           |
 
 ---
 
@@ -820,7 +820,7 @@ A arquitetura proposta trata de problemas comuns a muitos prestadores municipais
 telemetria, histórico, alarmes, relatórios, integração entre unidades e redução da dependência de
 soluções fechadas.
 
-Na pesquisa realizada para este pré-projeto, **não foi localizada iniciativa equivalente de
+Na pesquisa realizada para elaborar esta proposta, **não foi localizada iniciativa equivalente de
 prestador público municipal de saneamento no Brasil** que reúna este mesmo conjunto de
 características: desenvolvimento interno de software, arquitetura baseada em padrões abertos,
 telemetria e supervisão, com possibilidade de publicação de componentes como software livre. Isso
@@ -854,10 +854,10 @@ mensurável.
 
 ## 10. Encaminhamento proposto
 
-Este pré-projeto não propõe início imediato da implantação. Minha situação funcional ainda depende
-das providências necessárias à reintegração e da organização de períodos de licença já adquiridos.
-Por essa razão, minha previsão atual de disponibilidade para assumir de forma contínua a execução do
-projeto é **fevereiro de 2027**.
+Esta proposta técnica preliminar não prevê o início imediato da implantação. Minha situação
+funcional ainda depende das providências necessárias à reintegração e da organização de períodos de
+licença já adquiridos. Por essa razão, minha previsão atual de disponibilidade para assumir de forma
+contínua a execução do projeto é **fevereiro de 2027**.
 
 Até lá, proponho que a Administração possa avaliar a iniciativa, confrontá-la com a realidade atual
 do SAAE e, caso considere oportuno prosseguir, preparar as condições institucionais e materiais
@@ -932,7 +932,7 @@ A faixa preliminar de material estudada é de **R$ 5.500 a R$ 16.500** **cálcul
 de cloro, e deverá ser confirmada por cotações.
 
 O levantamento de campo deverá verificar o que já existe, identificar os pontos de maior interesse
-para medição e reunir os dados necessários para substituir as estimativas deste pré-projeto por
+para medição e reunir os dados necessários para substituir as estimativas deste documento por
 informações atuais do próprio SAAE.
 
 A partir daí, poderá ser definida a primeira unidade a ser estudada para instrumentação.
@@ -1014,8 +1014,8 @@ Consultadas em 22 de agosto de 2026.
 
 ---
 
-_Este documento é um pré-projeto e não constitui projeto executivo. Os indicadores municipais
-utilizados como referência provêm das fontes indicadas acima e podem não refletir a operação atual.
-Valores marcados como cálculo são estimativas baseadas em premissas declaradas e não constituem
-orçamento ou cotação. A maquete que acompanha o documento utiliza dados simulados e não está
-conectada a equipamento real._
+_Este documento constitui uma proposta técnica preliminar, não um projeto executivo. Os indicadores
+municipais utilizados como referência provêm das fontes indicadas acima e podem não refletir a
+operação atual. Valores marcados como cálculo são estimativas baseadas em premissas declaradas e não
+constituem orçamento ou cotação. A maquete que acompanha o documento utiliza dados simulados e não
+está conectada a equipamento real._
