@@ -58,6 +58,9 @@ const abertura = renderizado.slice(0, inicioCorpo);
 const corpoOriginal = renderizado.slice(inicioCorpo);
 const titulo = abertura.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? 'Projeto técnico';
 const meta = abertura.match(/<p>([\s\S]*?)<\/p>/)?.[1] ?? '';
+const [categoria = '', instituicao = '', subtitulo = '', autoria = '', localData = ''] = meta
+  .split(/<br>\s*/)
+  .map((item) => item.trim());
 const ultimoSeparador = corpoOriginal.lastIndexOf('<hr>');
 const antesDaNota = ultimoSeparador >= 0 ? corpoOriginal.slice(0, ultimoSeparador) : corpoOriginal;
 const trechoNota = ultimoSeparador >= 0 ? corpoOriginal.slice(ultimoSeparador) : '';
@@ -84,8 +87,16 @@ const montarHtml = (paginas = new Map()) => {
 </head>
 <body>
   <header class="cover">
-    <h1>${titulo}</h1>
-    <div class="cover-meta">${meta}</div>
+    <div class="cover-institution">${instituicao}</div>
+    <div class="cover-title-block">
+      <div class="cover-category">${categoria}</div>
+      <h1>${titulo}</h1>
+      <div class="cover-subtitle">${subtitulo}</div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-author">${autoria}</div>
+      <div class="cover-place-date">${localData}</div>
+    </div>
   </header>
   <nav class="toc" aria-labelledby="titulo-sumario">
     <h2 id="titulo-sumario">Sumário</h2>

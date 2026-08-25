@@ -1,33 +1,29 @@
-# Digitalizar, automatizar e controlar
+# Digitalização, automação e controle operacional
 
-**Proposta Técnica Preliminar — agosto de 2026**  
+**Proposta Técnica Preliminar**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis  
-**Autor:** Bruno Andrade · **Matrícula:** 190545
-
-## A proposta
-
-Este documento apresenta uma proposta de digitalização, telemetria, automação e supervisão
-operacional para o SAAE de Angra dos Reis.
-
-A proposta prevê implantação gradual, a partir da estrutura existente e das necessidades que forem
-identificadas no levantamento e nas etapas posteriores.
+Telemetria, supervisão e integração gradual dos processos operacionais  
+**Autor:** Bruno Andrade · **Matrícula:** 190545  
+Angra dos Reis · agosto de 2026
 
 ## Sobre esta proposta técnica preliminar
 
-Este documento constitui uma **proposta técnica preliminar**. Ele apresenta uma sequência de
-trabalho e uma arquitetura possível, mas não substitui levantamento de campo, projeto executivo,
+Este documento apresenta uma proposta técnica preliminar para digitalização, telemetria, automação e
+supervisão operacional do SAAE de Angra dos Reis.
+
+A proposta organiza uma possível sequência de implantação e apresenta referências de arquitetura,
+equipamentos e tecnologias, mas não substitui levantamento de campo, projeto executivo,
 especificação de equipamentos, orçamento formal, cronograma de obra ou responsabilidade técnica.
 
-Quando são citados equipamentos, protocolos ou tecnologias, a finalidade é indicar **tipo, função e
-critério de escolha**. A definição do que instalar, em qual unidade e com qual dimensionamento deve
+Quando são citados equipamentos, protocolos ou tecnologias, a finalidade é indicar tipo, função e
+critério de escolha. A definição do que instalar, em qual unidade e com qual dimensionamento deve
 ser feita posteriormente, com dados atuais e participação dos profissionais responsáveis pelas áreas
 envolvidas.
 
-Fui servidor administrativo da autarquia por dezesseis anos e estou afastado desde 2020, com retorno
-previsto. As descrições operacionais deste documento se referem à **rotina que conheci até o
-afastamento** e às informações públicas que consegui consultar. Não tenho acesso à situação interna
-atual e, portanto, não sei quais procedimentos, equipamentos, contratos ou sistemas foram alterados
-desde então.
+As descrições operacionais deste documento se referem à rotina que conheci até o meu afastamento em
+2020 e as informações públicas que consegui consultar. Não tenho acesso à situação interna atual e,
+portanto, não sei quais procedimentos, equipamentos, contratos ou sistemas foram alterados desde
+então.
 
 O levantamento inicial proposto neste documento tem justamente essa finalidade: confirmar o que
 permanece válido, registrar o que já evoluiu e substituir premissas por dados atuais da própria
