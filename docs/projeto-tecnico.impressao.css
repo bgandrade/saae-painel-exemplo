@@ -1,0 +1,298 @@
+@page {
+  size: A4 portrait;
+  margin: 19mm 17mm 20mm 22mm;
+
+  @top-left {
+    content: 'Digitalizar, automatizar e controlar';
+    color: #64748b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7.5pt;
+  }
+
+  @top-right {
+    content: 'Pré-projeto · versão 3.3';
+    color: #64748b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7.5pt;
+  }
+
+  @bottom-left {
+    content: 'Serviço Autônomo de Água e Esgoto de Angra dos Reis';
+    color: #64748b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7pt;
+  }
+
+  @bottom-right {
+    content: counter(page);
+    color: #475569;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+  }
+}
+
+@page cover {
+  margin: 24mm;
+
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+
+  @bottom-left {
+    content: none;
+  }
+
+  @bottom-right {
+    content: none;
+  }
+}
+
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.46;
+  color: #172033;
+  background: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+body {
+  hyphens: auto;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+.cover {
+  page: cover;
+  min-height: 245mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 5mm solid #0b6670;
+  border-bottom: 1px solid #94a3b8;
+  break-after: page;
+}
+
+.cover h1 {
+  max-width: 145mm;
+  margin: 0 0 16mm;
+  color: #123047;
+  font-size: 29pt;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.cover-meta {
+  max-width: 135mm;
+  padding-left: 6mm;
+  border-left: 1.5mm solid #0b6670;
+  color: #334155;
+  font-size: 12pt;
+  line-height: 1.65;
+}
+
+.cover-meta strong {
+  color: #172033;
+}
+
+.toc {
+  break-after: page;
+}
+
+.toc h2 {
+  margin: 0 0 10mm;
+  padding-bottom: 4mm;
+  border-bottom: 1px solid #94a3b8;
+  color: #123047;
+  font-size: 20pt;
+}
+
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc li {
+  margin: 0 0 3.5mm;
+  break-inside: avoid;
+}
+
+.toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  color: #172033;
+  font-size: 10pt;
+  text-decoration: none;
+}
+
+.toc-text {
+  max-width: 145mm;
+}
+
+.toc-leader {
+  min-width: 8mm;
+  flex: 1;
+  border-bottom: 0.3mm dotted #94a3b8;
+  transform: translateY(-0.8mm);
+}
+
+.toc-page {
+  min-width: 6mm;
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.document-body > h2 {
+  break-before: page;
+}
+
+h2,
+h3,
+h4 {
+  break-after: avoid-page;
+  color: #123047;
+  line-height: 1.18;
+}
+
+h2 {
+  margin: 0 0 7mm;
+  padding-bottom: 3mm;
+  border-bottom: 1px solid #94a3b8;
+  font-size: 18pt;
+}
+
+h3 {
+  margin: 8mm 0 3mm;
+  font-size: 13pt;
+}
+
+h4 {
+  margin: 6mm 0 2.5mm;
+  font-size: 11pt;
+}
+
+p {
+  margin: 0 0 3.2mm;
+  orphans: 3;
+  widows: 3;
+}
+
+ul,
+ol {
+  margin: 2mm 0 4mm;
+  padding-left: 7mm;
+}
+
+li {
+  margin-bottom: 1.2mm;
+}
+
+blockquote {
+  margin: 5mm 0;
+  padding: 3.5mm 5mm;
+  border-left: 1.3mm solid #0b6670;
+  background: #eef6f6;
+  color: #243746;
+  break-inside: avoid-page;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+hr {
+  display: none;
+}
+
+table {
+  width: 100%;
+  margin: 4mm 0 6mm;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-size: 8.2pt;
+  line-height: 1.27;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tr {
+  break-inside: avoid-page;
+}
+
+th,
+td {
+  padding: 1.8mm 2mm;
+  border: 0.3mm solid #aab5c1;
+  vertical-align: top;
+  text-align: left;
+}
+
+th {
+  background: #dce8ea;
+  color: #123047;
+  font-weight: 700;
+}
+
+tbody tr:nth-child(even) {
+  background: #f5f7f9;
+}
+
+a {
+  color: #075c68;
+  text-decoration: underline;
+  text-decoration-thickness: 0.2mm;
+  text-underline-offset: 0.4mm;
+}
+
+code {
+  padding: 0.2mm 0.8mm;
+  border-radius: 1mm;
+  background: #eef1f4;
+  font-family: 'DejaVu Sans Mono', Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.document-note {
+  margin-top: 9mm;
+  padding-top: 4mm;
+  border-top: 0.5mm solid #64748b;
+  color: #475569;
+  font-size: 8.5pt;
+}
+
+@media screen {
+  body {
+    max-width: 210mm;
+    margin: 12mm auto;
+    padding: 18mm 17mm 20mm 22mm;
+    box-shadow: 0 2mm 10mm rgb(15 23 42 / 16%);
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

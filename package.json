@@ -9,6 +9,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "documento:html": "node tools/gerar_documento.mjs --html-only",
+    "documento:pdf": "node tools/gerar_documento.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -33,6 +35,8 @@
     "eslint-plugin-react-refresh": "^0.5.4",
     "globals": "^17.11.0",
     "jsdom": "^30.0.1",
+    "markdown-it": "^15.0.0",
+    "pdfjs-dist": "^6.2.108",
     "prettier": "^3.9.6",
     "vite": "^7.1.12"
   }

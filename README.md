@@ -42,6 +42,20 @@ pnpm check        # roda os quatro verificadores funcionais abaixo
 Use `pnpm lint:fix` para aplicar correções seguras do ESLint e `pnpm format` para formatar o
 projeto.
 
+### Documento para impressão
+
+O pré-projeto em [`docs/projeto-tecnico.md`](docs/projeto-tecnico.md) pode ser convertido em HTML ou
+PDF com capa, sumário, páginas A4, cabeçalho, rodapé e tratamento próprio para tabelas:
+
+```bash
+pnpm documento:html # gera dist/documentos/projeto-tecnico.html
+pnpm documento:pdf  # gera dist/documentos/projeto-tecnico.pdf usando Chromium
+```
+
+O gerador procura `chromium`, `chromium-browser` ou `google-chrome`. Para usar outro executável,
+defina `CHROMIUM_BIN` com seu caminho. A apresentação impressa fica em
+[`docs/projeto-tecnico.impressao.css`](docs/projeto-tecnico.impressao.css).
+
 | Comando            | O que confere                                                                                                               |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | `pnpm check:geo`   | cada coordenada cai dentro do município (malha IBGE) e todas as referências entre unidades, bombas, setores e linhas fecham |
