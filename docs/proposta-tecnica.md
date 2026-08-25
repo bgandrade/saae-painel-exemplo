@@ -1,4 +1,4 @@
-# Digitalização, automação e controle operacional
+# Digitalização, Automação e Controle Operacional
 
 **Proposta Técnica Preliminar**  
 Serviço Autônomo de Água e Esgoto de Angra dos Reis  

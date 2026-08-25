@@ -90,12 +90,13 @@ body {
 }
 
 .cover-institution {
-  max-width: 150mm;
+  width: 100%;
   color: #334155;
   font-size: 9.5pt;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: 0.075em;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -203,11 +204,6 @@ body {
 
 .document-body > h2 {
   break-before: page;
-}
-
-.document-body > #sobre-esta-proposta-tecnica-preliminar {
-  margin-top: 30mm;
-  break-before: auto;
 }
 
 h2,

@@ -7,12 +7,12 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import MarkdownIt from 'markdown-it';
 
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const fonte = join(raiz, 'docs', 'projeto-tecnico.md');
-const cssFonte = join(raiz, 'docs', 'projeto-tecnico.impressao.css');
+const fonte = join(raiz, 'docs', 'proposta-tecnica.md');
+const cssFonte = join(raiz, 'docs', 'proposta-tecnica.impressao.css');
 const saidaDir = join(raiz, 'dist', 'documentos');
-const htmlDestino = join(saidaDir, 'projeto-tecnico.html');
-const pdfDestino = join(saidaDir, 'projeto-tecnico.pdf');
-const pdfRascunho = join(saidaDir, '.projeto-tecnico.rascunho.pdf');
+const htmlDestino = join(saidaDir, 'proposta-tecnica.html');
+const pdfDestino = join(saidaDir, 'proposta-tecnica.pdf');
+const pdfRascunho = join(saidaDir, '.proposta-tecnica.rascunho.pdf');
 const somenteHtml = process.argv.includes('--html-only');
 
 const escaparHtml = (texto) =>
@@ -56,7 +56,7 @@ if (inicioCorpo === -1)
 
 const abertura = renderizado.slice(0, inicioCorpo);
 const corpoOriginal = renderizado.slice(inicioCorpo);
-const titulo = abertura.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? 'Projeto técnico';
+const titulo = abertura.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? 'Proposta técnica';
 const meta = abertura.match(/<p>([\s\S]*?)<\/p>/)?.[1] ?? '';
 const [categoria = '', instituicao = '', subtitulo = '', autoria = '', localData = ''] = meta
   .split(/<br>\s*/)
