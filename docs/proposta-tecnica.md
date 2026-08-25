@@ -174,10 +174,6 @@ barreira de segurança.
 de exportação devem permanecer sob domínio do SAAE, independentemente de quem forneça sensores ou
 serviços de apoio.
 
-> **Sobre a demonstração que acompanha esta proposta.** A maquete utiliza **dados simulados**. Ela
-> serve para demonstrar conceitos de interface, simulação, alarmes e intertravamentos. Não
-> representa a planta atual do município e não deve ser tratada como sistema já implantado.
-
 ---
 
 ## 3. Demonstração interativa
