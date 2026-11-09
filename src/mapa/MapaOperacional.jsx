@@ -4,7 +4,7 @@
  * A versão anterior desenhava tudo em SVG à mão, e o preço apareceu nos
  * rótulos: <text> soltos, sem detecção de colisão, se sobrepondo em qualquer
  * zoom. A correção estrutural foi terminar com a lista própria de localidades
- * e deixar o basemap rotular — CARTO e Esri já trazem Japuíba, Jacuecanga,
+ * e deixar o basemap rotular — OpenStreetMap e Esri já trazem Japuíba, Jacuecanga,
  * Banqueta e Vila do Abraão com tipografia e colisão profissionais.
  *
  * As unidades viram divIcon com a sigla em caixa opaca, que é o que garante
@@ -57,7 +57,6 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
   const [vista, setVista] = useState(VISTAS.find((v) => v.padrao)?.id ?? 'continente');
   const [sistema, setSistema] = useState(sistemaInicial);
   const [offline, setOffline] = useState(false);
-  const tema = document.documentElement.dataset.theme;
 
   /* ── criação do mapa: uma vez só ── */
   useEffect(() => {
@@ -121,11 +120,10 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
     if (!def.online) return;
 
     let carregou = false;
-    const tl = L.tileLayer(def.url(tema), {
+    const tl = L.tileLayer(def.url(), {
       attribution: def.atrib,
-      subdomains: def.subdominios,
       maxZoom: def.zoomMax,
-      detectRetina: true,
+      detectRetina: def.detectRetina ?? true,
       crossOrigin: true,
     });
     tl.on('tileload', () => {
@@ -148,7 +146,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       clearTimeout(id);
       if (m.hasLayer(tl)) m.removeLayer(tl);
     };
-  }, [camada, tema]);
+  }, [camada]);
 
   /* ── enquadramento ── */
   useEffect(() => {

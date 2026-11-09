@@ -294,13 +294,16 @@ e Vila do Abraão com tipografia e colisão profissionais.
 
 | Camada    | Fonte                                         | Quando                           |
 | --------- | --------------------------------------------- | -------------------------------- |
-| Ruas      | CARTO Dark Matter / Positron (XYZ, sem chave) | padrão, segue o tema             |
+| Ruas      | OpenStreetMap padrão (XYZ, sem chave)          | padrão, nos dois temas           |
 | Satélite  | Esri World Imagery                            | mostra o relevo e a orla         |
 | Sinóptico | contorno IBGE embutido                        | leitura esquemática e _fallback_ |
 
-CARTO em vez do OpenStreetMap padrão porque o OSM colorido briga com um painel de sala de controle
-escuro, enquanto o Dark Matter foi desenhado exatamente para ficar por baixo de sobreposição de
-dados.
+O mapa de ruas usa o serviço público do **OpenStreetMap**, sem cadastro, chave de API ou trial.
+A cartografia padrão é a mesma nos temas claro e escuro. A atribuição permanece visível no mapa.
+O uso deve seguir a [política dos tiles públicos](https://operations.osmfoundation.org/policies/tiles/):
+visualização interativa, cache HTTP do navegador e envio de Referer (configurado em `public/_headers`).
+O serviço tem capacidade limitada e não oferece garantia de disponibilidade; não há download em
+massa nem pré-carregamento para uso offline. O modo offline usa apenas o contorno local do IBGE.
 
 **Se os tiles não carregarem em 3,5 s, o mapa cai sozinho para o contorno do IBGE** e avisa na tela.
 O auditório sem rede continua funcionando. Para deixar o painel 100 % offline de propósito, basta

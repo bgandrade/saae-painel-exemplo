@@ -10,7 +10,8 @@
 
 /*
   X-Content-Type-Options: nosniff
-  Referrer-Policy: no-referrer
+  # O OpenStreetMap exige Referer válido; em requisições externas, envia só a origem.
+  Referrer-Policy: strict-origin-when-cross-origin
   # O painel carrega tiles de mapa de dois provedores e NADA MAIS — nem fonte,
   # nem CDN de script, nem telemetria. A CSP abaixo trava isso: se algum dia
   # alguém acrescentar outra dependência externa, ela falha aqui em vez de
@@ -25,4 +26,4 @@
   # inline do React (barras de nível, larguras de gráfico, posições do
   # sinóptico) e a folha que o Vite injeta. Nenhum script inline é permitido —
   # `script-src` continua restrito a 'self'.
-  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://*.basemaps.cartocdn.com https://server.arcgisonline.com; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://tile.openstreetmap.org https://server.arcgisonline.com; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
