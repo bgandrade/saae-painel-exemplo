@@ -1,29 +1,83 @@
-# Simulador de Saneamento — Angra dos Reis
+# Proposta de Digitalização, Automação e Controle Operacional
 
-**Iniciativa pessoal de Bruno Andrade, desenvolvida como proposta ao SAAE de Angra dos Reis.**
+**Saneamento de Angra dos Reis · Portfólio de Bruno Andrade**
 
-Demonstração interativa de supervisão e automação para abastecimento de água e esgotamento
-sanitário, com simulação de bombeamento, reservação, rede, qualidade e tratamento de esgoto. O
-contexto de Angra dos Reis é usado como estudo de caso.
+Iniciativa pessoal de **Bruno Andrade**, desenvolvida e apresentada como proposta ao **SAAE de Angra
+dos Reis**. Este repositório preserva o trabalho de concepção e planejamento técnico como portfólio:
+diagnóstico, estratégia de implantação gradual, arquitetura, critérios de escolha de equipamentos,
+hipóteses econômicas e limites de execução.
 
-**Este não é um sistema oficial do SAAE, um projeto implantado ou uma iniciativa institucional da
-autarquia.** A publicação preserva o trabalho e a proposta para estudo e reutilização, sem presumir
-aprovação ou adoção. Não há conexão com equipamentos ou sistemas reais.
-
-**[Abrir a demonstração](https://saae-painel.pages.dev/)**
-
-## Proposta técnica
+O documento central é a **[proposta técnica](docs/proposta-tecnica.md)**. A demonstração interativa
+é material de apoio para explorar alguns dos conceitos de supervisão e automação propostos.
 
 **[Ler a proposta em PDF](docs/proposta-tecnica.pdf)** ·
-[Consultar o Markdown](docs/proposta-tecnica.md)
+**[Consultar a proposta em Markdown](docs/proposta-tecnica.md)**
 
-Documento de autoria pessoal apresentado ao SAAE, originalmente elaborado em agosto de 2026 e
-preservado como referência histórica. Reúne diagnóstico, etapas de digitalização e automação,
-arquitetura, equipamentos, estimativas e limitações. As premissas e referências são datadas; o
-documento não comprova aprovação ou implantação e não substitui levantamento de campo ou projeto
-executivo.
+A proposta foi originalmente elaborada em **agosto de 2026** e é preservada como referência
+histórica. É um trabalho de autoria pessoal: não constitui iniciativa institucional, sistema oficial
+ou projeto implantado pelo SAAE, nem pressupõe aprovação ou adoção pela autarquia. Não substitui
+levantamento de campo, projeto executivo ou responsabilidade técnica.
 
-## Funcionalidades
+## O problema estudado
+
+O ponto de partida é a rotina operacional conhecida pelo autor até 2020, complementada por
+referências públicas: leituras pontuais, registros em papel, consolidação manual e informações
+dispersas entre campo, laboratório e operação. Essas premissas precisam ser verificadas antes de
+qualquer adoção; não são um diagnóstico da situação atual do SAAE.
+
+A proposta examina como transformar esses registros em histórico estruturado e, progressivamente,
+incorporar medição contínua, automação local e supervisão centralizada.
+
+## Abordagem proposta
+
+Cada etapa deve produzir uma entrega útil antes do avanço para a seguinte:
+
+| Etapa                         | Objetivo                                                                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **0 — Registro digital**      | Estruturar leituras de campo e laboratório com autoria, horário, histórico e relatórios.                 |
+| **1 — Medição contínua**      | Integrar instrumentos ao mesmo histórico, preservando a convivência com leituras manuais.                |
+| **2 — Automação local**       | Introduzir regras de operação em unidades selecionadas, preservando proteções físicas e autonomia local. |
+| **3 — Supervisão e controle** | Centralizar a visualização e considerar comandos remotos onde houver projeto, segurança e autorização.   |
+
+As decisões técnicas priorizam padrões abertos, separação entre campo, comunicação, servidor e
+interface, dados sob controle da autarquia e proteções críticas independentes do software de
+supervisão. Protocolos, tecnologias e equipamentos são referências para avaliação, não
+especificações executivas ou escolhas já implantadas.
+
+## O que este trabalho reúne
+
+- Diagnóstico de referência e definição de uma sequência de implantação com entregas independentes.
+- Arquitetura de aquisição, comunicação, armazenamento, serviços e interface, com critérios de
+  escolha.
+- Referências de instrumentação, bombeamento e controle, incluindo barreiras para comando remoto.
+- Hipóteses de custos e benefícios, riscos, continuidade, responsabilidades e necessidades de campo.
+- Uma demonstração implementada para tornar parte da proposta explorável e permitir ensaios
+  reproduzíveis.
+
+Esses materiais apresentam o raciocínio técnico e as decisões de concepção do autor. As estimativas
+são baseadas em premissas declaradas; não representam orçamento formal, economia comprovada ou
+resultados de uma implantação.
+
+## Materiais do portfólio
+
+| Material                                                              | Conteúdo                                                                                                   |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| [Proposta técnica — PDF](docs/proposta-tecnica.pdf)                   | Documento completo para leitura e compartilhamento, com capa, sumário e paginação.                         |
+| [Proposta técnica — Markdown](docs/proposta-tecnica.md)               | Fonte principal do trabalho, com diagnóstico, etapas, arquitetura, equipamentos, estimativas e limitações. |
+| [Demonstração interativa](https://saae-painel.pages.dev/)             | Simulador de apoio aos conceitos da proposta, sem ligação com equipamentos reais.                          |
+| [Guia da demonstração](docs/guia-demonstracao.md)                     | Telas, ensaios reproduzíveis, cenários e funcionamento do motor.                                           |
+| [Referências da proposta](docs/proposta-tecnica.md#anexo-iii--fontes) | Bibliografia e fontes consultadas na elaboração do documento.                                              |
+
+## Demonstração de apoio
+
+**[Explorar a demonstração interativa](https://saae-painel.pages.dev/)**
+
+A aplicação simula abastecimento de água e esgotamento sanitário no contexto do estudo de caso. Ela
+permite explorar bombeamento, reservação, rede, qualidade e tratamento de esgoto. Todos os valores
+operacionais são simulados; não há conexão com equipamentos ou sistemas reais. A existência da
+demonstração não significa que a arquitetura completa descrita na proposta tenha sido implementada.
+
+### Recursos da demonstração
 
 - Oito telas: visão geral, sinóptico, unidades, automação, rede e pressão, qualidade, esgoto e
   relatórios.
@@ -34,9 +88,10 @@ executivo.
 - Mapa com camadas de ruas, satélite e contorno municipal local, temas claro/escuro e modo quiosque.
 
 O [guia da demonstração](docs/guia-demonstracao.md) explica as telas, os ensaios e o motor. O botão
-de ajuda do painel também orienta a exploração sem apresentador.
+de ajuda do painel também orienta a exploração sem apresentador. A implementação usa React, Vite e
+Leaflet, com um motor de simulação em JavaScript; ela ilustra parte dos conceitos da proposta.
 
-## Executar localmente
+## Executar a demonstração localmente
 
 Requisitos: Node.js **24.15.0** (fixado em `mise.toml`) e pnpm **11.3.0** (fixado em
 `package.json`). O [mise](https://mise.jdx.dev/) é opcional se o Node já estiver instalado. Instale
@@ -55,7 +110,7 @@ pnpm build   # gera dist/
 pnpm preview # serve o pacote de produção localmente
 ```
 
-### Controles
+### Controles da demonstração
 
 | Tecla   | Ação                                         |
 | ------- | -------------------------------------------- |
@@ -99,7 +154,7 @@ Após alterá-los, gere o PDF, confira capa, tabelas, links e sumário e inclua 
 mesmo commit das fontes. HTML e PDF intermediário ficam em `dist/documentos/`, ignorados pelo Git. O
 PDF final fica em `docs/` e não integra o build do site.
 
-## Arquitetura e dados
+## Estrutura do repositório e da demonstração
 
 | Diretório                                                   | Responsabilidade                                                   |
 | ----------------------------------------------------------- | ------------------------------------------------------------------ |
@@ -113,7 +168,7 @@ PDF final fica em `docs/` e não integra o build do site.
 React e Vite compõem a aplicação estática; Leaflet apresenta o mapa. O motor usa uma semente para
 reproduzir os ensaios. Consulte o guia para modificar unidades e entender as malhas.
 
-## Limitações e serviços externos
+## Limitações da demonstração e serviços externos
 
 - Todas as medições, capacidades, comandos, alarmes e cenários são simulados. O modelo é didático,
   sem validação para controle de instalações, dimensionamento ou avaliação de conformidade
@@ -132,10 +187,11 @@ reproduzir os ensaios. Consulte o guia para modificar unidades e entender as mal
   servidor público do OpenStreetMap
   [não permite prefetch](https://operations.osmfoundation.org/policies/tiles/).
 - Os serviços externos têm condições próprias e não oferecem disponibilidade garantida pela
-  aplicação. As atribuições devem permanecer visíveis. Veja
-  [fontes e créditos](docs/fontes-e-creditos.md).
+  aplicação. As atribuições devem permanecer visíveis. Veja a
+  [política de uso do OpenStreetMap](https://operations.osmfoundation.org/policies/tiles/) e os
+  [créditos do serviço Esri](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer).
 
-## Hospedagem
+## Hospedar a demonstração
 
 No Cloudflare Pages, configure `pnpm build` como comando de build e `dist` como diretório de saída.
 O arquivo `public/_headers` define cache e cabeçalhos de segurança para esse serviço. Em outras
@@ -146,13 +202,14 @@ O build publica apenas o simulador. A proposta e seu PDF são consultados pelo r
 
 ## Contribuir
 
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para relatar problemas e propor alterações. Contribuições
-devem preservar o caráter demonstrativo, a identificação da autoria e os créditos. Não há
-compromisso de suporte, prazo de resposta ou evolução para um sistema operacional.
+Veja [CONTRIBUTING.md](CONTRIBUTING.md) para discutir a proposta, relatar problemas e propor
+alterações na documentação ou na demonstração. Contribuições devem preservar o contexto da proposta,
+o caráter demonstrativo do software, a identificação da autoria e os créditos. Não há compromisso de
+suporte, prazo de resposta ou evolução para um sistema operacional.
 
 ## Licença
 
 Código e documentação autorais de Bruno Andrade estão sob a [licença MIT](LICENSE). Dados,
 bibliotecas e materiais de terceiros mantêm suas próprias condições e não são relicenciados pela MIT
 deste projeto. O histórico foi preservado e contém materiais antigos com pendências de permissão de
-redistribuição, detalhadas em [fontes e créditos](docs/fontes-e-creditos.md).
+redistribuição. A MIT não concede autorização sobre esses materiais.

@@ -1,10 +1,10 @@
 {
-  "name": "saae-angra-painel",
+  "name": "proposta-saneamento-angra",
   "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@11.3.0",
   "type": "module",
-  "description": "Simulador de saneamento de Angra dos Reis — iniciativa pessoal de Bruno Andrade desenvolvida como proposta ao SAAE",
+  "description": "Proposta técnica de digitalização, automação e controle operacional do saneamento de Angra dos Reis — portfólio de Bruno Andrade, apresentada ao SAAE",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -44,10 +44,10 @@
   "author": "Bruno Andrade",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bgandrade/saae-painel-exemplo.git"
+    "url": "https://github.com/bgandrade/proposta-saneamento-angra.git"
   },
-  "homepage": "https://saae-painel.pages.dev/",
+  "homepage": "https://github.com/bgandrade/proposta-saneamento-angra#readme",
   "bugs": {
-    "url": "https://github.com/bgandrade/saae-painel-exemplo/issues"
+    "url": "https://github.com/bgandrade/proposta-saneamento-angra/issues"
   }
 }

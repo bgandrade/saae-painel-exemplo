@@ -1,14 +1,18 @@
 # Contribuir
 
-Este simulador é uma iniciativa pessoal de Bruno Andrade, desenvolvida como proposta ao SAAE de
-Angra dos Reis. Contribuições são bem-vindas para fins demonstrativos e educacionais; não há
-compromisso de suporte, prazo de resposta ou implantação operacional.
+Este repositório reúne a proposta técnica de digitalização, automação e controle operacional
+desenvolvida por Bruno Andrade como iniciativa pessoal apresentada ao SAAE de Angra dos Reis. A
+proposta é o material central do portfólio; o simulador é uma demonstração de apoio. Contribuições
+são bem-vindas para fins demonstrativos e educacionais; não há compromisso de suporte, prazo de
+resposta ou implantação operacional.
 
 ## Relatar problemas
 
-Abra uma issue com a tela ou comando afetado, passos para reproduzir, resultado esperado e
-observado, navegador e versão do Node quando relevantes. Inclua o cenário e a velocidade da
-simulação. Não envie credenciais, dados pessoais ou informações operacionais internas.
+Para observações sobre a proposta, indique a seção, a premissa ou a referência discutida e explique
+a correção sugerida. Para problemas na demonstração, indique a tela ou comando afetado, passos para
+reproduzir, resultado esperado e observado, navegador e versão do Node quando relevantes. Inclua o
+cenário e a velocidade da simulação. Não envie credenciais, dados pessoais ou informações
+operacionais internas.
 
 ## Propor alterações
 
@@ -33,4 +37,4 @@ substituem essa revisão.
 
 O código e a documentação autorais são disponibilizados sob MIT. Ao contribuir, disponibilize suas
 contribuições autorais sob essa licença. Materiais de terceiros devem trazer origem, atribuição e
-condições de uso compatíveis, registradas em [fontes e créditos](docs/fontes-e-creditos.md).
+condições de uso compatíveis, registradas na documentação da contribuição.
