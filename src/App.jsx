@@ -116,7 +116,7 @@ function Painel() {
   }, [tema]);
 
   useEffect(() => {
-    document.title = `${view.nome} · SAAE Angra dos Reis`;
+    document.title = `${view.nome} · Simulador de Saneamento — Angra dos Reis`;
   }, [view.nome]);
 
   useEffect(() => {
@@ -164,8 +164,8 @@ function Painel() {
             <Icone nome="gota" tamanho={16} style={{ color: '#fff' }} />
           </div>
           <div className="marca-txt">
-            <div className="marca-sigla">SAAE Angra dos Reis</div>
-            <div className="marca-sub">Centro de Controle Operacional</div>
+            <div className="marca-sigla">Simulador de Saneamento</div>
+            <div className="marca-sub">Angra dos Reis · Proposta pessoal ao SAAE</div>
           </div>
         </div>
 
@@ -319,13 +319,13 @@ function Painel() {
       <footer className="rodape">
         <span className="rodape-aviso">
           <Icone nome="alerta" tamanho={11} />
-          DADOS SIMULADOS — MAQUETE DEMONSTRATIVA
+          DADOS SIMULADOS · PROJETO INDEPENDENTE
         </span>
         <span className="rodape-item oculta-quiosque">
           Contorno municipal: IBGE (malha 3300100)
         </span>
         <span className="rodape-item oculta-quiosque">
-          Unidades: coordenadas SAAE · rede, setores e conjuntos estimados
+          Bruno Andrade · Iniciativa pessoal proposta ao SAAE
         </span>
         <span className="espaco" />
         <span className="rodape-item oculta-quiosque">

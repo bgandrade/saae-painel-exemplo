@@ -1391,6 +1391,41 @@ h3 {
 }
 
 @media (max-width: 760px) {
+  .app {
+    --alt-topbar: 86px;
+  }
+  .topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    padding: 4px 8px;
+  }
+  .marca-txt {
+    overflow: hidden;
+  }
+  .marca-sigla {
+    font-size: var(--t-sm);
+  }
+  .marca-sigla,
+  .marca-sub {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .abas {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .topbar-dir {
+    gap: 4px;
+  }
+  .topbar-dir .relogio {
+    display: none;
+  }
+  .barra-estado,
+  .rodape {
+    min-width: 0;
+    overflow-x: auto;
+  }
   .ajuda-controles,
   .ajuda-etapas,
   .ajuda-cenarios {

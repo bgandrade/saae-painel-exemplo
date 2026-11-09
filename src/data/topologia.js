@@ -8,8 +8,8 @@
  * │ incluí-la automaticamente — nenhum outro arquivo precisa ser tocado.    │
  * └────────────────────────────────────────────────────────────────────────┘
  *
- * `confirmada: true`  → unidade que existe, com nome e localização reais,
- *                       levantados em mapa público. NÃO significa que as
+ * `confirmada: true`  → unidade identificada em mapa público, com localização
+ *                       aproximada, sem validação de campo. NÃO significa que as
  *                       demais características sejam reais: capacidades,
  *                       vazões, número de conjuntos e setpoints são projeção.
  * `confirmada: false` → traçado/ativo estimado, existe só para dar contexto
@@ -28,13 +28,13 @@ export const TIPOS = Object.freeze({
 });
 
 /* ──────────────────────────────── UNIDADES ────────────────────────────────
- * As dez unidades abaixo existem, e seus nomes e coordenadas foram levantados
- * em mapa público e verificados por point-in-polygon contra a malha do IBGE
- * (tools/check_geo.mjs). Todas caem dentro do município; a ETE Abraão cai
- * dentro do polígono da Ilha Grande.
+ * Os nomes das dez unidades usam referências reais e as coordenadas são
+ * aproximações levantadas em mapa público. O teste point-in-polygon contra
+ * a malha do IBGE (tools/check_geo.mjs) confirma apenas inclusão no município,
+ * não a posição exata ou um cadastro validado pelo SAAE.
  *
  * São um RECORTE: o SAAE atende o município inteiro e opera muito mais que
- * estas dez. Tudo além de nome e localização — capacidades, vazões, número de
+ * estas dez. Tudo além dos nomes e localizações aproximadas — capacidades, vazões, número de
  * conjuntos, setpoints — é projeção dimensionada para a maquete se comportar
  * de forma realista, não o cadastro da autarquia.
  *
@@ -624,7 +624,7 @@ export const SETORES = [
 ];
 
 /* ──────────────────────────── LINHAS (ESTIMADAS) ───────────────────────────
- * Traçado aproximado, desenhado entre as coordenadas reais das unidades para
+ * Traçado aproximado, desenhado entre as coordenadas estimadas das unidades para
  * dar leitura de rede ao mapa. Não corresponde ao cadastro do SAAE.
  */
 export const LINHAS = [

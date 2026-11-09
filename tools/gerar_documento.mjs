@@ -1,5 +1,12 @@
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  unlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -11,7 +18,8 @@ const fonte = join(raiz, 'docs', 'proposta-tecnica.md');
 const cssFonte = join(raiz, 'docs', 'proposta-tecnica.impressao.css');
 const saidaDir = join(raiz, 'dist', 'documentos');
 const htmlDestino = join(saidaDir, 'proposta-tecnica.html');
-const pdfDestino = join(saidaDir, 'proposta-tecnica.pdf');
+const pdfDestino = join(raiz, 'docs', 'proposta-tecnica.pdf');
+const pdfFinal = join(saidaDir, '.proposta-tecnica.final.pdf');
 const pdfRascunho = join(saidaDir, '.proposta-tecnica.rascunho.pdf');
 const somenteHtml = process.argv.includes('--html-only');
 
@@ -194,15 +202,16 @@ const localizarSecoes = (paginas) => {
 imprimirPdf(pdfRascunho, 1);
 const paginasSumario = localizarSecoes(await lerPaginas(pdfRascunho));
 gravarHtml(paginasSumario);
-imprimirPdf(pdfDestino, 2);
+imprimirPdf(pdfFinal, 2);
 
-const paginasFinais = localizarSecoes(await lerPaginas(pdfDestino));
+const paginasFinais = localizarSecoes(await lerPaginas(pdfFinal));
 for (const [id, pagina] of paginasSumario) {
   if (paginasFinais.get(id) !== pagina) {
     throw new Error(`A paginação mudou após montar o sumário na seção “${id}”.`);
   }
 }
 
+renameSync(pdfFinal, pdfDestino);
 unlinkSync(pdfRascunho);
 
 console.log(`PDF gerado: ${pdfDestino}`);

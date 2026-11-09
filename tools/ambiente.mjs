@@ -65,7 +65,7 @@ export async function prepararRender(raiz = process.cwd()) {
   const React = (await import('react')).default;
   const vite = await createServer({
     root: raiz,
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, hmr: false, ws: false },
     appType: 'custom',
     logLevel: 'error',
   });

@@ -1,15 +1,22 @@
 # Digitalização, Automação e Controle Operacional
 
-**Proposta Técnica Preliminar**  
-Serviço Autônomo de Água e Esgoto de Angra dos Reis  
-Telemetria, supervisão e integração gradual dos processos operacionais  
-**Autor:** Bruno Andrade · **Matrícula:** 190545  
+**Proposta Técnica Preliminar**\
+Iniciativa pessoal apresentada ao SAAE de Angra dos Reis\
+Telemetria, supervisão e integração gradual dos processos operacionais\
+**Autor:** Bruno Andrade\
 Angra dos Reis · agosto de 2026
 
 ## Sobre esta proposta técnica preliminar
 
-Este documento apresenta uma proposta técnica preliminar para digitalização, telemetria, automação e
-supervisão operacional do SAAE de Angra dos Reis.
+Este documento é uma iniciativa pessoal de Bruno Andrade, desenvolvida e apresentada como proposta
+para digitalização, telemetria, automação e supervisão operacional do SAAE de Angra dos Reis. Não é
+uma iniciativa institucional, um sistema oficial ou um projeto implantado pelo SAAE, nem pressupõe
+aprovação ou adoção pela autarquia.
+
+A proposta foi originalmente elaborada em agosto de 2026 e é preservada como referência histórica.
+As etapas de implantação e os encaminhamentos abaixo registram possibilidades propostas à época, sem
+representar compromissos atuais de execução. Código e documentação autorais são disponibilizados sob
+licença MIT; dados e materiais de terceiros conservam suas próprias condições.
 
 A proposta organiza uma possível sequência de implantação e apresenta referências de arquitetura,
 equipamentos e tecnologias, mas não substitui levantamento de campo, projeto executivo,
@@ -20,10 +27,9 @@ critério de escolha. A definição do que instalar, em qual unidade e com qual 
 ser feita posteriormente, com dados atuais e participação dos profissionais responsáveis pelas áreas
 envolvidas.
 
-As descrições operacionais deste documento se referem à rotina que conheci até o meu afastamento em
-2020 e as informações públicas que consegui consultar. Não tenho acesso à situação interna atual e,
-portanto, não sei quais procedimentos, equipamentos, contratos ou sistemas foram alterados desde
-então.
+As descrições operacionais deste documento se referem à rotina que conheci até 2020 e às informações
+públicas que consegui consultar. Não tenho acesso à situação interna atual e, portanto, não sei
+quais procedimentos, equipamentos, contratos ou sistemas foram alterados desde então.
 
 O levantamento inicial proposto neste documento tem justamente essa finalidade: confirmar o que
 permanece válido, registrar o que já evoluiu e substituir premissas por dados atuais da própria
@@ -366,8 +372,7 @@ medição automática. Com isso, torna-se possível acompanhar diferenças entre
 identificar necessidade de verificação, limpeza ou calibração do analisador.
 
 > **Referência de preço.** Um serviço municipal de saneamento do interior paulista divulgou
-> investimento de aproximadamente **R$ 17 mil** em analisador de cloro e
-> economia de cerca de **R$
+> investimento de aproximadamente **R$ 17 mil** em analisador de cloro e economia de cerca de **R$
 > 13 mil por ano em reagente**. O caso serve apenas como referência externa; não é projeção de
 > economia para o SAAE.
 
@@ -851,14 +856,10 @@ mensurável.
 
 ## 10. Encaminhamento proposto
 
-Esta proposta técnica preliminar não prevê o início imediato da implantação. Minha situação
-funcional ainda depende das providências necessárias à reintegração e da organização de períodos de
-licença já adquiridos. Por essa razão, minha previsão atual de disponibilidade para assumir de forma
-contínua a execução do projeto é **fevereiro de 2027**.
-
-Até lá, proponho que a Administração possa avaliar a iniciativa, confrontá-la com a realidade atual
-do SAAE e, caso considere oportuno prosseguir, preparar as condições institucionais e materiais
-necessárias à futura implantação.
+Os encaminhamentos a seguir foram formulados como possibilidades para avaliação da Administração à
+época da proposta. Não representam aprovação, cronograma vigente ou compromisso de implantação. Uma
+eventual adoção exige confrontar estas premissas com a realidade atual do SAAE e definir as
+condições institucionais, técnicas e materiais necessárias.
 
 ### 1. Definir a condução institucional do projeto
 

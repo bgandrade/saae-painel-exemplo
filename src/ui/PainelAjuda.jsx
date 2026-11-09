@@ -174,9 +174,10 @@ export default function PainelAjuda({ aoNavegar, aoAbrirSimulacao }) {
           <span className="ajuda-sobretitulo">Guia da maquete demonstrativa</span>
           <h2 id="ajuda-comecar">Comece aqui</h2>
           <p>
-            Este painel mostra como registro digital, telemetria, automação e supervisão podem
-            trabalhar juntos. Explore as telas ou reproduza os ensaios abaixo: o modelo continua
-            rodando enquanto você navega.
+            Este projeto é uma iniciativa pessoal de Bruno Andrade, desenvolvida como proposta ao
+            SAAE de Angra dos Reis. O painel mostra como registro digital, telemetria, automação e
+            supervisão podem trabalhar juntos. Explore as telas ou reproduza os ensaios abaixo: o
+            modelo continua rodando enquanto você navega.
           </p>
         </div>
         <div className="ajuda-alerta">
@@ -184,8 +185,8 @@ export default function PainelAjuda({ aoNavegar, aoAbrirSimulacao }) {
           <div>
             <strong>Todos os valores operacionais são simulados.</strong>
             <span>
-              A maquete não está conectada a equipamentos ou sistemas do SAAE e não representa uma
-              implantação concluída.
+              Não é um sistema oficial, uma iniciativa institucional ou um projeto implantado pelo
+              SAAE. A maquete não está conectada a equipamentos ou sistemas reais.
             </span>
           </div>
         </div>
@@ -331,7 +332,10 @@ export default function PainelAjuda({ aoNavegar, aoAbrirSimulacao }) {
           <dl>
             <div>
               <dt>Referências reais</dt>
-              <dd>Contorno municipal do IBGE e nomes e localizações de algumas unidades.</dd>
+              <dd>
+                Contorno municipal do IBGE e nomes de algumas unidades. As posições são aproximadas,
+                obtidas em mapas públicos, sem validação de campo.
+              </dd>
             </div>
             <div>
               <dt>Aproximado ou estimado</dt>

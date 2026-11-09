@@ -2,3 +2,13 @@ node_modules/
 dist/
 .DS_Store
 *.local
+
+# Configuração e credenciais locais
+.env
+.env.*
+!.env.example
+.aws/
+*.pem
+*.key
+*.log
+coverage/

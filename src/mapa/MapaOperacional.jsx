@@ -376,7 +376,7 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       </div>
 
       {offline && <div className="mapa-offline">Sem conexão — exibindo contorno IBGE</div>}
-      <div className="mapa-nota">Contorno: IBGE · rede estimada</div>
+      <div className="mapa-nota">Contorno: IBGE · posições aproximadas · rede estimada</div>
     </div>
   );
 }

@@ -15,7 +15,8 @@ export const CAMADAS = [
     id: 'ruas',
     nome: 'Ruas',
     url: () => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    atrib: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    atrib:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     // O serviço padrão fornece tiles de 256 px; evita multiplicar pedidos em telas retina.
     detectRetina: false,
     zoomMax: 19,

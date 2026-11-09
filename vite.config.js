@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 /**
  * Apenas a maquete demonstrativa e publicada. O projeto tecnico permanece em
- * docs/projeto-tecnico.md e nao faz parte do build.
+ * docs/proposta-tecnica.md e nao faz parte do build.
  *
  * O preview do Cloudflare Pages serve na raiz de um subdominio proprio, entao
  * `base: '/'` e seguro.

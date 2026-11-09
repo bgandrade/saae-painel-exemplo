@@ -69,7 +69,11 @@ export default function Relatorios() {
 
   function exportarCSV() {
     const linhas = [
-      ['SAAE Angra dos Reis — Boletim de operação (DADOS SIMULADOS)'],
+      ['Simulador de Saneamento — Angra dos Reis — Boletim de operação (DADOS SIMULADOS)'],
+      ['Iniciativa pessoal de Bruno Andrade, desenvolvida como proposta ao SAAE de Angra dos Reis'],
+      [
+        'Projeto independente — não é sistema oficial, iniciativa institucional ou projeto implantado pelo SAAE',
+      ],
       ['Período', `últimas ${horas} h`, 'Emitido em', dataHora(sim.tempo)],
       [],
       ['Indicador', 'Código SNIS', 'Valor', 'Unidade'],
@@ -114,15 +118,18 @@ export default function Relatorios() {
     <div className="grid">
       {/* Só aparece no papel: ver impressao.css */}
       <div className="cabecalho-relatorio">
-        <div className="cr-org">SAAE — Serviço Autônomo de Água e Esgoto de Angra dos Reis</div>
-        <div className="cr-sub">Centro de Controle Operacional</div>
+        <div className="cr-org">Simulador de Saneamento — Angra dos Reis</div>
+        <div className="cr-sub">
+          Bruno Andrade · Iniciativa pessoal desenvolvida como proposta ao SAAE
+        </div>
         <div className="cr-tit">Boletim de Operação</div>
         <div className="cr-meta">
           Período: últimas {horas} horas · Emitido em {dataLonga(sim.tempo)}, {hora(sim.tempo)} ·
           Operador de plantão: {sim.operador}
         </div>
         <div className="cr-aviso">
-          DOCUMENTO DEMONSTRATIVO — TODOS OS DADOS SÃO SIMULADOS E NÃO REPRESENTAM MEDIÇÃO REAL
+          DOCUMENTO DEMONSTRATIVO — DADOS SIMULADOS, SEM MEDIÇÃO REAL. NÃO É SISTEMA OFICIAL,
+          INICIATIVA INSTITUCIONAL OU PROJETO IMPLANTADO PELO SAAE.
         </div>
       </div>
 

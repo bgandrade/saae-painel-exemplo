@@ -3,7 +3,7 @@
  *
  * Serve a um objetivo específico: o diálogo de impressão do navegador vira o
  * gerador de PDF do boletim. Sem biblioteca, sem servidor — e o que sai é um
- * documento com cabeçalho institucional, período e o aviso de dados simulados,
+ * documento com cabeçalho de autoria pessoal, período e aviso de dados simulados,
  * que é o que fecha a frase "e emite o relatório que hoje é feito à mão".
  */
 
@@ -14,7 +14,7 @@
   }
 
   /* Impresso é sempre claro: economiza tinta e é o que se espera de um
-     documento oficial, mesmo que o painel esteja no tema escuro. */
+     relatório legível, mesmo que o painel esteja no tema escuro. */
   :root,
   :root[data-theme='dark'] {
     --fundo: #fff;
