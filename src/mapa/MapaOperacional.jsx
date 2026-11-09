@@ -125,6 +125,13 @@ export default function MapaOperacional({ altura = 480, sistemaInicial = 'ambos'
       maxZoom: def.zoomMax,
       detectRetina: def.detectRetina ?? true,
       crossOrigin: true,
+      // Retém tiles já visitados até quatro linhas/colunas além do viewport.
+      // keepBuffer não faz prefetch: o OSM público não permite essa prática.
+      keepBuffer: 4,
+      // Carrega durante o arraste também no celular, com o throttle do Leaflet
+      // (200 ms), e evita pedidos de zooms intermediários durante flyTo/pinça.
+      updateWhenIdle: false,
+      updateWhenZooming: false,
     });
     tl.on('tileload', () => {
       carregou = true;

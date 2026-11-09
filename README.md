@@ -126,6 +126,11 @@ reproduzir os ensaios. Consulte o guia para modificar unidades e entender as mal
 - Ruas e satélite fazem requisições a OpenStreetMap e Esri, respectivamente. Esses provedores
   recebem os dados normais das requisições do navegador. Sem acesso aos tiles, o mapa pode usar o
   contorno local do IBGE; não há download de tiles para uso offline.
+- O mapa mantém tiles já visitados até quatro linhas/colunas além da área visível e carrega novos
+  tiles durante o arraste, inclusive no celular. O cache HTTP segue os cabeçalhos dos provedores.
+  Essa retenção ajuda ao voltar por áreas visitadas; não antecipa áreas ainda não vistas, pois o
+  servidor público do OpenStreetMap
+  [não permite prefetch](https://operations.osmfoundation.org/policies/tiles/).
 - Os serviços externos têm condições próprias e não oferecem disponibilidade garantida pela
   aplicação. As atribuições devem permanecer visíveis. Veja
   [fontes e créditos](docs/fontes-e-creditos.md).
